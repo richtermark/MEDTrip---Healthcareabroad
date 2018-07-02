@@ -1,0 +1,245 @@
+{% extends 'InstitutionBundle::unauthenticated.layout.html.twig' %}
+
+{% block title %} Client Sign-up {% endblock %}
+
+{% block content %}
+    {% embed 'InstitutionBundle:Embed:contentWrapper.unauthenticated.html.twig' 
+        with {'pageTitle': 'Create an Account', 'contentSpanClass': 'span8 marginleft0'} 
+    %}
+        {% block wrappedContent %}    
+        <h1>Create New Account</h1> 
+        <div class="span8">
+            <form action="{{ path('institution_signUp') }}" id="signupForm" method="POST" class="form">
+                <section id="_accountInfo" class="section account-info">
+                   <h2>
+                       Personal Contact Information<br>
+                       </h2>
+                       <h4 style="font-weight:normal; color:#999;">None of the Account Manager details will be published on our site. This data is used only for internal communications between your organization and {{ site_name }}</h4>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="span6">
+                                <div class="control-group row-field {{ (form.firstName.vars.valid ? '' : 'error') }}">
+                                    <label for="institutionSignUp_firstName">Your First Name *</label>
+                                   {{ form_widget(form.firstName, { 'attr': {'class': 'span12'} }) }}
+                                   {{ form_errors(form.firstName) }}
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <div class="control-group row-field {{ (form.lastName.vars.valid ? '' : 'error') }}">
+                                 <label for="institutionSignUp_lastName">Your Last Name *</label>
+                                    {{ form_widget(form.lastName, { 'attr': {'class': 'span12'} }) }}
+                                    {{ form_errors(form.lastName ) }}
+                                </div>
+                            </div>
+                            <div class="control-group row-field">
+                                <label for="institutionSignUp_jobTitle">  Your Job Role or Title
+                                    <small> ( Optional ) </small>
+                                </label>
+                                {{ form_widget(form.jobTitle, { 'attr': {'class': 'span6'} }) }}
+                            </div>
+                                                 <div class="row-fluid terms hca-contact-details">
+                        {% for _widget in form.contactDetails %}
+                            {{ form_widget(_widget) }}
+                             {{ form_errors(_widget) }}
+                        {% endfor %}
+                        
+                    </div>
+                            
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="section institution-contact">
+                    <h2>
+                        Your Login Details
+                        <br>
+                        <small>
+                            How you will sign in to your HealthcareAbroad account.
+                        </small>
+                    </h2>
+                    <div class="row-fluid tooltip-wrap">
+                        <div class="span12" style="padding-bottom:0">
+  <!--                                   <div class="tooltip-content">
+            <i class="icon-envelope icon-2x pull-left"></i>This is the email address you use to login to the <b>{{ site_name }}</b> system. It is also the email address we send all internal account communications from the {{ site_name }} admin team to your organization.
+        </div> -->
+                        <div class="control-group row-field {{ (form.email.vars.valid ? '' : 'error') }}">
+                                <label for="institutionSignUp_email">  Your Email address *
+                                    <small> (Your company email address.)  </small>
+                                </label>
+                                {{ form_widget(form.email, { 'attr': {'class': 'span6 tooltip-wrap2', 'placeholder': 'i.e you@some-domain.com'} }) }}
+                                <img style="display:none; margin:-3px 37px 0px 0px;" id="_confirmEmailAjax" src="{{ asset('images/institution/loading.gif') }}" />
+                                {{ form_errors(form.email) }}
+                                    <div class="tooltip-content2 hca-email">
+                                        Your email address will be your username when you log in.
+                                    </div>
+                            </div>
+                            <div class="control-group row-field {{ (form.confirm_email.vars.valid ? '' : 'error') }}">
+                                <label for="institutionSignUp_confirmEmail"> Re-type your email * </label>
+                                   {{ form_widget(form.confirm_email, { 'attr': {'class': 'span6'} }) }}
+                                   <img style="display:none; margin:-3px 37px 0px 0px;" id="loader_ajax" src="{{ asset('images/institution/loading.gif') }}" />
+                                   {{ form_errors(form.confirm_email) }}
+                            </div>
+
+                            <div class="control-group row-field {{ (form.password.vars.valid ? '' : 'error') }}">
+                                <label for="institutionSignUp_password">
+                                    Set your password * <small>( Must be atleast 6 characters long ) </small>
+                                </label>
+                               {{ form_widget(form.password, { 'attr': {'class': 'span6'} }) }}
+                               {{ form_errors(form.password) }}
+                            </div>
+                             <div class="control-group row-field {{ (form.confirm_password.vars.valid ? '' : 'error') }}">
+                                <label for="institutionSignUp_confirmPassword"> Re-type your password * </label>
+                                   {{ form_widget(form.confirm_password, { 'attr': {'class': 'span6'} }) }}
+                                   <img style="display:none; margin:-3px 37px 0px 0px;" class="_loaderAjax" src="{{ asset('images/institution/loading.gif') }}" />
+                                   {{ form_errors(form.confirm_password) }}
+                            </div>
+                            </div>
+                    </div>
+
+                </section>
+                
+                
+                
+                <section class="section account-info">
+                    <h2>Type of Institution *<small>  <br>
+                          Please select which best describes the healthcare provider you are adding: </small>
+                    </h2>
+                    <div class="row-fluid">
+                        <div class="span12 control-group row-field {{ (form.type.vars.valid ? '' : 'error') }}">
+                               {% for _key, _typeChoice in form.type.vars.choices %}
+                                    {% set _inputId =  form.type.vars.id ~ '_' ~ _key %}
+                                    <label class="radio" for="{{ _inputId }}">
+                                    <input id="{{ _inputId }}" type="radio" value="{{ _typeChoice.value }}" required="required" name="{{ form.type.vars.full_name }}" {% if form.type.vars.data == _typeChoice.value %} checked="checked"{% endif %}>
+                                    {{ _typeChoice.label }}</label> 
+                                   {% if not loop.last %}
+                                   <hr>
+                                   {% endif %}
+                                {% endfor %}
+                               <span class="row">{{ form_errors(form.type) }} </span> 
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row-fluid terms">
+                        <div class="span12 control-group row-field {{ (form.agree_to_terms.vars.valid ? '' : 'error') }}">
+                            <label class="checkbox">
+                                {{ form_widget(form.agree_to_terms) }} I agree to {{ site_name }}'s 
+                                <a href="{{ path('institution_terms_of_use') }}" target="_blank">Terms of Use</a> and 
+                                <a href="{{ path('frontend_page_privacy_policy') }}" target="_blank">Privacy Policy</a> *.
+                            </label>
+                            <span class="pull-left">  {{ form_errors(form.agree_to_terms) }} </span>
+                        </div>
+                    </div>
+                </section>
+                <section class="section footer">
+                    <div class="row-fluid terms">
+                        <div class="span12">
+                            <div class="span6"><label>* <small>Required Fields</small></label></div>
+                            <div class="span6">
+                            <button type="submit" class="_btnSubmit btn pull-right btn-primary btn-large"> Create Account</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                {% if (form._token) %} {# added condition for test #}
+                    {{ form_widget(form._token) }}
+                {% endif %}
+            </form>
+        </div>
+        <aside class="span4">
+            {{ render_signup_steps_by_route(app.request.attributes.get('_route'), false) | raw }}
+		</aside>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block inlineJavascriptCode %}
+<script type="text/javascript" src="{{ asset('bundles/helper/js/Flag.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('bundles/helper/js/Common.js') }}" ></script>
+<script type="text/javascript">
+     $(document).ready(function() {
+        
+    	$('#institutionUserSignUp_email').blur(function(e) {
+        	_email = $('#institutionUserSignUp_email').val();
+        	if(_email !== "") {
+        		$('#loader_ajax').show();
+        		HCA.removeInlineErrorMessage($('#institutionUserSignUp_email').parent());
+        		if (isValidEmailAddress(_email)) {
+            		$.ajax({
+        				url: '{{ get_validate_email_uri() }}',
+        				data: {'email': _email },
+        				type: 'POST',
+        				success: function(response){
+        					if(response.status == 'invalid') {
+        					    HCA.displayInlineErrorMessage($('#institutionUserSignUp_email').parent(), response.message);
+            				}
+        					$('#loader_ajax').hide();
+        				}
+        			});
+        		} else {
+        			HCA.displayInlineErrorMessage($('#institutionUserSignUp_email').parent(), 'Email is invalid');
+        			$('#loader_ajax').hide();
+        		}
+        	}
+    	});
+
+
+    	$('#institutionUserSignUp_confirm_email').blur(function() {
+    		$('_confirmEmailAjax').show();
+    	    HCA.removeInlineErrorMessage($('#institutionUserSignUp_confirm_email').parent());
+    	    if ($("#institutionUserSignUp_email").val() != $("#institutionUserSignUp_confirm_email").val()) {
+        	  	HCA.displayInlineErrorMessage($('#institutionUserSignUp_confirm_email').parent(), 'Emails do not match!');
+    	    }
+    	    $('_confirmEmailAjax').hide();
+    	});
+    	
+    	$("#institutionUserSignUp_password").blur(function() {
+    		HCA.removeInlineErrorMessage($('#institutionUserSignUp_password').parent());
+    		if($("#institutionUserSignUp_password").val().length <= 5 && $("#institutionUserSignUp_password").val() !== '' ) {
+        		HCA.displayInlineErrorMessage($('#institutionUserSignUp_password').parent(), 'Password must be atleast 6 characters long!');
+    		}
+    		else {
+    			checkPasswordMatch();
+    		}
+    	});
+    	
+    	$("#institutionUserSignUp_confirm_password").blur(function() {
+        	if($("#institutionUserSignUp_password").val().length >= 6) {
+        		checkPasswordMatch();
+        	}
+    	});
+    	    	
+        $('button._btnSubmit').click(function() {
+            if($('#institutionUserSignUp_confirm_password').parent().hasClass('error') || $('#institutionUserSignUp_password').parent().hasClass('error') || $('#institutionUserSignUp_email').parent().hasClass('error')) {
+                HCA.alertMessage('error', 'We need you to correct some of your input. Please check the fields in red.');
+                window.location.href="#_accountInfo";
+                return false;
+            }else {
+            	$('button._btnSubmit').submit();
+            }
+        });
+    	
+    	
+    	function isValidEmailAddress(email) {
+    	    var pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
+    	    return pattern.test(email);
+    	};
+
+    	function checkPasswordMatch() {
+    		$('img._loaderAjax').show();
+    	    HCA.removeInlineErrorMessage($('#institutionUserSignUp_confirm_password').parent());
+    	    if ($("#institutionUserSignUp_password").val() != $("#institutionUserSignUp_confirm_password").val()) {
+        	  	HCA.displayInlineErrorMessage($('#institutionUserSignUp_confirm_password').parent(), 'Passwords do not match!');
+    	    }
+    	    $('img._loaderAjax').hide();	
+    	}
+
+    });
+
+
+
+</script>
+
+{% endblock %}

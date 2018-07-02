@@ -1,0 +1,66 @@
+{% set resultItemSchemaType = resultItemSchemaType is defined ? resultItemSchemaType : 'http://schema.org/LocalBusiness' %} 
+<div itemscope itemtype="http://schema.org/Hospital" class="item-wrapper {{ get_impression_tracker_class() }}" {{ get_statistics_parameter_attribute_name() }} = ~ encode_search_result_item_impression_parameters(statisticsDataObject) }}>
+
+    {% if searchResultItem.displayLogo %}
+        <div class="left-column-wrapper">
+            {% include 'StatisticsBundle:Tracker/Widgets:searchResultItem.clickthroughLink.html.twig' with { 'link': {
+                url: searchResultItem.url,
+                html: searchResultItem.isInstitution ?
+                    render_institution_logo(searchResultItem.dataObject, {attr: {alt: 'hospital logo', class: 'small'}}) :
+                    render_institution_medical_center_logo(searchResultItem.dataObject),
+                class: 'small-logo-wrapper' }}
+           %}
+        </div>
+    {% endif %}
+
+    <div class="right-column-wrapper">
+        {% if searchResultItem.displayPhoto and searchResultItem.featuredMedia %}
+            <div class="pull-right listing-photo">
+                <div class="thumbnail-frame">
+                    <img class="img-polaroid" alt="" src="{{ institution_media_src(searchResultItem.featuredMedia, constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::ADS_FEATURED_IMAGE')) }}">
+                </div>
+                {% include 'StatisticsBundle:Tracker/Widgets:searchResultItem.clickthroughLink.html.twig' with { 'link': {
+                    url: searchResultItem.url, html: '<span class="white-icon-search"></span> Learn More', class: 'btn blue pull-right' }} %}
+            </div>
+        {% endif %}
+
+        <h3 class="heading">
+            <a itemprop="url" content="{{ searchResultItem.url }}" href="{{ searchResultItem.url }}">
+                <span itemprop="name">{{ searchResultItem.name }}</span>
+            </a>
+        </h3>
+
+        {% if searchResultItem.supplementaryUrl %}
+            <h4 class="heading"><a href="{{ searchResultItem.supplementaryUrl.url }}">{{ searchResultItem.supplementaryUrl.name }}</a></h4>
+        {% endif %}
+
+        {% if searchResultItem.description | length > 0 %}
+            <p>
+                <span itemprop="description">
+                {{ (searchResultItem.description | length > 200 ? (searchResultItem.description | slice(0, 200) | trim) ~ '...' : searchResultItem.description) | raw }}
+                </span>
+                
+                {% include 'StatisticsBundle:Tracker/Widgets:searchResultItem.clickthroughLink.html.twig' with { 'link': {
+                    url: searchResultItem.url, html: 'More Info', class: '' }} %}
+            </p>
+        {% endif %}
+    </div>
+
+    <div class="tag-box">
+        <span class="location"><i class="icon-map-marker"></i>
+            {{ searchResultItem.isInstitution ?
+                institution_address_to_string(searchResultItem.dataObject, ['city', 'state', 'country']) :
+                medical_center_complete_address_to_string(searchResultItem.dataObject, ['city', 'state', 'country'])
+           }}
+        </span>
+
+        {% if searchResultItem.links is defined %}
+            {% set linkClasses = { googleplus: 'icon-google-plus', twitter: 'icon-twitter', facebook: 'icon-facebook', website: 'icon-globe', contactnumber: 'icon-phone', email: 'icon-envelope' } %}
+            <div class="link-box">
+                {% for key, link in searchResultItem.links %} 
+                    <a {% if link.value is defined %} href="{{link.value}}" target="_blank" {% endif %} data-toggle="tooltip" title="{{ link.tooltip }}" class="{{ linkClasses[key] }} link-tooltip"></a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

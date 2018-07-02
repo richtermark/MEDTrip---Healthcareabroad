@@ -1,0 +1,26 @@
+{% set subTask = [{'title': 'Click here to view all user types', 'href': path('admin_userType_index')}] %}
+
+{% if userType.id is defined and userType.id %}
+    {% set subTask = subTask | merge([{'title': 'Go back to ' ~ userType.name ~ ' User Type', 'href': path('admin_userType_edit', {'id':userType.id}) }]) %}
+{% endif %}
+
+{% set contents = [
+    {
+        'title': 'Back to user types',
+        'description': 'Manage user types',
+        'class': 'add-icon',
+        'href': path('admin_userType_index'),
+        'links': subTask
+    },
+    {
+        'title': 'Back to admin settings',
+        'description': 'Go to admin settings',
+        'class': 'add-icon',
+        'href': path('admin_settings'),
+        'links': [{'title': 'Go back to admin settings', 'href': path('admin_settings')}]
+    }
+    
+    ]
+%}
+
+{% include '::relatedTasks.base.admin.html.twig' with {contents: contents} %}

@@ -1,0 +1,64 @@
+{
+    "name": "symfony/framework-standard-edition",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.1.8",
+        "twig/twig": "v1.12.2",
+        "twig/extensions": "v1.0.0-alpha",
+        "doctrine/common": "2.3.0",
+        "doctrine/orm": "2.3.2",
+        "doctrine/dbal": "2.3.2",
+        "monolog/monolog": "1.2.1",
+        "symfony/monolog-bundle": "v2.1.8",
+        "sensio/generator-bundle": "v2.1.10",
+        "doctrine/doctrine-bundle": "v1.1.0",
+        "jdorn/sql-formatter": "v1.2.0",
+        "gedmo/doctrine-extensions": "v2.3.5",
+        "symfony/assetic-bundle": "v2.1.2",
+        "kriswallsmith/assetic": "v1.1.0-alpha4",
+        "symfony/swiftmailer-bundle": "master",
+        "jms/security-extra-bundle": "1.1.*",
+        "jms/di-extra-bundle": "1.0.*",
+        "jms/debugging-bundle": "dev-master",
+        "sensio/distribution-bundle": "v2.1.8",
+        "guzzle/guzzle": "*",
+        "rezzza/mailchimp-bundle": "1.0.*@dev",
+        "knplabs/gaufrette": "dev-master",
+        "knplabs/knp-gaufrette-bundle": "0.2.*@dev",
+        "imagine/Imagine": "dev-master",
+        "chromedia/utilities": "dev-master",
+        "stfalcon/tinymce-bundle": "v0.2.0",
+        "gregwar/captcha-bundle": "dev-master"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
+        ],
+        "post-update-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://commonutilities.dev.chromedia.com/"
+        }
+    ],
+    "minimum-stability": "dev"
+}

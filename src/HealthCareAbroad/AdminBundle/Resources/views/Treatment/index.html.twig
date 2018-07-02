@@ -1,0 +1,95 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+{% set selectedTab = 'manageHcaData' %}
+{% set selectedSubMenu = 'treatments' %}
+{% set treatmentLabel = getClassLabel('treatment') %}
+
+{% block content %}
+    <div class="span3">
+    {% include 'AdminBundle:Widgets:subMenu.manageHcaData.html.twig'%}
+    </div>
+    <div id="content" class="span9">
+        
+        {% embed 'HelperBundle:Widgets:section.html.twig' 
+            with { 
+                title: treatmentLabel.plural | title,
+                actions: [{link: path('admin_treatment_add'), label: 'Add '~ treatmentLabel.singular | title, 'icon' : 'icon-ok' }] 
+            }  
+        %}
+            {% block sectionContent %}
+            
+                {% autoescape false %} {{ listFilters is defined ? listFilters : '' }} {% endautoescape %}
+                
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Name of Treatment</th>
+                        <th>Details</th>
+                        <th>Specialization</th>
+                        <th>Sub-specializations</th>
+                        <th width="15%">Actions</th>
+                    </tr>
+            
+                {% for each in treatments %}
+                    
+                    <tr>
+                        <td>{{ each.name }}</td>
+                        <td>{{ each.description | raw }}</td>
+                        <td>{{ each.specialization.name }}</td>
+                        <td class="procedure-type">
+                                <ul style="list-style:none;">
+                                    {% for eachSub in each.subSpecializations %}
+                                        <li>{{ eachSub.name }}</li>
+                                    {% else %}
+                                        <li>No sub specialization</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        <td>
+                            <ul class="table-action">
+                                <li><a href="{{ path('admin_treatment_edit', { id:each.id } ) }}"> <i class="icon-edit"></i> Edit</a></li>
+                                
+                                <li>
+                                    {% set status = each.isActive() ? {label: 'Deactivate', icon: 'icon-remove'} : {label: 'Activate', icon: 'icon-ok'} %}
+                                    <a href="{{ path('admin_treatment_updateStatus', {id: each.id} ) }}" title="" class="update-status">
+                                        <i class="{{ status.icon }}"></i> <span>{{ status.label }}</span>
+                                    </a>
+                                </li>
+                                <li><a href="{{ path('admin_treatment_convert', { 'specializationId' : each.specialization.id,'id' : each.id } ) }}"> <i class="icon-edit"></i> Convert To Term</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </table>
+            {% endblock %}
+            
+        {% endembed %}
+        
+        {% if pager.isPaginable %}
+           {{ paginate(pager, 'admin_treatment_index', app.request.query.all) }}
+        {% endif %}
+        
+    </div>
+    
+    {% block inlineJavascriptCode %}
+        <script src="{{ asset('bundles/admin/js/AdminHcaData.js') }}"></script>
+        <script type="text/javascript">
+        <!--
+        AdminTreatmentsManager.init({
+            'loadSubSpecializationsBySpecializationUrl': '{{ path("admin_specialization_loadAvailableSubSpecializations") }}',
+            'subSpecializationsDropdownElement': $('#filter-subSpecialization')
+        });
+
+        $(function(){
+            $('#filter-specialization').change(function(event){
+                _id = $(this).val();
+                if ('all' != _id) {
+                    AdminTreatmentsManager.loadSubSpecializationsBySpecialization(_id, { selectedSubSpecializationIds: ['{{ app.request.get("subSpecialization") }}'] });                
+                }
+            }).change();
+        });
+        
+        
+        //-->
+        </script>
+    {% endblock %}
+    
+{% endblock %}

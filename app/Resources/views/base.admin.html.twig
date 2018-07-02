@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>{% block title %}HealthCareAbroad{% endblock %}</title>
+
+        {% set with_backbone = with_backbone is defined ? with_backbone : false %}
+        {% javascripts
+            'js/jquery/jquery-1.8.2.js'
+            'js/jquery/jquery-ui-1.9.0.custom.js'
+            'js/bootstrap.min.js'
+            'bundles/helper/js/Common.js'
+            'bundles/helper/js/CustomSelect.js'
+            output='js/compiled-admin.js'
+        %}
+
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        
+        {% if with_backbone %}
+            <script type="text/javascript" src="{{ path('helper_default_apiUtilityJavascript') }}"></script>
+            {% javascripts 
+                'js/lib/underscore-min.js'
+                'js/lib/backbone-min.js'
+                'js/lib/ICanHaz.min.js'
+                'bundles/helper/js/Channel.js'
+                'bundles/helper/js/view/CommonFlashMessageView.js'
+        		output='js/compiled-admin-backbone-based.js'
+            %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+                
+            {% endjavascripts %}
+        {% endif %}
+        
+        
+           <script type="text/javascript">
+            $(function(){
+                HCA.init({
+                    tinymceConfig: {
+                        textarea_class: "{{ tinymce.textarea_class }}",
+                        themeSimple: $.parseJSON('{{ tinymce.theme.simple|json_encode|raw }}'),
+                        themeMedium: $.parseJSON('{{ tinymce.theme.medium|json_encode|raw }}'),
+                        themeBbCode: $.parseJSON('{{ tinymce.theme.bbcode|json_encode|raw }}'),
+                        themeAdvanced: $.parseJSON('{{ tinymce.theme.advanced|json_encode|raw }}')
+                    }
+                });
+
+            	$('.dropdown-toggle').click(function(){ /* temporary added */
+            		$('ul.dropdown-menu').hide();
+            		$(this).next('ul.dropdown-menu').toggle();
+        	    });
+            })
+
+            </script>
+        
+            {% stylesheets 
+                'css/jquery-ui/base/jquery-ui-1.10.1.custom.min.css'
+                'css/bootstrap.min.css'
+                'css/bootstrap-timepicker.min.css'
+                'css/font-awesome.min.css'
+				'css/admin/frontend_search_form.css'
+				'css/hca-flags.css'
+				'css/admin/style.css'
+				output='css/compiled-admin.css'
+            %}
+                <link href="{{ asset_url }}" rel="stylesheet"/>
+                
+            {% endstylesheets %}
+            
+<!--             <link href="/css/jquery-ui.css" rel="stylesheet"/> -->
+            <link href="/css/jquery-ui/base/jquery-ui-1.9.1.custom.min.css" rel="stylesheet"/>
+            
+    </head>
+    {% block body %}{% endblock %}
+
+    {{ tinymce_init() }}
+</html>

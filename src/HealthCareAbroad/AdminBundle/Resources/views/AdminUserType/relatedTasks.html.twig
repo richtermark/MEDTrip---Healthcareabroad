@@ -1,0 +1,37 @@
+{% set contents = [] %}
+
+{% if showAdd %}	    
+    {% set contents = [{
+            'title': 'Add user type',
+            'description': 'Create new user type',
+            'class': 'add-icon',
+            'href': path('admin_userType_add'),
+            'links': [{'title': 'Click here to add user type', 'href': path('admin_userType_add')}]
+    }] %}
+{% endif %}
+
+{% if showList %}
+    {% set contents = contents | merge([{
+            'title': 'User types list',
+            'description': 'View list of all user types',
+            'class': 'add-icon',
+            'href': path('admin_userType_index'),
+            'links': [{'title': 'Click here to view list', 'href': path('admin_userType_index')}]
+    }]) %}
+{% endif %}
+
+{% if showRoles %}
+    {% set contents = contents | merge([{
+            'title': 'Access roles list',
+            'description': 'Manage access roles',
+            'class': 'add-icon',
+            'href': path('admin_userRole_index'),
+            'links': [
+                {'title': 'Click here to view all permission', 'href': path('admin_userRole_index')}
+            ]
+    }]) %}
+{% endif %}
+
+{# {'title': 'Manage permissions of {{ userType.name | title}} user type', 'href': path('admin_userRole_viewByUserType', {'id':userType.id})}, #}
+
+{% include '::relatedTasks.base.admin.html.twig' with {contents: contents} %}

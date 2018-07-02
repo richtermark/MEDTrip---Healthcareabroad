@@ -1,0 +1,139 @@
+#
+# List down the events that will be dispatched in this bundle.
+# Parameter will be in the following format:
+#    $event_name: $target_entity_qualified_name
+#
+# Event name convention is:
+#        event.{subject_entity}.{event_action}
+#
+# Sample parameter:
+#    event.admin_user.add: HealthCareAbroad\AdminBundle\Event\AdminUserEvent
+#
+
+parameters:
+
+    #
+    # admin user related events
+    #
+    event.admin_user.add: HealthCareAbroad\AdminBundle\Event\AdminUserEvent
+    event.admin_user.edit: HealthCareAbroad\AdminBundle\Event\AdminUserEvent
+    event.admin_user.login: HealthCareAbroad\AdminBundle\Event\AdminUserEvent
+    event.admin_user.change_password: HealthCareAbroad\AdminBundle\Event\AdminUserEvent
+
+    # admin migration
+    event.admin.migrate_specialization: HealthCareAbroad\AdminBundle\Event\AdminMigrationEvent
+    event.admin.merge_treatment: HealthCareAbroad\AdminBundle\Event\AdminMigrationEvent
+    
+    #
+    # admin user type related events
+    #
+    event.admin_user_type.add: HealthCareAbroad\AdminBundle\Event\AdminUserTypeEvent
+    event.admin_user_type.edit: HealthCareAbroad\AdminBundle\Event\AdminUserTypeEvent
+    event.admin_user_type.delete: HealthCareAbroad\AdminBundle\Event\AdminUserTypeEvent
+    event.admin_user_type.add_role: HealthCareAbroad\AdminBundle\Event\AdminUserTypeEvent
+    event.admin_user_type.delete_role: HealthCareAbroad\AdminBundle\Event\AdminUserTypeEvent
+
+    #
+    # advertisement related events
+    #
+    event.advertisement.add: HealthCareAbroad\AdminBundle\Event\AdvertisementEvent
+    event.advertisement.edit: HealthCareAbroad\AdminBundle\Event\AdvertisementEvent
+    event.advertisement.delete: HealthCareAbroad\AdminBundle\Event\AdvertisementEvent
+
+    #
+    # city related events
+    #
+    event.city.add: HealthCareAbroad\AdminBundle\Event\CityEvent
+    event.city.edit: HealthCareAbroad\AdminBundle\Event\CityEvent
+    event.city.delete: HealthCareAbroad\AdminBundle\Event\CityEvent
+
+    #
+    # city related events
+    #
+    event.state.add: HealthCareAbroad\AdminBundle\Event\StateEvent
+    event.state.edit: HealthCareAbroad\AdminBundle\Event\StateEvent
+    event.state.delete: HealthCareAbroad\AdminBundle\Event\StateEvent
+
+    #
+    # country related events
+    #
+    event.country.add: HealthCareAbroad\AdminBundle\Event\CountryEvent
+    event.country.edit: HealthCareAbroad\AdminBundle\Event\CountryEvent
+    event.country.delete: HealthCareAbroad\AdminBundle\Event\CountryEvent
+
+    #
+    # specialization related events
+    #
+    event.specialization.add: HealthCareAbroad\AdminBundle\Event\SpecializationEvent
+    event.specialization.edit: HealthCareAbroad\AdminBundle\Event\SpecializationEvent
+    event.specialization.delete: HealthCareAbroad\AdminBundle\Event\SpecializationEvent
+
+    #
+    # treatment related events
+    #
+    event.treatment.add: HealthCareAbroad\AdminBundle\Event\TreatmentEvent
+    event.treatment.edit: HealthCareAbroad\AdminBundle\Event\TreatmentEvent
+    event.treatment.delete: HealthCareAbroad\AdminBundle\Event\TreatmentEvent
+
+    #
+    # subspecialization related events
+    #
+    event.subspecialization.add: HealthCareAbroad\AdminBundle\Event\SubSpecializationEvent
+    event.subspecialization.edit: HealthCareAbroad\AdminBundle\Event\SubSpecializationEvent
+    event.subspecialization.delete: HealthCareAbroad\AdminBundle\Event\SubSpecializationEvent
+
+    #
+    # news related events
+    #
+    event.news.add: HealthCareAbroad\AdminBundle\Event\NewsEvent
+    event.news.edit: HealthCareAbroad\AdminBundle\Event\NewsEvent
+    event.news.delete: HealthCareAbroad\AdminBundle\Event\NewsEvent
+
+    #
+    # offered service related events
+    #
+    event.offered_service.add: HealthCareAbroad\AdminBundle\Event\OfferedServiceEvent
+    event.offered_service.edit: HealthCareAbroad\AdminBundle\Event\OfferedServiceEvent
+    event.offered_service.delete: HealthCareAbroad\AdminBundle\Event\OfferedServiceEvent
+
+    #
+    # language related events
+    #
+    event.language.add: HealthCareAbroad\AdminBundle\Event\LanguageEvent
+    event.language.edit: HealthCareAbroad\AdminBundle\Event\LanguageEvent
+    event.language.delete: HealthCareAbroad\AdminBundle\Event\LanguageEvent
+    
+    #
+    # awarding Body related events
+    #
+    event.awarding_body.add: HealthCareAbroad\AdminBundle\Event\AwardingBodyEvent
+    event.awarding_body.edit: HealthCareAbroad\AdminBundle\Event\AwardingBodyEvent
+    event.awarding_body.delete: HealthCareAbroad\AdminBundle\Event\AwardingBodyEvent
+    
+    #
+    # GlobalAward related events
+    #
+    event.global_award.add: HealthCareAbroad\AdminBundle\Event\GlobalAwardEvent
+    event.global_award.edit: HealthCareAbroad\AdminBundle\Event\GlobalAwardEvent
+    event.global_award.delete: HealthCareAbroad\AdminBundle\Event\GlobalAwardEvent
+    
+    #
+    # doctor related events
+    #
+    event.doctor.add: HealthCareAbroad\AdminBundle\Event\DoctorEvent
+    event.doctor.edit: HealthCareAbroad\AdminBundle\Event\DoctorEvent
+    event.doctor.delete: HealthCareAbroad\AdminBundle\Event\DoctorEvent
+    
+    #
+    # Helper text related events
+    #
+    event.helper_text.add: HealthCareAbroad\AdminBundle\Event\HelperTextEvent
+    event.helper_text.edit: HealthCareAbroad\AdminBundle\Event\HelperTextEvent
+    event.helper_text.delete: HealthCareAbroad\AdminBundle\Event\HelperTextEvent
+
+    #
+    # Medical Provider Group related events
+    #
+    event.medical_provider_group.add: HealthCareAbroad\AdminBundle\Event\MedicalProviderGroupEvent
+    event.medical_provider_group.edit: HealthCareAbroad\AdminBundle\Event\MedicalProviderGroupEvent
+    event.medical_provider_group.delete: HealthCareAbroad\AdminBundle\Event\MedicalProviderGroupEvent

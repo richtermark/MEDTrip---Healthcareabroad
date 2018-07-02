@@ -1,0 +1,99 @@
+InstitutionBundleTests:
+    resource: "@InstitutionBundle/Resources/config/routing_test.yml"
+    prefix:   /
+
+admin_treatment_testSave:
+    pattern:  /admin/treatment/test-save
+    defaults: { _controller: AdminBundle:Treatment:save }
+    requirements:
+         id: \d+
+         _method: GET
+
+admin_subSpecialization_testSave:
+    pattern:  /admin/sub-specialization/test-save
+    defaults: { _controller: AdminBundle:Treatment:save }
+    requirements:
+         id: \d+
+         _method: GET
+
+admin_specialization_testSave:
+    pattern:  /admin/specialization/test-save
+    defaults: { _controller: AdminBundle:Specialization:save }
+    requirements:
+         id: \d+
+         _method: GET
+         
+admin_country_testSave:
+    pattern:  /admin/country/test-save
+    defaults: { _controller: AdminBundle:Country:save }
+    requirements:
+         id: \d+
+         _method: GET
+         
+admin_language_testSave:
+    pattern:  /admin/language/test-save
+    defaults: { _controller: AdminBundle:Language:save }
+    requirements:
+         id: \d+
+         _method: GET
+
+admin_city_testSave:
+    pattern:  /admin/city/test-save
+    defaults: { _controller: AdminBundle:City:save }
+    requirements:
+         id: \d+
+         _method: GET
+         
+admin_awardingBody_testSave:
+    pattern:  /admin/awardingBody/test-save
+    defaults: { _controller: AdminBundle:AwardingBody:save }
+    requirements:
+         id: \d+
+         _method: GET
+       
+admin_affiliation_testSave:
+    pattern:  /admin/affiliation/test-save
+    defaults: { _controller: AdminBundle:Affiliation:save }
+    requirements:
+         id: \d+
+         _method: GET
+
+admin_news_testSave:
+    pattern:  /admin/news/test-save
+    defaults: { _controller: AdminBundle:News:save }
+    requirements:
+         id: \d+
+         _method: GET
+         
+admin_offered_service_testSave:
+    pattern:  /admin/offered_service/test-save
+    defaults: { _controller: AdminBundle:OfferedService:save }
+    requirements:
+         id: \d+
+         _method: GET
+
+admin_institution_medicalCenter_testAdd:
+    pattern:  /admin/institution/{institutionId}/medical-center/test-save
+    defaults: { _controller: AdminBundle:Institution:saveMedicalCenter }
+    requirements:
+         institutionId: \d+
+         _method: GET
+         
+admin_institution_procedureType_testAdd:
+    pattern:  /admin/institution/{institutionId}/medical-center/{imcId}/procedure-type/test-save
+    defaults: { _controller: AdminBundle:Institution:saveProcedureType }
+    requirements:
+        institutionId: \d+
+        imcId: \d+
+        _method: GET
+
+admin_institution_procedure_testAdd:
+    pattern:  /admin/institution/{institutionId}/medical-center/{imcId}/procedure-type/{imptId}/procedure/test-save
+    defaults: { _controller: AdminBundle:Institution:saveProcedure }
+    requirements:
+        institutionId: \d+
+        imcId: \d+
+        imptId: \d+
+        _method: GET
+_main:
+    resource: routing.yml

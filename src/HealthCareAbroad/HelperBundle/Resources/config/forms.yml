@@ -1,0 +1,136 @@
+services:
+    form.userType_list:
+        class: HealthCareAbroad\UserBundle\Form\ListType\AdminUserTypeListType
+        tags:
+            - { name: form.type, alias: userType_list }
+    
+    form.fancy_business_hours_widget:
+        class: HealthCareAbroad\HelperBundle\Form\FieldType\FancyBusinessHourType
+        tags:
+            - { name: form.type, alias: fancy_business_hours }
+    
+    form.simple_contact_detail:
+        class: HealthCareAbroad\HelperBundle\Form\FieldType\SimpleContactDetailFieldType
+        calls:
+            - [setLocationService, [@services.location]]
+        tags:
+            - { name: form.type, alias: simple_contact_detail }
+    
+    form.detailed_street_address:
+        class: HealthCareAbroad\HelperBundle\Form\FieldType\DetailedStreetAddressFieldType
+        tags:
+            - { name: form.type, alias: detailed_street_address }
+    form.custom.contact_number:
+        class: HealthCareAbroad\HelperBundle\Form\FieldType\ContactNumberFieldType
+        tags:
+            - { name: form.type, alias: contact_number }
+
+    form.custom.contact_number_with_flag:
+        class: HealthCareAbroad\HelperBundle\Form\FieldType\ContactNumberWithFlagFieldType
+        tags:
+            - { name: form.type, alias: contact_number_with_flag }
+    form.custom.website:
+        class: HealthCareAbroad\HelperBundle\Form\FieldType\WebsiteFieldType
+        tags:
+            - { name: form.type, alias: website_custom_field }
+    form.custom.social_media_sites:
+        class: HealthCareAbroad\HelperBundle\Form\FieldType\SocialMediaSitesFieldType
+        tags:
+            - { name: form.type, alias: social_media_sites_custom_field }
+    form.globalCountry_list:
+        class: HealthCareAbroad\HelperBundle\Form\ListType\GlobalCountryListType
+        calls:
+            - [setLocationService, [@services.location]]
+        tags:
+            - { name: form.type, alias: globalCountry_list }
+
+    form.globalCity_list:
+        class: HealthCareAbroad\HelperBundle\Form\ListType\GlobalCityListType
+        arguments: [@services.location]
+        tags:
+            - { name: form.type, alias: globalCity_list }
+
+    form.country_list:
+        class: HealthCareAbroad\HelperBundle\Form\ListType\CountryListType
+        tags:
+            - { name: form.type, alias: country_list }
+
+    form.city_list:
+        class: HealthCareAbroad\HelperBundle\Form\ListType\CityListType
+        tags:
+            - { name: form.type, alias: city_list }
+            
+    form.state_list:
+        class: HealthCareAbroad\HelperBundle\Form\ListType\StateListType
+        arguments: [@services.location]
+        tags:
+            - { name: form.type, alias: state_list }
+
+    form.institutionServices_list:
+        class: HealthCareAbroad\HelperBundle\Form\ListType\InstitutionServicesListType
+        arguments: [@services.helper.ancillary_service]
+        tags:
+            - { name: form.type, alias: institutionServices_list }
+
+    form.doctorSpecializations_list:
+        class: HealthCareAbroad\HelperBundle\Form\ListType\DoctorSpecializationsListType
+        tags:
+            - { name: form.type, alias: doctorSpecializations_list }
+
+    form.institutionGlobalAwards_list:
+        class: HealthCareAbroad\HelperBundle\Form\ListType\InstitutionGlobalAwardsListType
+        arguments: [@services.global_award]
+        tags:
+            - { name: form.type, alias: institutionGlobalAwards_list }
+
+    form.tagtype_list:
+        class: "%services.tagtype_list%"
+        tags:
+        - { name: form.type, alias: tagtype_list }
+    form.language_list:
+        class: "%services.language_list%"
+        calls:
+            - [setDoctrine, [@doctrine]]
+        tags:
+            - { name: form.type, alias: language_autocomplete }
+
+    form.news_list:
+        class: "%services.news_list%"
+        calls:
+            - [setContainer, [@service_container]]
+        tags:
+            - { name: form.type, alias: news_list }
+
+    form.advertisement_list:
+        class: "%services.advertisement_list%"
+        calls:
+           - [setContainer, [@service_container]]
+        tags:
+           - { name: form.type, alias: advertisement_list }
+
+    form.awarding_body_list:
+        class: HealthCareAbroad\HelperBundle\Form\ListType\AwardingBodyListType
+        tags:
+            - { name: form.type, alias: awarding_body_list }
+
+    form.admin_media_file:
+        class: HealthCareAbroad\MediaBundle\Form\AdminMediaFile
+        tags:
+            - { name: form.type, alias: admin_media_file }
+
+    form.admin_media_file_type_extension:
+        class: HealthCareAbroad\HelperBundle\Form\Extension\AdminMediaFileTypeExtension
+        tags:
+            - { name: form.type_extension, alias: admin_media_file_extension }
+            
+    form.custom.fancy_country:
+        class: HealthCareAbroad\HelperBundle\Form\FieldType\FancyCountryFieldType
+        calls:
+            - [setLocationService, [@services.location]]
+        tags:
+            - { name: form.type, alias: fancy_country }
+
+    form.custom.select:
+        class: HealthCareAbroad\HelperBundle\Form\FieldType\CustomSelectFieldType
+        tags:
+            - { name: form.type, alias: custom_select }

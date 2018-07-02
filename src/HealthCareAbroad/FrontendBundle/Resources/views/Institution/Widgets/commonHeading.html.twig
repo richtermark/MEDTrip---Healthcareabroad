@@ -1,0 +1,71 @@
+{# this file will be shared with medical centers profile page #}
+
+{% if viewData.contactNumber %}
+<div id="_call-content-wrapper" style="display: none">
+    <h2><small><i class="icon-phone"></i>Call</small><span>{{ viewData.headerText }}</span></h2>
+    <h1>{{ viewData.contactNumber.__toString }}</h1>
+</div>
+{% endif %}
+
+<div class="cover-photo-wrapper">
+
+    {#
+    <!-- 
+        FIXME! we have to point itemprop="name" to viewData.headerText only, 
+        right now if we wrap it with span, design changes  
+    -->
+    #}
+    <h1 itemprop="name">{{ viewData.headerText }}
+       {% if viewData.subHeader is defined %} 
+           <span><a href="{{ viewData.subHeader.url }}">{{ viewData.subHeader.text }}</a></span> 
+       {% endif %}
+    </h1>
+    
+    <img class="featured-image" src="{{ viewData.featuredMediaSource }}" />
+
+    <div class="info-wrapper hca-v-sprite stripe-bg-dark">
+        <div class="logo-wrapper">
+            {% if viewData.logoSource %}
+                <img src="{{ viewData.logoSource }}" class="hospital-logo" />
+            {% else %}
+                <span class="hca-sprite {{ viewData.defaultLogoClass }}"></span>
+            {% endif %}
+        </div>
+        <div class="span5 pull-right btn-contact-list">
+            <ul class="unstyled inline-list">
+                {% if viewData.contactNumber %}
+                <li>
+                    <a href="#" id="hospital-contact" rel="popover" class="btn blue"><i class="icon-phone"></i> Call Us</a>
+                </li>
+                {% endif %}
+                <li>
+                    <a class="btn blue" href="#form_feedback" role="button" ><i class="icon-envelope-alt"></i>  Email Us</a>
+                </li>
+                {% if viewData.website %}
+                <li>
+                     <a id="visit_website" class="btn blue" href="{{ viewData.website }}" target="_blank"><i class="icon-globe"></i> Visit Website</a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <ul class="unstyled inline-list">
+            {% for type, value in viewData.social %}
+                {% if value %}
+                    {% set iconClass = type == 'googleplus' ? 'icon-google-plus' : 'icon-' ~ type  %}
+                    <li>
+                        <a class="btn blue" href="{{ value }}" target="_blank">Visit <i class="{{ iconClass }}"></i></a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+
+        <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" class="address">
+            <span class="hca-sprite address-icon pull-left"></span>
+            <address>
+                {{ viewData.streetAddress | raw }}, {{ viewData.mainAddress | raw}}
+            </address>
+        </div>
+    </div>    
+</div>
+

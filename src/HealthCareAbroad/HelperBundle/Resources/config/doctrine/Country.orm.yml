@@ -1,0 +1,46 @@
+HealthCareAbroad\HelperBundle\Entity\Country:
+    type: entity
+    table: countries
+    repositoryClass: HealthCareAbroad\HelperBundle\Repository\CountryRepository
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: NONE
+        name:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+            
+        ccIso:
+            type: string
+            length: 10
+            fixed: false
+            nullable: false
+            column: cc_iso
+            
+        countryCode:
+            type: string
+            length: 11
+            fixed: false
+            nullable: false
+            column: country_code
+            
+        slug:
+            type: string
+            length: 100
+            fixed: true
+            nullable: false
+        status:
+            type: smallint
+            nullable: false
+
+    oneToMany:
+        cities:
+            targetEntity: HealthCareAbroad\HelperBundle\Entity\City
+            mappedBy: country
+    lifecycleCallbacks: {  }

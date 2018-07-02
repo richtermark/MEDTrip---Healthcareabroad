@@ -1,0 +1,39 @@
+institution_ajaxRemoveAncillaryService:
+    pattern:  /institution/ajaxRemoveAncillaryService
+    defaults: { _controller: InstitutionBundle:InstitutionProperties:ajaxRemoveAncillaryService }
+    requirements:
+        institutionId: \d+
+        _method: POST
+
+institution_ajaxAddAncillaryService:
+    pattern:  /institution/ajaxAddAncillaryService
+    defaults: { _controller: InstitutionBundle:InstitutionProperties:ajaxAddAncillaryService }
+    requirements:
+        institutionId: \d+
+        _method: POST
+
+institution_ajaxAddGlobalAward:
+    pattern: /institution/awards-certificates-and-affiliations/ajaxAdd
+    defaults: { _controller: InstitutionBundle:InstitutionProperties:ajaxAddGlobalAward}
+    requirements:
+        _method: POST
+        
+institution_ajaxEditGlobalAward:
+    pattern: /institution/awards-certificates-and-affiliations/ajaxEdit
+    defaults: { _controller: InstitutionBundle:InstitutionProperties:ajaxEditGlobalAward}
+    requirements:
+        _method: POST
+        
+institution_ajaxRemoveGlobalAward:
+    pattern: /institution/awards-certificates-and-affiliations/ajaxRemove
+    defaults: { _controller: InstitutionBundle:InstitutionProperties:ajaxRemoveGlobalAward}
+    requirements:
+        _method: POST
+
+# institutionId is included in request parameters since this is an unsecured request
+institution_ajaxGlobalAwardSource:
+    pattern: /ns-institution/{institutionId}/awards-certificates-and-affiliations/search
+    defaults: { _controller: InstitutionBundle:Unsecured:ajaxGlobalAwardSource}
+    requirements:
+        institutionId: \d+
+        _method: GET

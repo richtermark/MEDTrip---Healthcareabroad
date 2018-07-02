@@ -1,0 +1,29 @@
+frontend_institution_multipleCenter_profile:
+    pattern: /hospital/{institutionSlug}
+    defaults: { _controller: FrontendBundle:Institution:profile }
+    requirements:
+        _method:  GET
+        
+frontend_institution_singleCenter_profile:
+    pattern: /clinic/{institutionSlug}
+    defaults: { _controller: FrontendBundle:Institution:profile }
+    requirements:
+        _method:  GET
+
+frontend_multiple_center_ajaxSaveInstitutionInquiry:
+    pattern: /hospital/{institutionId}/inquiry
+    defaults: {_controller: FrontendBundle:Inquiry:ajaxSaveInquiry }
+    requirements:
+        _method:  GET|POST
+
+frontend_institutionMedicaCenter_ajaxSaveImcInquiry:
+    pattern: /hospital/{institutionId}/medical-center/{imcId}/inquiry
+    defaults: {_controller: FrontendBundle:Inquiry:ajaxSaveInquiry }
+    requirements:
+        _method:  GET|POST
+        
+frontend_institutionMedicalCenter_profile:
+    pattern: /{institutionSlug}/clinic/{imcSlug}
+    defaults: { _controller: FrontendBundle:InstitutionMedicalCenter:profile }
+    requirements:
+        _method:  GET

@@ -1,0 +1,116 @@
+#--------------------------------------------------------------------------------
+# full page routes
+#
+
+institution_medicalCenter_index:
+    pattern: /listings
+    defaults: { _controller: InstitutionBundle:MedicalCenter:index }
+    requirements:
+        _method: GET
+
+institution_medicalCenter_view:
+    pattern: /listing/{imcId}
+    defaults: { _controller: InstitutionBundle:MedicalCenter:view }
+    requirements:
+        _method: GET
+        imcId: \d+
+#--------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------        
+# ajax routes
+#
+
+
+institution_medicalCenter_ajaxUpdateProfileByField:
+    pattern: /medical-center/{imcId}/ajax/update-by-field
+    defaults: { _controller: InstitutionBundle:MedicalCenter:ajaxUpdateByField }
+    requirements:
+        _method: GET|POST
+        imcId: \d+
+
+institution_medicalCenter_ajaxUpdateCoordinates:
+    pattern: /medical-center/{imcId}/ajax/update-coordinates
+    defaults: {_controller: InstitutionBundle:MedicalCenter:ajaxUpdateCoordinates }
+    requirements:
+        imcId: \d+
+        _method:  POST
+
+institution_medicalCenter_loadTabbedContents:
+    pattern: /medical-center/{imcId}/ajax/loadTabbedContents
+    defaults: { _controller: InstitutionBundle:MedicalCenter:loadTabbedContents }
+    requirements:
+        _method: GET
+        imcId: \d+
+
+institution_medicalCenter_add:
+    pattern: /medical-center/add-new
+    defaults: { _controller: InstitutionBundle:MedicalCenter:addMedicalCenter }
+    requirements:
+        _method: POST
+        
+institution_medicalCenter_addGlobalAwards:
+    pattern: /medical-center/{imcId}/awards-certificates-and-affiliations/add
+    defaults: { _controller: InstitutionBundle:MedicalCenter:addGlobalAwards, imcId: ~}
+    requirements:
+        _method: GET|POST
+        imcId: \d+
+        
+institution_load_doctor_specializations:
+    pattern: /medical-center/{imcId}/search-doctor-specializations/{doctorId}
+    defaults: {_controller: InstitutionBundle:MedicalCenter:searchMedicalSpecialistSpecialization}
+    requirements:
+        _method: GET|POST
+
+institution_medicalCenter_addDoctor:
+    pattern: /medical-center/{imcId}/add-doctor
+    defaults: { _controller: InstitutionBundle:MedicalCenter:addDoctor }
+    requirements:
+        _method: GET|POST
+        imcId: \d+
+
+institution_medicalCenter_addExistingDoctor:
+    pattern: /medical-center/{imcId}/add-existing-doctor
+    defaults: { _controller: InstitutionBundle:MedicalCenter:addExistingDoctor }
+    requirements:
+        _method: GET|POST
+        imcId: \d+
+
+institution_medicalCenter_removeDoctor:
+    pattern: /medical-center/{imcId}/remove-doctor
+    defaults: { _controller: InstitutionBundle:MedicalCenter:removeDoctor }
+    requirements:
+        _method: GET|POST
+        doctorId: \d+
+        imcId: \d+
+
+institution_medicalCenter_ajaxUpdateDoctor:
+    pattern: /medical-center/{imcId}/update-doctor/{doctorId}
+    defaults: { _controller: InstitutionBundle:MedicalCenter:ajaxUpdateDoctor }
+    requirements:
+        _method: POST
+        doctorId: \d+
+        imcId: \d+
+        
+institution_medicalCenter_ajaxAddSpecialistService:
+    pattern:  /{institutionId}/medical-center/{imcId}/ajaxAddSpecialistService
+    defaults: { _controller: InstitutionBundle:MedicalCenter:ajaxAddSpecialist }
+    requirements:
+        institutionId: \d+
+        imcId: \d+
+        _method: POST
+        
+institution_medicalCenter_ajaxRemoveSpecialistService:
+    pattern:  /{institutionId}/medical-center/{imcId}/ajaxRemoveSpecialistService
+    defaults: { _controller: InstitutionBundle:MedicalCenter:ajaxRemoveSpecialist }
+    requirements:
+        institutionId: \d+
+        imcId: \d+
+        _method: POST
+        
+institution_medicalCenter_logo_upload:
+    pattern: /medical-center/{imcId}/logo/upload/
+    defaults: { _controller: InstitutionBundle:MedicalCenter:upload }
+    requirements:
+        _method: POST
+        imcId: \d+

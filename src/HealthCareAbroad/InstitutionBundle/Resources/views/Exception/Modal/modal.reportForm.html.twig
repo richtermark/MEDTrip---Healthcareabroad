@@ -1,0 +1,28 @@
+{% embed 'InstitutionBundle:Embed:modalBox.base.html.twig' with {'modal': {'id' : 'report', 'title': 'Submit Report', 'formId': 'errorReport'}} %}
+    {% block modalBody %}
+    	<div class="alert-box"></div>   
+    <form action="{{ path('institution_page_exception_report_send') }}" method="POST" {{ form_enctype(form) }} class="basic-form" id="errorReportForm">
+        <div class="details control-group row-fluid">
+            <label for="{{ form.children.details.vars.id }}" >
+                <strong>{{ form.children.details.vars.label }}</strong>
+            </label>
+           {{ form_widget(form.details, { 'attr': {class: 'span12', cols: 30, rows: 10} })  }}
+        </div>
+		 <div class="captcha control-group row-fluid">
+		     <label for="{{ form.children.captcha.vars.id }}" >
+                <strong>{{ form.children.captcha.vars.label }}</strong>
+            </label>
+             {{ form_widget(form.captcha) }}
+        </div>
+			
+		{{ form_rest(form) }}
+	</form>
+   {% endblock %}
+   {% block modalFooter %}
+        <button class="btn" data-dismiss="modal" aria-hidden="true"> Close</button>
+        <button data-loader-text="Sending..." class="btn btn-primary" id="errorSubmit">Send Now</button>
+    {% endblock %}
+{% endembed %}
+
+
+    

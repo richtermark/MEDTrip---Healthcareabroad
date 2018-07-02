@@ -1,0 +1,14 @@
+services:
+    services.memcache:
+        class: HealthCareAbroad\MemcacheBundle\Services\MemcacheService
+        arguments: [%memcached.servers%]
+    
+    services.memcache.keyCompiler:
+        class: HealthCareAbroad\MemcacheBundle\Services\KeyCompiler
+        arguments: [%memcache_namespaces%, %memcache_keys%]
+            
+    services.memcache.keyFactory:
+        class: HealthCareAbroad\MemcacheBundle\Services\KeyFactory
+        calls:
+            - [setCompiler, [@services.memcache.keyCompiler]]
+            - [setMemcache, [@services.memcache]]

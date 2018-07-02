@@ -1,0 +1,42 @@
+{# shared between institution and institution medical center profile #}
+
+<div class="profile-widget-wrapper contact">
+    <h5>Contact Information</h5>
+    <div class="row-fluid">
+        <div class="span5">
+            <div class="media">
+                <i class="icon-map-marker icon-2x pull-left blue"></i>
+                <div class="media-body">
+                    {{ streetAddress }}, {{ mainAddress }}
+                </div>
+            </div>
+        </div>
+        <div class="span7 btn-contact-list">
+            <ul class="unstyled inline-list">
+                {% if contactNumber %}
+                <li>
+                     <a href="#" id="example1" rel="popover" class="btn blue"><i class="icon-phone"></i> Call Us</a>
+                </li>
+                {% endif %}
+                <li>
+                    <a role="button" href="#form_feedback" class="btn blue"><i class="icon-envelope-alt"></i>  Email Us</a>
+                </li>
+                {% if website %}
+                <li>
+                    <a href="{{ website }}" class="btn blue" id="visit_website" target="_blank"><i class="icon-globe"></i> Visit Website</a>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="unstyled inline-list">
+            {% for type, value in social %}
+                {% if value %}
+                    {% set iconClass = type == 'googleplus' ? 'icon-google-plus' : 'icon-' ~ type  %}
+                    <li>
+                        <a class="btn blue" href="{{ value }}" target="_blank">Visit <i class="{{ iconClass }}"></i></a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+services:
+    services.advertisement:
+        class: HealthCareAbroad\AdvertisementBundle\Services\AdvertisementService
+        arguments: [@doctrine]
+
+    services.advertisement.factory:
+        class: HealthCareAbroad\AdvertisementBundle\Services\AdvertisementFactory
+        arguments: [@service_container]
+        
+    services.advertisement.retriever:
+        class: HealthCareAbroad\AdvertisementBundle\Services\Retriever
+        calls:
+            - [setDoctrine, [@doctrine]]
+        
+    form.advertisement:
+        class: HealthCareAbroad\AdvertisementBundle\Form\AdvertisementFormType
+        arguments: [@service_container]
+        tags:
+            - {name: form.type, alias: advertisement }
+
+
+    form.advertisementType_list:
+        class: HealthCareAbroad\AdvertisementBundle\Form\ListType\AdvertisementTypeListType
+        tags:
+            - {name: form.type, alias: advertisementType_list }
+
+    form.advertisementPropertyName_list:
+        class: HealthCareAbroad\AdvertisementBundle\Form\ListType\AdvertisementPropertyNameListType
+        tags:
+            - {name: form.type, alias: advertisementPropertyName_list }
+
+    form.highlight_featured_images:
+        class: HealthCareAbroad\AdvertisementBundle\Form\HighlightFeaturedImagesFormType
+        tags:
+            - {name: form.type, alias: highlight_featured_images }
+
+    form.advertisement_highlight:
+        class: HealthCareAbroad\AdvertisementBundle\Form\HighlightFormType
+        tags:
+            - {name: form.type, alias: advertisement_highlight }
+                
+    twig.advertisement_widgets:
+        class: HealthCareAbroad\AdvertisementBundle\Twig\AdvertisementWidgetsTwigExtension
+        arguments: [@twig, @services.advertisement.retriever, @services.api.hcaBlog]
+        calls:
+            - [setSessionService, [@session]]
+            - [setMemcacheService, [@services.memcache]]
+        tags:
+            - name: twig.extension
+            
+    services.advertisement.media:
+        class: HealthCareAbroad\AdvertisementBundle\Services\AdvertisementMediaService
+        calls:
+            - [setFilesystem, [@advertisement_filesystem]] 
+            - [setEntityManager, [@doctrine.orm.entity_manager]]
+            - [setUploadDirectory, [%local_web_root%/%media_advertisement_subdir%]]

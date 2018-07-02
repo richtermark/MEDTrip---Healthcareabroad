@@ -1,0 +1,69 @@
+<header id="header">
+    <div class="container">
+        <div class="row">
+            <div class="span4">
+              <a href="{{ path('frontend_main_homepage') }}" target="_blank"><img src="{{ asset('images/institution/medtrip-logo.png') }}" alt="MedTrip Logo"></a>
+                
+            </div>
+            <div class="pull-right">
+                <div class="navbar">
+                    <script type="text/javascript">
+                    $(function() {
+                    	
+                    	var _inquiryCntrBanner = $('#inquiry_banner_cntr').find('span').html();
+                    	if(_inquiryCntrBanner == ' 0 ') {
+                    		$('#inquiry_banner_cntr').find('span').removeAttr('class').html('');
+                
+                    	    return false;
+                    	}
+                    });
+                    </script>
+                    <ul class="nav">
+                        <li>
+                            <a id="inquiry_banner_cntr" href="{{ path ('institution_inquiries')}}"><i class="icon-envelope-alt"></i>Inquiries<span class="badge badge-warning"> {{ app.request.session.get('unreadInquiriesCount') }} </span></a>
+                        </li>
+                        <!-- li>
+                            <a href="clinic-listing-all.html"><i class="icon-flag"></i>Notifications<span class="badge badge-warning"> 10 </span></a>
+                        </li-->
+                        <!-- <li>
+                            <a href="clinic-listing-all.html"><i class="icon-medkit"></i>Clinics</a>
+                        </li> -->
+                    </ul>
+                    <ul class="nav">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user"></i>{{ app.session.get('userFirstName') | title}} {{ app.session.get('userLastName') | title }}<i class="icon-caret-down"></i></a>
+                            <ul class="dropdown-menu">
+                                
+                                {% if not is_internal_admin_user(app.user) %}
+                                <li>
+                                    <a href="{{ path('institution_editAccount') }}" ><i class="icon-edit"></i> Manage Account</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('institution_editAccountEmail') }}" ><i class="icon-envelope"></i> Manage Email Address</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('institution_editAccountPassword' ) }}" ><i class="icon-lock"></i> Change Password</a>
+                                </li>
+                                {% endif %}
+                                <li class="divider">
+                                    <li class="nav-header">
+                                        Logged in as:
+                                    </li>
+                                    <li class="text">
+                                        {{ app.session.get('userEmail') }}
+                                    </li>
+                                    <li class="divider">
+                                    </li>
+                                </li>
+                                <li>
+                                    <a href="{{ path('institution_logout') }}"><i class="icon-share-alt"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+    	<!--End of container -->

@@ -1,0 +1,37 @@
+#<IfModule mod_rewrite.c>
+#    RewriteEngine On
+
+    #<IfModule mod_vhost_alias.c>
+    #    RewriteBase /
+    #</IfModule>
+
+#   RewriteCond %{REQUEST_FILENAME} !-f
+#    RewriteRule ^(.*)$ app.php [QSA,L]
+#    RewriteRule ^(.+)/$ http://%{HTTP_HOST}/$1 [R=301,L]
+#</IfModule>
+
+
+
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks
+    RewriteEngine On
+
+    # Explicitly disable rewriting for front controllers
+    RewriteRule ^webgrind/ - [L]
+    RewriteRule ^blog/ - [L]
+    RewriteRule ^app_dev.php - [L]
+    RewriteRule ^app.php - [L]
+    RewriteRule ^test/ - [L]
+
+    # rewrite index.html and index.php to /
+    RewriteRule ^index\.html$ / [NC,R=301,L]
+    RewriteRule ^index\.php$ / [NC,R=301,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    #RewriteRule ^(.+)/$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+    # Change below before deploying to production
+    RewriteRule ^(.*)$ app.php [QSA,L]
+    #RewriteRule ^(.*)$ app_dev.php [QSA,L]
+
+</IfModule>

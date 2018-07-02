@@ -1,0 +1,81 @@
+{% if featuredClinicsAds %}
+
+<div class="featured-type-wrapper">
+	{% for each in featuredClinicsAds %}
+	    {% if each.institution and each.institutionMedicalCenter %}
+	    
+	        {#-- set statistic parameters for this advertisement --#}
+	        {% set _impressionStatisticParametersAttribute = get_statistics_parameter_attribute_name() ~ '=' ~ encode_advertisement_impressions_parameters(each)  %}
+            {% set _clickThroughStatisticParametersAttribute = get_statistics_parameter_attribute_name() ~ '=' ~ encode_advertisement_clickthrough_parameters(each)  %}
+	        {#-----------------------------------------------------#}
+	        
+	        {#-- BE CAREFUL WHEN MODIFYING ELEMENTS WITH STATS TRACKERS --#}
+	        <div class="featured-item box-shadow {{ get_impression_tracker_class() }}"  {{ _impressionStatisticParametersAttribute }} >
+    		    {% set clinicUrl = get_institution_medical_center_frontend_url(each.institutionMedicalCenter) %}
+
+                {% if each.title %}    
+                <div class="title-ads">
+                    <h4 class="title">
+                        <a href="{{ clinicUrl }}" class="{{ get_clickthrough_tracker_class() }}" {{ _clickThroughStatisticParametersAttribute }} > {{ each.title }} </a>
+                    </h4>
+                </div>
+                {% endif %}
+
+    			<div class="content row">
+    				<div class="clinic-box">
+    					<a href="{{ clinicUrl }}" class="small-logo-wrapper {{ get_clickthrough_tracker_class() }}" {{ _clickThroughStatisticParametersAttribute }} >
+    					    {{ render_institution_medical_center_logo(each.institutionMedicalCenter, {context: 4, attr: {class: 'small', alt: 'clinic logo'}}) | raw }}       				    
+    					</a>
+    
+    					<!-- User Ratings Temporarily Commented -->
+                        {# include 'FrontendBundle:Widgets:ratings.html.twig' #}
+    
+                        <strong>{{ institution_address_to_string(each.institution, ['city', 'country']) }}</strong>
+    				</div>
+    				<div class="description-box">
+			            
+			                <h3 class="heading">
+                                <a href="{{ get_institution_frontend_url(each.institution) }}">{{ each.institution.name }}</a>
+                            </h3>
+    					
+    					<p>{{ each.description | raw }}</p>
+    				</div>
+
+                    {% if each.media %}
+                        <div class="thumbnail-frame pull-right">
+                            {% set thumbnailSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::ADS_FEATURED_IMAGE') %}
+                            <img src="{{ advertisement_media_src(each.media, thumbnailSize) }}" class="img-polaroid" alt="">
+                        </div>
+                    {% endif %}
+
+					<a href="{{ clinicUrl }}" class="btn blue {{ get_clickthrough_tracker_class() }} pull-right" {{ _clickThroughStatisticParametersAttribute }}> 
+					    <span class="white-icon-search"></span> Learn More 
+				    </a>
+
+    			</div>
+     			<div class="ad-highlights-wrapper row-fluid">
+                    {% set clinicHighlights = json_decode(each.highlights) %}    
+                    {% set iconSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::MINI') %}
+                    {% for clinicHighlight in clinicHighlights %}
+                        <div class="item-wrapper span6">
+                            {% if clinicHighlight.icon %}
+                                {% set imageSrc = clinicHighlight.icon.src_thumbnail is defined ? clinicHighlight.icon.src_thumbnail : advertisement_media_src(clinicHighlight.icon, iconSize) %}
+                                <img class="img-circle pull-left" src="{{ imageSrc }}" alt="logo" width="50"/>
+                            {% else %}
+                                <span class="{{ ad_highlight_placeholder_class(clinicHighlight.type) }} img-circle pull-left default"></span>
+                            {% endif %}
+
+                            {% if clinicHighlight.header %}
+                                <h5>{{ clinicHighlight.header }}</h5>
+                            {% endif %}
+                            <span class="title">{{ clinicHighlight.label }}</span>
+                        </div>
+                    {% endfor %}
+    		    </div>
+            </div><!--End of featured_item 1-->
+	    {% endif %}
+		
+    {% endfor %}
+</div><!--End of featured_wrapper-->
+
+{% endif %}

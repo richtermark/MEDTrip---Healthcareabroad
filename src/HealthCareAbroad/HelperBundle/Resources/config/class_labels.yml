@@ -1,0 +1,51 @@
+parameters:
+    #-- TODO: find way to optimize this
+    # class_keys are short cut keys to class labels and will be used when called from Twig templates
+    # Sample:
+    #    {{ getLabels('institution_medical_center') }}
+    class_keys:
+        institution: HealthCareAbroad\InstitutionBundle\Entity\Institution
+        institution_medical_center: HealthCareAbroad\InstitutionBundle\Entity\InstitutionMedicalCenter
+        institution_specialization: HealthCareAbroad\InstitutionBundle\Entity\InstitutionSpecialization
+        institution_property: HealthCareAbroad\InstitutionBundle\Entity\InstitutionProperty
+        institution_medical_center_property: HealthCareAbroad\InstitutionBundle\Entity\InstitutionMedicalCenterProperty
+        media: HealthCareAbroad\MediaBundle\Entity\Media
+        contact_detail: HealthCareAbroad\HelperBundle\Entity\ContactDetail
+        business_hour: HealthCareAbroad\InstitutionBundle\Entity\BusinessHour
+
+    #-- 
+    # translation of class key to displayed labels in Twig templates
+    class_labels:
+        specialization: {singular: "specialization", plural: "specializations"}
+        sub_specialization: {singular: "sub specialization", plural: "sub specializations"}
+        treatment: {singular: "treatment", plural: "treatments"}
+        contact_detail: {singular: "contact detail", plural: "contact details"}
+        business_hour: {singular: "business hour", plural: "business hours"}
+        institution: {singular: "institution", plural: "institutions" }
+        institution_medical_center: {singular: "clinic", plural: "clinics"}
+        institution_specialization: {singular: "specialization", plural: "specializations"}
+        institution_property: {singular: "global award / ancillary service", plural: "global awards / ancillary services"}
+        institution_medical_center_property: {singular: "global award / ancillary service of clinic", plural: "global awards / ancillary services of clinic"}
+        media: {singular: "image / video", plural: "images / videos"}
+        country: {singular: "country", plural: "countries"}
+        state: {singular: "state", plural: "states"}
+        city: {singular: "city", plural: "cities"}
+        helper_text: {singular: "helper text", plural: "helper text"}
+        doctor: {singular: "doctor", plural: "doctors"}
+        awardingBody: {singular: "awarding body", plural: "awarding bodies"}
+        global_award: {singular: "award, certificate or affiliation", plural: "awards, certificates or affiliations"}
+        ancilliary_service: {singular: "ancillary service", plural: "ancillary services"}
+        language: {singular: "language", plural: "languages"}
+        advertisement: {singular: "advertisement", plural: "advertisements"}
+        inquiry: {singular: "inquiry", plural: "inquiries"}
+        user: {singular: "user", plural: "users"}
+        user_type: {singular: "user type", plural: "user types"}
+        user_role: {singular: "user role", plural: "user roles"}
+        admin_setting: {singular: "admin setting", plural: "admin settings"}
+        user_permission: {singular: "user permission", plural: "user permissions"}
+        institution_detail: {singular: "instiution detail", plural: "instiution details"}
+        medical_provider_group: {singular: "medical provider group", plural: "medical providers group"}
+        clinic: {singular: "clinic", plural: "clinics"}
+        term: {singular: "related search word", plural: "related search words"}
+        feedback: {singular: "feedback", plural: "feedbacks"}
+        errorReport: {singular: "error report", plural: "errror reports"}        

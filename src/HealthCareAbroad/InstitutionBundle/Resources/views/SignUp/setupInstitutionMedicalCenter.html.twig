@@ -1,0 +1,201 @@
+{% extends 'InstitutionBundle::registration.layout.html.twig' %}
+{% set disableMainNavigation = true %}
+{% set setUpProfile = true %}
+
+{% block content %}
+<div class="row">
+    <div class="span12 confirm-msg">
+         {% if app.session.flashbag.get('callout') %}
+            <div class="alert alert-info"><h4>Congratulations,
+                <b> {{ institution.name | title }} </b>
+                <span>has been added to</span> {{ site_name }}.</h4> 
+                <p>Next, please add your first clinic profile. You will be able to add all of your clinics at your convenience in future steps.</p>
+            </div>
+        {% endif %}
+    </div>
+    <h1>Add New Clinic</h1>
+
+    <div class="span8">
+        <form id="clinicForm" action="{{ path('institution_signup_setup_institutionMedicalCenter', {imcId: institutionMedicalCenter.id} ) }}" method="post" novalidate>
+    
+           {% if error_message %}
+                <div class="alert alert-error">
+                    {{ error_message }}
+                </div>
+            {% endif %}
+            
+            <section class="section institution-info">
+                <h2>Basic Information<br><small>Basic information about the clinic you are adding.</small></h2>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="control-group {{ (form.name.vars.valid ? '' : 'error') }}">
+                            <label for="institution-name">Name of the Clinic</label>
+                            {{ form_widget(form.name, { 'attr': {'class': 'span12 tooltip-wrap2', placeholder: 'e.g The Cardiology Center at Sacred Heart Hospital'} }) }}
+                            {{ form_errors(form.name)}}
+                            <div class="tooltip-content2">
+                                This is the name that will show up in search results. Make sure it's descriptive
+                                enough to set you apart! If your clinic's name is simply the department
+                                in a hospital add the hospital to the end of the name. For example, 'The
+                                Cardiology Center at Sacred Heart Hospital'.
+                            </div>
+                        </div>
+                        <div class="control-group {{ (form.description.vars.valid ? '' : 'error') }}">
+                            <label for="description">Description <small>(Optional)</small></label>
+                            {{ form_widget(form.description, { 'attr': {'class': 'span12 tooltip-wrap2 tinymce'} }) }}
+                            <div class="tooltip-content2 hca-textarea">
+                                All the information about your clinic that a visitor may want to know.
+                                The history, the capacity, the capabilities and technologies. This is your
+                                chance to set your clinic apart. DO NOT include any emails, URLs, or contact
+                                information.
+                            </div>
+                            <div class="description"><small>you can edit / add Description later</small></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section address-info">
+                <h2>Clinic Address<br><small>Complete address of the clinic that you are adding.</small></h2>
+                <div class="row-fluid tooltip-wrap" >
+                    <div class="span12">
+                        <div class="tooltip-content">
+                            <i class="icon-map-marker icon-2x pull-left">
+                            </i>
+                            Providing your complete address helps us push you to the right searches,
+                            and helps patients plan their travel better.
+                        </div>
+                    
+                        <div class="control-group">
+                            <input type="radio" name="isSameAddress" value="1" onclick="InstitutionMedicalCenter.toggleAddress($(this));" data-toggle="#sameAddress" id="addressType-sameAdress" class="pull-left" checked>
+                            <label for="addressType-sameAdress">Same Address</label>
+                            <div id="sameAddress">
+                                <p>{{ institution_address_to_string(institution) }}</p>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="control-group">
+                            <input type="radio" name="isSameAddress" value ="0" id="addressType-newAddress" class="pull-left"  onclick="InstitutionMedicalCenter.toggleAddress($(this));" data-toggle="#newAddress" >
+                            <label for="addressType-newAddress">Different Address</label>
+                        </div>
+                        <div id="newAddress" style="display:none;">
+                            {{ form_widget(form.address, { attr: {class: 'addressFields span12'} } )}}
+                        <div class="row-fluid terms">
+                            <div class="control-group span6">
+                                <label for="Country">Country</label>
+                                {{ form_widget(form.country, { attr: {class: 'addressFields span12'} } )}}
+                            </div>
+                           <div class="control-group span6">
+                                <label>City</label>
+                                {{ form_widget(form.city, { attr: {class: 'addressFields span12'} } )}}
+                            </div>
+                        </div>
+                        <div class="row-fluid terms">    
+                            <div class="control-group span6">
+                                <label>State / Province</label>
+                                {{ form_widget(form.state, { attr: {class: 'addressFields span12'} } )}}
+                            </div>
+                          
+                            <div class="control-group span6">
+                                <label for="zip">Zip / Postal Code </label>
+                                {{ form_widget(form.zipCode, { attr: {class: 'span6 addressFields'} } )}}
+                            </div>
+                        </div>
+                            <div class="control-group">
+                                <label for="Helpful hint">Helpful hint for getting there?</label>
+                                {{ form_widget(form.addressHint, { attr: {class: 'span12 tooltip-wrap2'} } )}}
+                                <div class="tooltip-content2">
+                                   If there are any instructions that will help someone find you that aren't included in the address put them here. 
+                                   This could be something like, 'On the 2nd floor', or 'Next door to the gas station', whatever will make it easy for patients to find you!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section contact-info">
+                <h2>Clinic Contact Details<br><small>This is your clinic's contact details. Please be as detailed as possible.</small></h2>
+                <div class="row-fluid tooltip-wrap" >
+                    <div class="span12">
+                        <div class="tooltip-content">
+                            <i class="icon-lightbulb icon-2x pull-left">
+                            </i>
+                            This is how we will contact you to let you know about potential leads.
+                            Please provide the correct phone numbers and email addresses to make sure
+                            you don't miss any inquiries that may come through HealthcareAbroad.
+                        </div>
+                        <div class="control-group website">
+                            {{ form_label(form.websites) }}
+                            {{ form_widget(form.websites, {attr: {class: 'span12'} })}}
+                        </div>
+                        <div class="row-fluid terms">
+                            <div class="contactEmail control-group span12 {{ (form.contactEmail.vars.valid ? '' : 'error') }}">
+                                <label for="Phone Number">Clinic Email Address</label>
+                                {{ form_widget(form.contactEmail, { 'attr': {'class': 'span8'} }) }}
+                                {{ form_errors(form.contactEmail) }}
+                            </div>
+                        </div>
+                        
+                        <div class="row-fluid terms">
+                            {% for _widget in form.contactDetails %}
+                                {{ form_widget(_widget) }}
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="section socialmedia-info">
+                <h2>Website and Social Media<small>(Optional)</small></h2>
+                <div class="row-fluid">
+                    {{ form_widget(form.socialMediaSites) }}
+                </div>
+            </section>
+
+            <section class="section clinic-schedule">
+                {% include 'InstitutionBundle:SignUp/Widgets:section.imc_businesshours.html.twig' %}
+            </section>
+             {{ form_widget(form.coordinates)}}
+            {{ form_widget(form._token) }}
+
+            <section class="section footer">
+                <div class="row-fluid terms">
+                    <div class="span12">
+                        <button class="btn pull-right btn-primary btn-large" type="submit">
+                            Continue to Adding Specializations
+                        </button>
+                        
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+
+    <aside class="span4">
+        {{ render_signup_steps_by_route(app.request.attributes.get('_route'), false) | raw}}
+    </aside>
+
+</div>
+
+{% endblock %}
+
+
+{% block inlineJavascriptCode %}
+
+<script  type="text/javascript" src="{{ asset('bundles/helper/js/Location.js') }}"></script>
+<script src="{{ asset('js/jquery/globalize.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery.ui.mask.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/institution/js/institutionMedicalCenter.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('bundles/helper/js/Flag.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('bundles/helper/js/fancy_business_hours.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap-timepicker.min.js') }}"></script>
+
+<script type="text/javascript">
+$(function(){
+	$('input[name=isSameAddress]:checked').click();
+});
+</script>
+
+{% endblock %}

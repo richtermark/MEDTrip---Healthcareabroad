@@ -1,0 +1,48 @@
+HealthCareAbroad\MediaBundle\Entity\Gallery:
+    type: entity
+    table: gallery
+    repositoryClass: HealthCareAbroad\MediaBundle\Repository\GalleryRepository
+    gedmo:
+        loggable:
+            logEntryClass: HealthCareAbroad\LogBundle\Entity\VersionEntry
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        dateCreated:
+            type: datetime
+            nullable: false
+            column: date_created
+    manyToMany:
+        media:
+            gedmo:
+                - versioned
+            targetEntity: HealthCareAbroad\MediaBundle\Entity\Media 
+            cascade:
+                - "persist"
+                - "remove"
+            inversedBy: gallery
+            joinTable:
+                name: gallery_media
+                joinColumns:
+                    gallery_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    media_id:
+                        referencedColumnName: id
+    oneToOne:
+        institution:
+            gedmo:
+                - versioned
+            targetEntity: HealthCareAbroad\InstitutionBundle\Entity\Institution
+            inversedBy: null
+            joinColumns:
+                institution_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+
+    lifecycleCallbacks: {  }

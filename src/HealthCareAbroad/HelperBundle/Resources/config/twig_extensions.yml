@@ -1,0 +1,108 @@
+services:
+    services.miscellaneous.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\MiscellaneousTwigExtension
+        calls:
+            - [setClassLabels, [%class_labels%]]
+            - [setClassKeys, [%class_keys%]]
+        public: true
+        tags:
+            - { name: twig.extension }
+
+    services.treatments.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\TreatmentsTwigExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+            
+    services.timeAgo.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\TimeAgoTwigExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    services.helpetext.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\HelpTextTwigExtension
+        arguments: [@doctrine]
+        public: false
+        tags:
+            - { name: twig.extension }
+            
+    services.convert_json_text.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\AddressTextTwigExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+    
+    services.flagList.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\FlagTwigExtension
+        arguments: [@services.location]
+        calls: 
+            - [setTwig, [@twig]]
+        public: false
+        tags:
+            - { name: twig.extension }
+            
+    services.institutionProperties.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\InstitutionPropertiesTwigExtension
+        arguments: [@services.institution_property]
+        calls: 
+            - [setTwig, [@twig]]
+        public: false
+        tags:
+            - { name: twig.extension }
+            
+    services.medicalCenterProperties.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\InstitutionMedicalCenterPropertiesTwigExtension
+        arguments: [@services.institution_medical_center_property]
+        calls: 
+            - [setTwig, [@twig]]
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    services.institutionTypeText.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\InstitutionTypeTwigExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+            
+    services.institution.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\InstitutionTwigExtension
+        public: false
+        calls:
+            - [setInstitutionService, [@services.institution]]
+            - [setInstitutionMedicalCenterService, [@services.institution_medical_center]]
+            - [setMediaExtension, [@services.media.twig.extension]]
+            - [setInstitutionGalleryService, [@services.institution.gallery]]
+            - [setImagePlaceHolders, [%imageplaceholder%]]
+        tags:
+            - { name: twig.extension }
+
+    services.institutionMedicalCenter.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\InstitutionMedicalCenterTwigExtension
+        public: true
+        calls:
+            - [setInstitutionMedicalCenterService, [@services.institution_medical_center]]
+            - [setMediaExtension, [@services.media.twig.extension]]
+            - [setImagePlaceHolders, [%imageplaceholder%]]
+        tags:
+            - { name: twig.extension }
+
+    services.inline_javascript.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\InlineJavascriptTwigExtension
+        public: false
+        calls:
+            - [setTwig, [@twig]]
+        tags:
+            - { name: twig.extension }
+
+    services.url_generator.twig.extension:
+        class: HealthCareAbroad\HelperBundle\Twig\UrlGeneratorTwigExtension
+        public: false
+        calls:
+            - [setSession, [@session]]
+            - [setChromediaApiUrl, [%chromedia_api_uri%]]
+            - [setChromediaAccountUrl, [%chromedia_accounts_uri%]]
+        arguments: [@router]
+        tags:
+            - { name: twig.extension }

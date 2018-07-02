@@ -1,0 +1,321 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+{% set selectedTab = 'advertisements' %}
+{% set selectedSubTab = '' %}
+{% set selectedStep = selectedStep is defined ? selectedStep : 'step1' %}
+{% set nextButtonLabel = nextButtonLabel is defined ? nextButtonLabel: 'Next' %}
+{% set advertisementsLabel = getClassLabel('advertisement') %}
+
+{% block content %}
+
+    <style type="text/css">
+        
+        .tmp-form input[type=checkbox] {
+            margin-top: 4px;
+            float: left;
+        }
+        
+        .tmp-form > div > label {
+            font-weight: bold;
+        }
+        
+        .tmp-form > div > div {
+            /*margin-left: 20px; */
+        }
+
+        .tmp-form .default-properties label {
+            display: inline-block;
+        }
+
+        #advertisement_dateExpiry > select {
+            width: 65px;
+        }
+
+        #advertisement_dateExpiry > select:first-child {
+            width: 80px;
+        }
+        
+        .tmp-form > div {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .tmp-form > .highlights {
+            width: 1020px;
+        }
+
+        .tmp-form > .highlights > a{
+            position: absolute; 
+            right: 0; 
+            top: 53px;
+        }
+
+        .tmp-form > .highlights > div {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .tmp-form > .highlights > div > a{  
+            top: 30px;
+            right: 27px;
+            position: absolute;
+        }
+        
+        .tmp-form > .highlights > div > div {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 10px;
+        }
+        
+        .tmp-form > .highlights > div > div select {
+            width: 120px;
+        }
+        
+    </style>
+
+	<div id="main-content">
+
+	{% embed 'HelperBundle:Widgets:section.html.twig' with { 
+                title: ( 'Add ' ) ~ advertisementsLabel.singular | title  ~ ' - Step ' ~ step,
+                actions: [{link: path('admin_advertisement_index'), label: 'View all '~ advertisementsLabel.plural | title, 'icon' : 'icon-list' }]
+            }
+        %}
+
+	{% block sectionContent %}
+			
+			    <!--  start table-content  -->
+                <div id="table-content" style="width:70%">
+
+    				<!-- start form -->
+    				<form novalidate="novalidate" action="{{ formAction }}" enctype="multipart/form-data" method="post" {{ form_enctype(form) }} class="tmp-form">
+                        {% if step == 1 %}    
+
+        				    {{ form_row(form.institution) }}
+        				
+        				    {{ form_row(form.advertisementType) }}
+        				    
+        				    <button type="button" class="btn btn-primary" id="next-btn">Next</button>
+
+    				    {% else %}
+
+    				        {{ form_row(form.institution) }}
+        				
+        				    {{ form_row(form.advertisementType) }}
+
+        				    {{ form_row(form.title) }}
+        				    
+        				    {{ form_row(form.description) }}
+    
+        				    {% for propertyValue in form.advertisementPropertyValues %}
+        				    
+                                {{ form_row(propertyValue.advertisementPropertyName) }}
+        				    
+                                {% set valueObj = propertyValue.get('value') %}
+    
+        				        {% if ((valueObj.advertisementPropertyName.name == 'highlight_featured_images')) and valueObj.value|length %}
+        				            <div class="custom-property-values">
+                                        {{ form_label(propertyValue.value) }}
+            				            {% for adValueId, media in valueObj.value %} 
+
+            				                {% if valueObj.advertisementPropertyName.name == 'highlight_featured_images' %}
+                                                {% if media %}
+                        				            <div>
+                        				                {{ form_row(propertyValue.value.children['image' ~ loop.index0], {attr: {style: 'display:none;'}} ) }}
+
+                        				                <img src=" {{ advertisement_media_src(media) }}">
+
+                        				                <a href="{{ path('admin_advertisement_ajaxDeleteImage', {advertisementPropertyValueId: adValueId}) }}" class="remove-image">remove</a>
+                        				            </div>
+                                                {% else  %}
+                                                    {{ form_row(propertyValue.value.children[adValueId]) }}
+                                                {% endif %}    				                    
+    
+            				                {% else %}
+                    				            <div style="position:absolute; left:450px;">
+                    				                {# media(media, form.get('data'), 'default', {thumbnail: true, width: 100}) | raw #}
+                    				                <img src="{{ advertisement_media_src(media) }}" width="100">
+                    				                <!-- a href="{{ path('admin_advertisement_ajaxDeleteImage', {advertisementPropertyValueId: valueObj.id}) }}" class="remove-image">remove</a-->
+                    				            </div>
+                                                {{ form_widget(propertyValue.value) }}
+            				                {% endif %}
+            				            {% else %}
+            				                {{ form_widget(propertyValue.value) }}
+            				            {% endfor %}
+                                    </div>
+                                {% elseif valueObj.advertisementPropertyName.name == 'media_id' %}
+        				            <div class="custom-property-values">
+                                        {{ form_label(propertyValue.value) }}
+    
+                                        {% if propertyValue.value.get('data') and propertyValue.value.get('data').id %}
+                                            {{ form_widget(propertyValue.value, {attr: {style: 'display:none;'}}) }}
+                                            {# media(propertyValue.value.get('data'), form.get('data'), 'default', {thumbnail: true, width: 100}) | raw #}
+                                            <img src="{{ advertisement_media_src(propertyValue.value.get('data')) }}" width="100">
+                                            <a href="{{ path('admin_advertisement_ajaxDeleteImage', {advertisementPropertyValueId: valueObj.id}) }}" class="remove-image">remove</a>
+                                        {% else %}
+                                            {{ form_widget(propertyValue.value) }}
+                                        {% endif %}
+                                    </div>
+        				        {% elseif valueObj.advertisementPropertyName.name == 'highlights' %}
+                                    <div class="custom-property-values highlights">
+                                        {{ form_label(propertyValue.value) }}
+                                        {% for highlightIndex, highlight in propertyValue.value %}
+                                            <div id="{{ highlight.get('id') }}">
+                                            {% for property in highlight.children %}
+                                                {% if property.get('name') == 'icon' and property.get('data') and (property.get('data').id is defined) %}
+                                                    <div>
+                                                        {{ form_label(property) }}
+                                                        {{ form_widget(property, {attr:{style:'display:none'}}) }}
+                                                        {# media(property.get('data'), form.get('data'), 'default', {thumbnail: true, width: 80}) | raw #}
+                                                        <img src="{{ advertisement_media_src(property.get('data')) }}" width="80">
+                                                        
+                    				                    <a href="{{ path('admin_advertisement_ajaxDeleteImage', {advertisementPropertyValueId: valueObj.id, mediaId: property.get('data').id, index: highlightIndex}) }}" class="remove-image">remove</a>
+                                                    </div>
+                                                {% else %}
+                                                    {{ form_row(property) }}
+                                                {% endif %}
+                                            {% endfor %}
+    
+                                            {% if loop.index > 1 %}
+                                                <a href="javascript:void(0)" class="remove-highlight">[ - remove highlight ]</a>
+                                            {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                        <a href="javascript:void(0)" class="add-highlight">[ + add another highlight ]</a>
+                                    </div>
+        				        {% else %}
+                                    <div class="custom-property-values">
+            				            {{ form_label(propertyValue.value) }}
+                				        {{ form_widget(propertyValue.value) }}
+        				            </div>
+        				        {% endif %}
+        				        
+        				    {% else %}
+        				        <div style="display:none">{{ form_row(form.advertisementPropertyValues) }}</div>    
+        				    {% endfor %}
+        				    
+        				    {{ form_row(form.dateExpiry) }}
+        				
+        					{{ form_rest(form) }}
+
+        				    <input type="submit" value="Submit" class="btn btn-large btn-primary" name="submit"/>
+    				    {% endif %}
+    				</form>
+                </div>
+				
+          {% endblock %}
+        {% endembed %}
+    </div>
+
+<script type="text/javascript">
+    $(function(){
+        var cityElem = $('.city-dropdown:first');
+        console.log(cityElem.val());
+        $('.country_dropdown').change(function(){
+            var params = {
+                countryId: $(this).val(),
+                loadNonGlobalCities: 1
+            };
+            var selectedCity = cityElem.val();
+            $('.city-dropdown:first').prop('disabled', true).html('<option>loading cities...</option>');
+            $.getJSON("{{ path('helper_loadCities') }}", params, function(response){
+                var options = '';
+                $.each(response.data, function(i, city){
+                    options += '<option value="'+city.id+'"'+ (city.id == selectedCity ? ' selected="selected"' : '') +'>' + city.name + '</option>';
+                });
+                $('.city-dropdown:first').prop('disabled', false).html(options);
+            });
+        }).change();
+
+        {% if isEditMode is defined and isEditMode %}
+            $('#advertisement_institution, #advertisement_advertisementType').mousedown(function(e){
+                e.preventDefault();
+            }).attr('readonly', true);
+        {% endif %}
+
+    	{% if step == 2 %}  
+            $('#advertisement_institution, #advertisement_advertisementType').change(function(){
+                var institutionId = $('#advertisement_institution').val();
+                var advertisementTypeId = $('#advertisement_advertisementType').val();
+                if(institutionId != '' && advertisementTypeId != '') {
+                    window.location = "{{ path('admin_advertisement_addStep2') }}?institutionId="+institutionId+"&advertisementTypeId="+advertisementTypeId;
+                }
+            }); 
+        {% endif %}
+
+        $('#next-btn').click(function(){
+            var institutionId = $('#advertisement_institution').val();
+            var advertisementTypeId = $('#advertisement_advertisementType').val();
+            if(institutionId != '' && advertisementTypeId != '') {
+                window.location = "{{ path('admin_advertisement_addStep2') }}?institutionId="+institutionId+"&advertisementTypeId="+advertisementTypeId;
+            }
+        }); 
+
+        $('.remove-image').click(function(){
+            var inputElem = $(this).parent().find('input:file');
+            var imgElem = $(this).parent().find('img');
+            var url = $(this).attr('href');
+            $(this).html('removing image...');
+            $.post(url, function(result){
+                if(result) {
+                	imgElem.next().fadeOut(500);
+                    imgElem.fadeOut(300, function(){inputElem.show();});
+                } else {
+                	$(this).html('remove');
+                }
+
+            }, 'json');
+
+            return false;
+        });
+
+        $('.highlights a.add-highlight').click(function() {
+            var newHighlight = $('.highlights > div:first').clone().hide();
+            var highlightCount = parseInt($('.highlights > div:last').attr('id').split('_').pop()) + 1;
+
+            if(!newHighlight.find('a.remove-highlight').length) {
+            	newHighlight.append('<a href="javascript:void(0)" class="remove-highlight">[ - remove highlight ]</a>');
+            }
+
+            var hightlightId = newHighlight.attr('id');
+            var arrId = hightlightId.split('_');
+            arrId[arrId.length - 1] = highlightCount;
+            var newhighlightId = arrId.join('_');
+            
+            var regex = new RegExp(hightlightId, "gi");
+            var newHighlightContent = newHighlight.html().replace(regex, newhighlightId).replace(/\[value\]\[0\]/gi, '[value][' + highlightCount + ']');
+
+            newHighlight.attr('id', newhighlightId).html(newHighlightContent);
+            newHighlight.find('div > img, div > a.remove-image').remove();
+            newHighlight.find('div > input').val('').show();
+            newHighlight.find('a.remove-highlight').click(function(){
+                $(this).parent().fadeOut(function(){$(this).remove()});
+            });
+
+            $(newHighlight).insertBefore($(this));
+            newHighlight.fadeIn();
+        });
+
+        $('.highlights > div > a.remove-highlight').click(function(){
+            $(this).parent().fadeOut(function(){$(this).remove()});
+        });
+
+
+        // TODO - Temporary Sort Institution
+        $('#advertisement_institution').each(function() {
+            // Keep track of the selected option.
+           var selectedValue = $(this).val();
+
+           // sort it out
+           $(this).html($("option", $(this)).sort(function(a, b) {
+               var aVal = $(a).html();
+               var bVal = $(b).html();
+               return aVal == bVal ? 0 : aVal < bVal ? -1 : 1 
+           }));
+
+           // Select one option.
+           $(this).val(selectedValue);
+        });
+    });
+</script>
+{% endblock %}
+
+

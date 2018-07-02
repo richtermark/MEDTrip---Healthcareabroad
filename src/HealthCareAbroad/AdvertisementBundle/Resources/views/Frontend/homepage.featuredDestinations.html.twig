@@ -1,0 +1,28 @@
+{% if featuredDestinationsAds|length %}
+
+    <div class="widget-wrapper wide">
+        <h3 class="widget-heading">Destinations</h3>
+    	<div class="widget-content-wrapper destination-carousel">
+    		<div class="tooltip bottom in">
+    			...
+    		</div>
+    		<div id="carousel-inner">
+    		    {% for each in featuredDestinationsAds %}
+    			<div class="thumb span2">
+    				<a href="{{ get_country_url(each.country) }}" class="tip" data-original-title="{{ each.title }}">
+    			        {% if each.media %}
+    			            <img src="{{ advertisement_media_src(each.media, constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::ADS_FEATURED_IMAGE')) }}" class="img-polaroid">
+    				    {% else %}
+    				        <img class="img-polaroid" src="{{ imageplaceholder.destinationIcon }}" alt="featured_pic" />
+    				    {% endif %}
+    				</a>
+    				<h6>{{ each.country.name }}</h6>
+    			</div>
+    			{% endfor %}
+    		</div>
+    		<a class="carousel-control prev" id="carousel_prev" href="#">&nbsp;</a>
+    		<a class="carousel-control next" id="carousel_next" href="#">&nbsp;</a>
+    	</div>
+    </div><!--End of travel_section_wrapper-->
+
+{% endif %}

@@ -1,0 +1,91 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+{% set selectedTab = 'manageHcaData' %}
+{% set selectedSubTab = 'manage_language' %}
+{% set languageLabel = getClassLabel('language') %}
+
+{% block content %}
+    <div class="span3">
+    {% include 'AdminBundle:Widgets:subMenu.manageHcaData.html.twig'%}
+    </div>
+    
+    <div id="content" class="span9">
+
+           {% embed 'HelperBundle:Widgets:section.html.twig' 
+            with { 
+                title: languageLabel.plural | title,
+                actions: [{link: path('admin_language_add'), label: 'Add '~ languageLabel.singular | title, 'icon' : 'icon-ok','class' : 'add-edit-language' }] 
+            }  
+        %}
+            {% block sectionContent %}
+    
+            {% autoescape false %} {{ listFilters is defined ? listFilters : '' }} {% endautoescape %}
+            {% set sortBy = app.request.get('sortBy') %}
+            {% set sortOrder = app.request.get('sortOrder') %}
+            {% set default = sortBy | length ? '' : 'sort-asc' %}
+             
+             <table id="language-list" class="table table-bordered sortable-list">
+                        <tr>         	 
+                            <th id="column-name"><a href="">Name</a></th>
+                         <th id="column-name"><a href="">Iso Code</a></th>
+                           <th width="15%">Actions</th>
+                        </tr>
+				     {% for each in Language %}
+                        <tr>
+                            <td>{{ each.name }}</td>
+                            <td>{{ each.isoCode }}</td>
+                            <td>
+                                <ul class="table-action">
+                                    <li><a href="{{ path('admin_language_edit', { id:each.id } ) }}" class="add-edit-language"> <i class="icon-edit"></i> Edit</a></li>
+                                    <li>
+                                        {% set status = each.status ? {label: 'Deactivate', icon: 'icon-remove'} : {label: 'Activate', icon: 'icon-ok'} %}
+                                        <a href="{{ path('admin_language_updateStatus', {id: each.id} ) }}" title="" class="update-status">
+                                            <i class="{{ status.icon }}"></i> <span>{{ status.label }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+            </table>
+       {% endblock %}
+    {% endembed %}
+</div>
+    
+{% endblock %}
+
+{% block inlineJavascriptCode %}
+   
+    <script type="text/javascript">
+        $(function(){
+        	$('#dialog-container').dialog({
+                position: ['center', 100],
+                autoOpen: false,
+                width: 750,
+                modal: true,
+                resizable: false,
+                close: function() {}
+            });
+
+            $('a.add-edit-language').click(function(){
+            	var elem = $(this);
+				var _url = elem.attr('href');
+
+				$("#dialog-container").empty();
+				$('#dialog-container').dialog('option','title', (elem.hasClass("edit") ? 'Edit' : 'Add') + ' Language Type');
+                $('#dialog-container').dialog({
+                    open: function() {
+                        $.ajax(_url)
+                            .done(function (data) {                        
+                            	$('#dialog-container').html(data);
+                            }
+                        );
+                    },
+                });
+
+            	$('#dialog-container').dialog("open");
+
+                 	return false;           
+            });
+        });
+    </script>
+{% endblock %}

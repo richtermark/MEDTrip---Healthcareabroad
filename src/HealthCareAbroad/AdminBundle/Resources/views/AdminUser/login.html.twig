@@ -1,0 +1,48 @@
+{% extends '::base.admin.html.twig' %}
+
+{% block title %}
+{{ parent() }} &raquo; Admin Login
+{% endblock %}
+
+{% block body %}
+<body>
+    <div class="container">
+        <div class="signupbox span3">
+            <form action="{{ path('admin_login_check') }}" method="POST" class="">
+
+                {% if error %}
+                    <div class="alert alert-error">
+                        {{ error.message }}
+                    </div>
+                {% endif %}
+
+                <div class="control-group">
+                    <label for="inputEmail" class="control-label">Email</label>
+                    <div class="controls">
+                        <input type="text" id="inputEmail" name="_username" value="{{ last_username }}" class="input-large">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label for="inputPassword" class="control-label">Password</label>
+                    <div class="controls">
+                        <input type="password" id="inputPassword" name="_password" class="input-large">
+                    </div>
+                </div>
+                
+
+                <div class="controls">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Login"/>
+                </div>
+                <div class="controls">
+                    <a href="">Forgot Password?</a>
+                </div>
+                
+            </form>
+    
+
+        </div>
+    </div>
+    <!-- End: login-holder -->
+</body>
+{% endblock %}

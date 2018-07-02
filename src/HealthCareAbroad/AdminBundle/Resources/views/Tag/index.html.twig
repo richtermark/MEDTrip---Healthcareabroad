@@ -1,0 +1,45 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+
+{% block content %}
+
+	<div id="content">
+
+		<div id="page-heading"><h3>List of Tags</h3></div>
+
+		{% embed '::contentWrapper.admin.html.twig' %}
+			{% block wrappedContent %}
+				
+				{% include '::notice.admin.html.twig' %}
+
+				<table class="generic-table mid-size">
+				<tr>
+					<th class="table-header-repeat line-left minwidth-1"><a href="">Name</a></th>
+					<th class="table-header-repeat line-left"><a href="">Type</a></th>
+					<th class="table-header-options actions line-left"><a href="">Action</a></th>
+				</tr>
+
+				{% for tag in tags %}
+					<tr class="{{ cycle(['alternate-row', ''], loop.index) }}">
+						<td>{{ tag.name }}</td>
+						<td>{{ types[tag.type] }}</td>
+						<td align="center">
+							<a id="tag-{{tag.id}}" href="javascript:void(0)" onclick="Tag.updateStatus($(this))">
+								{% if tag.status %} deactivate {% else %} activate {% endif %}
+							</a> 
+							<span class="separator" style="color:#ccc">|</span> 
+							<a href="{{ path('admin_tagEdit', {id:tag.id}) }}">edit</a> 
+						</td>
+					</tr>
+				{% endfor %}
+				</table>
+			
+			{% endblock %}
+		{% endembed %}
+	</div>
+	
+	{% block javascripts %}
+		{{ parent() }}
+		<script src="{{ asset('bundles/helper/js/Tag.js') }}"></script>
+	{% endblock %}
+
+{% endblock %}

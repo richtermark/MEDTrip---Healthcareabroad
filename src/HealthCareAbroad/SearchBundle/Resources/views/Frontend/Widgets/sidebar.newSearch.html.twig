@@ -1,0 +1,8 @@
+{% embed 'FrontendBundle:Embed:asideBox.html.twig' %}
+    {% block asideContent %}
+    <div class="search-widget">
+        <h3> Not what your're looking for? </h3>
+        {% render "SearchBundle:Frontend:showWidget" with {context: 'sidebar' } %}
+    </div>
+    {% endblock %}
+{% endembed %}

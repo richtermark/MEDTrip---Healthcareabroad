@@ -1,0 +1,75 @@
+helper_default_apiUtilityJavascript:
+    pattern: /helper/api-utility.js
+    defaults: { _controller: HelperBundle:Default:apiUtilityJavascript }
+    requirements:
+        _method: GET
+
+HelperBundle_securedRoutes:
+    resource: "@HelperBundle/Resources/config/routing_secured.yml"
+    prefix:   /secured-utilities
+
+helper_access_denied:
+    pattern:  /helper/access-denied
+    defaults: { _controller: HelperBundle:Default:error403 }
+
+helper_autoCompleteSearch:
+    pattern:  /autocomplete-search
+    defaults: { _controller: HelperBundle:Default:autoCompleteSearch, section: ~, term: ~ }
+    requirements:
+         section: ".+"
+         term: ".+"
+
+helper_loadCities:
+    pattern:  /location/load-cities
+    defaults: { _controller: HelperBundle:Default:loadCities }
+    requirements:
+        _method: GET
+        
+helper_loadStates:
+    pattern:  /location/load-states
+    defaults: { _controller: HelperBundle:Default:loadStates }
+    requirements:
+        _method: GET
+
+helper_specializationAccordionEntry:
+    pattern:  /specialization-accordion-entry
+    defaults: { _controller: HelperBundle:Default:getSpecializationAccordionEntry}
+    requirements:
+        _method: GET
+
+helper_populate_imc_highlight:
+    pattern:  /tools/populate_imc_highlight
+    defaults: { _controller: HelperBundle:Default:populateClinicDescriptionHighlight }
+
+helper_baseline:
+    pattern: /symfony-test/baseline
+    defaults: { _controller: HelperBundle:Test:baseline }
+
+helper_baseline_with_resources:
+    pattern: /symfony-test/baseline-resources
+    defaults: { _controller: HelperBundle:Test:baselineResources }
+
+helper_frontend_base:
+    pattern: /symfony-test/frontend-base
+    defaults: { _controller: HelperBundle:Test:frontendBase }
+
+helper_ajax_test:
+    pattern: /symfony-test/ajax
+    defaults: { _controller: HelperBundle:Test:ajaxTest }
+
+helper_ajax_sleep:
+    pattern: /symfony-test/ajax-sleep
+    defaults: { _controller: HelperBundle:Test:ajaxSleep }
+
+helper_ajax_called_afterwards:
+    pattern: /symfony-test/called-afterwards
+    defaults: { _controller: HelperBundle:Test:ajaxCalledAfterwards }
+    
+helper_testContactDetail:
+    pattern: /symfony-test/testContactDetail
+    defaults: {_controller: HelperBundle:Test:testContactDetail }
+    
+    
+helper_testLocation:
+    pattern: /symfony-test/testLocation
+    defaults: {_controller: HelperBundle:Test:testLocation }

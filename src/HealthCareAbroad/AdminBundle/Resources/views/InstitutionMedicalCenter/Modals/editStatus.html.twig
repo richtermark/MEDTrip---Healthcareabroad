@@ -1,0 +1,20 @@
+{% embed 'AdminBundle:Embed:modalBox.base.html.twig' with {'modal': {'id' : modalId, 'title': modalTitle, 'customBodyStyle' : 'max-height:200px;'}} %}
+    {% block modalBody %}
+    <form novalidate="novalidate" action="{{ path('admin_institution_medicalCenter_updateStatus', {'imcId': institutionMedicalCenter.id, 'institutionId' : institution.id} ) }}" id="status_medicalCenter_form" method="POST" class="basic-form">        
+        {{ form_errors(form) }}   
+    
+        {{ form_row(institutionMedicalCenterForm.status) }}
+        <div>
+            {{ institutionMedicalCenter_token |raw }}
+        </div>
+        {#{ form_widget(institutionMedicalCenterForm._token)  }#}
+        </br>
+        {#{ form_rest(institutionMedicalCenterForm) }#}
+    </form>
+    {% endblock %}
+    {% block footerBody %}
+        <button aria-hidden="true" data-dismiss="modal" class="btn">Cancel</button>
+        <button data-modalId="#status_medicalCenter_modal_form" data-formId="#status_medicalCenter_form" data-loader-text="Processing..." onclick="InstitutionMedicalCenter.updateMedicalCenterStatus(this); return false;" id="modal_status_medicalCenter_submitButton" class="btn btn-primary submit-button">Submit</button>
+    {% endblock %}
+{% endembed %}
+

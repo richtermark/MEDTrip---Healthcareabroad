@@ -1,0 +1,50 @@
+admin_institution_medicalCenter_addSpecialization:
+    pattern:  /admin/institution/{institutionId}/medical-center/{imcId}/add-specialization
+    defaults: { _controller: AdminBundle:InstitutionSpecialization:addSpecialization }
+    requirements:
+        institutionId: \d+
+        imcId: \d+
+        _method: GET|POST
+        
+admin_institution_medicalCenter_ajaxRemoveSpecializationTreatment:
+    pattern:  /admin/institution/{institutionId}/institutionSpecialization/{isId}/ajaxRemoveSpecializationTreatment/{tId}
+    defaults: { _controller: AdminBundle:InstitutionSpecialization:ajaxRemoveSpecializationTreatment }
+    requirements:
+        institutionId: \d+
+        isId: \d+
+        tId: \d+
+        _method: POST
+        
+admin_medicalCenter_ajaxEditSpecialization:
+    pattern: /admin/institution/{institutionId}/medical-center/{imcId}/specializations/{isId}/ajaxEditInstitutionSpecialization
+    defaults: { _controller: AdminBundle:InstitutionSpecialization:ajaxAddMedicalSpecializationTreatments }
+    requirements:
+        _method: GET|POST
+        institutionId: \d+
+        imcId: \d+
+        isId: \d+
+        
+admin_medicalCenter_ajaxSpecializationSource:
+    pattern: /ns-admin/{institutionId}/medical-center/{imcId}/specialization/search
+    defaults: { _controller: AdminBundle:Unsecured:ajaxSpecializationSource}
+    requirements:
+        imcId: \d+
+        institutionId: \d+
+        _method: GET    
+        
+admin_institution_medicalCenter_ajaxAddSpecialization:
+    pattern:  /admin/institution/{institutionId}/medical-center/{imcId}/ajaxAddSpecialization
+    defaults: { _controller: AdminBundle:InstitutionSpecialization:ajaxAddSpecialization }
+    requirements:
+        institutionId: \d+
+        imcId: \d+
+        _method: GET|POST
+        
+admin_medicalCenter_ajaxRemoveSpecialization:
+    pattern: /admin/institutions/{institutionId}/medical-centers/{imcId}/institution-specializations/{isId}
+    defaults: { _controller: AdminBundle:InstitutionSpecialization:ajaxRemoveSpecialization }
+    requirements:
+        _method: DELETE
+        imcId: \d+
+        isId: \d+
+        institutionId: \d+ 

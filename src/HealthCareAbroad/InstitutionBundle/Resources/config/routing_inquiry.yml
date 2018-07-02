@@ -1,0 +1,24 @@
+institution_inquiries:
+    pattern: /inquiries
+    defaults: { _controller: InstitutionBundle:Inquiry:viewAllInquiries }
+    requirements:
+        _method: GET
+        
+institution_view_inquiry:
+    pattern: /inquiry/{id}/view
+    defaults: { _controller: InstitutionBundle:Inquiry:viewInquiry }
+    requirements:
+        _method: GET 
+
+institution_delete_inquiry:
+    pattern: /inquiry/{id}/ajaxRemoveInquiry
+    defaults: { _controller: InstitutionBundle:Inquiry:ajaxRemoveInquiry }
+    requirements:
+        _method: POST
+        
+institution_mark_inquiry:
+    pattern: /inquiry/ajax-update-inquiries-status
+    defaults: { _controller: InstitutionBundle:Inquiry:ajaxUpdateInquiriesStatus }
+    requirements:
+        _method: POST
+        inquiry_ids: \d+ 

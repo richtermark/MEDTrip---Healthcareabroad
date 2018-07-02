@@ -1,0 +1,108 @@
+parameters:
+    # used by listeners if they should proceed with the sending of the notifications
+    # moved to parameters.yml
+    #notifications.enabled: true
+
+    notification.support.user:
+        #"support@healthcareabroad.com": "The HealthcareAbroad Team"
+        "listings@healthcareabroad.com": "The HealthcareAbroad Team"
+    #notification.support.password: "HCA#602_h3lp"
+    notification.support.password: "*rnXMV3&"
+
+    notification.inquiry.user:
+        "inquiry@healthcareabroad.com": The %site_name% Team
+    notification.inquiry.password: "esV01f#CS9"
+
+    notification.default.user: %mailer_user%
+    notification.default.password: %mailer_password%
+
+    # Temporary or could be made defaults; we may want the users to set these values himself, for example
+    # TODO: Refactor - this doesn't feel ideal.
+    mailer.templates:
+        notification.account_created:
+            template: "MailerBundle:EmailTemplates:notification.account_created.html.twig"
+            user: %notification.support.user%
+            password: %notification.support.password%
+            subject: Welcome to %site_name%!
+            enabled: %notification.account_created.enabled%
+        notification.hospital_profile_created:
+            template: "MailerBundle:EmailTemplates:notification.hospital_profile_created.html.twig"
+            user: %notification.support.user%
+            password: %notification.support.password%
+            subject: ~
+            enabled: %notification.hospital_profile_created.enabled%
+        notification.clinic_created:
+            template: "MailerBundle:EmailTemplates:notification.clinic_created.html.twig"
+            user: %notification.support.user%
+            password: %notification.support.password%
+            subject: ~
+            enabled: %notification.clinic_created.enabled%
+        notification.new_listings_approved:
+            template: "MailerBundle:EmailTemplates:notification.new_listings_approved.html.twig"
+            user: %notification.support.user%
+            password: %notification.support.password%
+            subject: ~
+            enabled: %notification.new_listings_approved.enabled%
+        notification.inquiries:
+            template: "MailerBundle:EmailTemplates:notification.inquiries.html.twig"
+            user: %notification.inquiry.user%
+            password: %notification.inquiry.password%
+            subject: This Prospective Patient Inquiry is from %site_name%
+            enabled: %notification.inquiries.enabled%
+        notification.password_reset:
+            template: "MailerBundle:EmailTemplates:notification.password_reset.html.twig"
+            user: %notification.support.user%
+            password: %notification.support.password%
+            subject: %%site_name Password Reset Request
+            enabled: %notification.password_reset.enabled%
+        notification.password_confirm:
+            template: "MailerBundle:EmailTemplates:notification.password_confirm.html.twig"
+            user: %notification.support.user%
+            password: %notification.support.password%
+            subject: %site_name% Password Updated
+            enabled: %notification.password_confirm.enabled%
+services:
+
+    listener.notifications:
+        class: HealthCareAbroad\MailerBundle\Listener\NotificationsListener
+        arguments: [@service_container, %mailer.templates%]
+        calls:
+            - [setExceptionLogger, [@services.log.error_log]]
+        abstract: true
+
+    listener.notifications.account_created:
+        class: HealthCareAbroad\MailerBundle\Listener\AccountCreatedListener
+        parent: listener.notifications
+        tags:
+            - { name: kernel.event_listener, event: event.institution.add, method: onSendNotification }
+
+    listener.notifications.hospital_profile_created:
+        class: HealthCareAbroad\MailerBundle\Listener\HospitalProfileCreatedListener
+        parent: listener.notifications
+        tags:
+            - { name: kernel.event_listener, event: mailer_bundle.notification.hospital_profile_created, method: onSendNotification }
+
+    listener.notifications.clinic_created:
+        class: HealthCareAbroad\MailerBundle\Listener\ClinicCreatedListener
+        parent: listener.notifications
+        tags:
+            - { name: kernel.event_listener, event: mailer_bundle.notification.clinic_created, method: onSendNotification }
+
+    listener.notifications.new_listings_approved:
+        class: HealthCareAbroad\MailerBundle\Listener\NewListingsApprovedListener
+        parent: listener.notifications
+        tags:
+            - { name: kernel.event_listener, event: mailer_bundle.notification.new_listings_approved, method: onSendNotification }
+
+    listener.notifications.inquiries:
+        class: HealthCareAbroad\MailerBundle\Listener\InquiriesListener
+        parent: listener.notifications
+        tags:
+            - { name: kernel.event_listener, event: mailer_bundle.notification.inquiries, method: onSendNotification }
+
+    listener.notifications.password:
+        class: HealthCareAbroad\MailerBundle\Listener\PasswordListener
+        parent: listener.notifications
+        tags:
+            - { name: kernel.event_listener, event: mailer_bundle.notification.password_reset, method: onSendNotification }
+            - { name: kernel.event_listener, event: mailer_bundle.notification.password_confirm, method: onSendNotification }

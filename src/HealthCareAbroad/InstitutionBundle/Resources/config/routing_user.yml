@@ -1,0 +1,47 @@
+institution_editAccount:
+    pattern:  /manage-account-profile.html
+    defaults: { _controller: InstitutionBundle:InstitutionUser:editAccount }
+    requirements:
+        _method:  GET|POST
+        
+institution_editAccountPassword:
+    pattern:  /manage-account-password.html
+    defaults: { _controller: InstitutionBundle:InstitutionUser:editAccountPassword }
+    requirements:
+        _method:  GET|POST
+
+institution_editAccountEmail:
+    pattern:  /manage-account-email.html
+    defaults: { _controller: InstitutionBundle:InstitutionUser:editAccountEmail}
+    requirements:
+        _method:  GET|POST        
+        
+institution_invite_user:
+    pattern:  /invite-staff
+    defaults: { _controller: InstitutionBundle:InstitutionUser:invite }
+    requirements:
+        _method:  GET|POST
+
+institution_login:
+    pattern:  /login
+    defaults: { _controller: InstitutionBundle:InstitutionUser:login }
+    requirements:
+        _method:  GET|POST
+
+institution_login_check:
+    pattern:  /login-check
+
+institution_logout:
+    pattern:  /logout
+
+institution_reset_password:
+    pattern: /reset.html
+    defaults: { _controller: InstitutionBundle:InstitutionUser:resetPassword }
+    requirements:
+        _method:  GET|POST
+
+institution_set_new_password:
+    pattern: /set-new-password/{token}
+    defaults: { _controller: InstitutionBundle:InstitutionUser:changePassword }
+    requirements:
+        _method: GET|POST

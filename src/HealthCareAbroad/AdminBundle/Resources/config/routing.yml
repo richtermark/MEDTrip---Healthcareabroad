@@ -1,0 +1,241 @@
+AdminBundle_migrationTools:
+    resource: "@AdminBundle/Resources/config/routing_migrationTools.yml"
+    prefix:   /admin
+
+# Routest for Admin PageMetaConfigurationController
+AdminBundle_pageMetaConfiguration:
+    resource: "@AdminBundle/Resources/config/routing_page_meta_configuration.yml"
+    prefix:   /
+
+# Routes for Admin RankingController
+AdminBundle_ranking:
+    resource: "@AdminBundle/Resources/config/routing_ranking.yml"
+    prefix:   /
+
+# Routes for Admin TermsController #
+AdminBundle_terms:
+    resource: "@AdminBundle/Resources/config/routing_terms.yml"
+    prefix:   /
+
+# Routes for Admin SpecializationController #
+AdminBundle_specialization:
+    resource: "@AdminBundle/Resources/config/routing_specialization.yml"
+    prefix:   /
+
+# Routes for Admin AdvertisementController #
+AdminBundle_advertisement:
+    resource: "@AdminBundle/Resources/config/routing_advertisement.yml"
+    prefix:   /
+
+# Routes for Admin AdvertisementController #
+AdminBundle_advertisementType:
+    resource: "@AdminBundle/Resources/config/routing_advertisement_type.yml"
+    prefix:   /
+
+# Routes for Admin SubSpecializationController #
+AdminBundle_subSpecialization:
+    resource: "@AdminBundle/Resources/config/routing_subSpecialization.yml"
+    prefix:   /
+
+# Routes for Admin TreatmentController #
+AdminBundle_treatment:
+    resource: "@AdminBundle/Resources/config/routing_treatment.yml"
+    prefix:   /
+
+# Routes for Admin AdvertisementController #
+AdminBundle_advertisement:
+    resource: "@AdminBundle/Resources/config/routing_advertisement.yml"
+    prefix:   /
+
+# Routes for Admin InstitutionController #
+AdminBundle_institutuion:
+    resource: "@AdminBundle/Resources/config/routing_institution.yml"
+    prefix:   /
+    
+# routes for InstituitonUserController
+AdminBundle_institutuion_user:
+    resource: "@AdminBundle/Resources/config/routing_institution_user.yml"
+    prefix:   /
+
+# Routes for Admin InstitutionPropertiesController #
+AdminBundle_institutionProperties:
+    resource: "@AdminBundle/Resources/config/routing_institutionProperties.yml"
+    prefix:   /
+    
+# Routes for Admin InstitutionTreatmentsController #
+AdminBundle_institutuionTreatments:
+    resource: "@AdminBundle/Resources/config/routing_institution_treatments.yml"
+    prefix:   /
+    
+# Routes for Admin InstitutionMedicalCenterController #
+AdminBundle_institutionMedicalCenter:
+    resource: "@AdminBundle/Resources/config/routing_institutionMedicalCenter.yml"
+    prefix:   /
+    
+
+# Routes for Admin InstitutionTreatmentsController #
+AdminBundle_institutuionSpecializations:
+    resource: "@AdminBundle/Resources/config/routing_institution_specialization.yml"
+    prefix:   /
+
+# Routes for Admin CountryController #
+AdminBundle_country:
+    resource: "@AdminBundle/Resources/config/routing_country.yml"
+    prefix:   /
+
+# Routes for Admin StateController #
+AdminBundle_state:
+    resource: "@AdminBundle/Resources/config/routing_state.yml"
+    prefix:   /
+
+# Routes for Admin CityController #
+AdminBundle_city:
+    resource: "@AdminBundle/Resources/config/routing_city.yml"
+    prefix:   /
+
+# Routes for Admin DoctorController #
+AdminBundle_doctor:
+    resource: "@AdminBundle/Resources/config/routing_doctor.yml"
+    prefix:   /
+    
+# Routes for Admin GlobalAwards #
+AdminBundle_global_award:
+    resource: "@AdminBundle/Resources/config/routing_global_award.yml"
+    prefix:   /
+
+# Routes for Admin Awarding Body #
+AdminBundle_awardingBody:
+    resource: "@AdminBundle/Resources/config/routing_awardingBody.yml"
+    prefix:   /
+    
+# Routes for Admin NewsController #
+AdminBundle_news:
+    resource: "@AdminBundle/Resources/config/routing_news.yml"
+    prefix:   /
+
+# Routes for Admin LanguageController #
+AdminBundle_language:
+    resource: "@AdminBundle/Resources/config/routing_language.yml"
+    prefix:   /
+
+# Routes for Admin OfferedServiceController #
+AdminBundle_offered_service:
+    resource: "@AdminBundle/Resources/config/routing_offered_service.yml"
+    prefix:   /
+
+# Routes for settings section #
+AdminBundle_settings:
+    resource: "@AdminBundle/Resources/config/routing_settings.yml"
+    prefix:   /
+    
+# Routes for account section #
+AdminBundle_AdminUser:
+    resource: "@AdminBundle/Resources/config/routing_admin_user.yml"
+    prefix:   /
+    
+# Routes for helper section #
+AdminBundle_helper_text:
+    resource: "@AdminBundle/Resources/config/routing_helper_text.yml"
+    prefix:   /
+    
+# Routes for medical provider group section #
+AdminBundle_medical_provider_group.yml_text:
+    resource: "@AdminBundle/Resources/config/routing_medical_provider_group.yml"
+    prefix:   /
+
+# Routes for Statistics #
+AdminBundle_statistics:
+    resource: "@AdminBundle/Resources/config/routing_statistics.yml"
+    prefix:   /
+    
+# Routes for Inquiry #
+AdminBundle_inquiry:
+    resource: "@AdminBundle/Resources/config/routing_inquiry.yml"
+    prefix:   /admin
+
+## -- edits history
+admin_history_index:
+    pattern: /admin/edit-history
+    defaults: { _controller: AdminBundle:EntityHistory:index }
+    requirements:
+        _method: GET
+        
+admin_showEditHistory:
+    pattern: /admin/edit-history/objects/{objectId}
+    defaults: { _controller: AdminBundle:EntityHistory:showEditHistory }
+    requirements:
+        _method: GET
+        objectId: \d+
+## -------------
+
+
+        
+admin_feedback:
+    pattern: /admin/feedback-inquiries
+    defaults: { _controller: AdminBundle:Feedback:index }
+    requirements:
+        _method:  GET
+        
+admin_tagHomepage:
+    pattern:  /admin/tags
+    defaults: { _controller: AdminBundle:Tag:index }
+
+admin_tagAdd:
+    pattern:  /admin/tag/add
+    defaults: { _controller: AdminBundle:Tag:add }
+
+admin_tagSave:
+    pattern:  /admin/tag/save
+    defaults: { _controller: AdminBundle:Tag:save }
+
+admin_tagEdit:
+    pattern:  /admin/tag/edit/{id}
+    defaults: { _controller: AdminBundle:Tag:edit }
+    requirements:
+         id: \d+
+
+admin_tagUpdateStatus:
+    pattern:  /admin/tag/update-status/{id}
+    defaults: { _controller: AdminBundle:Tag:updateStatus }
+    requirements:
+         id: \d+
+
+admin_manageHcaData:
+    pattern:  /admin/manage-hca-data
+    defaults: { _controller: AdminBundle:Default:manageHcaData }
+
+admin_removeAlert:
+    pattern:  /admin/remove-alert/{id}/{rev}
+    defaults: { _controller: AdminBundle:Default:removeAlert }
+    requirements:
+        id: ".+"
+        rev: ".+"
+
+admin_error403:
+    pattern: /admin/access-denied
+    defaults: { _controller: AdminBundle:Default:error403 }
+
+admin_homepage:
+    pattern:  /admin/dashboard
+    defaults: { _controller: AdminBundle:Default:index }
+
+   
+admin_create_staticPage:
+    pattern: /admin/create-static-page
+    defaults: { _controller: AdminBundle:StaticPage:createStaticPage }
+    requirements:
+        _method: GET|POST
+
+admin_static_page:
+    pattern: /admin/{url}
+    defaults: { _controller: AdminBundle:StaticPage: index }
+    requirements:
+        _method: GET|POST        
+        
+# Admin Global Media Ajax Delete
+admin_media_ajaxDelete:
+    pattern: /admin/media/ajax-delete
+    defaults: { _controller: AdminBundle:Default:ajaxDelete }
+    requirements:
+        _method: POST
+        mediaId: \d+

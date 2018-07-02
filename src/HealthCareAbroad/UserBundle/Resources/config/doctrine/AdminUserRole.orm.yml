@@ -1,0 +1,30 @@
+HealthCareAbroad\UserBundle\Entity\AdminUserRole:
+    type: entity
+    table: admin_user_roles
+    repositoryClass: HealthCareAbroad\UserBundle\Repository\AdminUserRoleRepository
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        name:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+        label:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+        status:
+            type: integer
+            nullable: false
+    manyToMany:
+        adminUserTypes:
+            targetEntity: HealthCareAbroad\UserBundle\Entity\AdminUserType
+            mappedBy: adminUserRoles
+    lifecycleCallbacks: {  }

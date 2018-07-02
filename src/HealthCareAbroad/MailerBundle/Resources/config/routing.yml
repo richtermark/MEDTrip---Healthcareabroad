@@ -1,0 +1,3 @@
+MailerBundle_test_sendEmail:
+    pattern:  /mail/test/send-email
+    defaults: { _controller: MailerBundle:Mailer:sendEmail }

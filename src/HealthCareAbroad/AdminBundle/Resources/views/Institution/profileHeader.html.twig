@@ -1,0 +1,128 @@
+<div class="container">
+    <div class="institutionbox-inner">
+
+        <a href="javascript:void(0)" onclick="$('#featuredImageContainer').slideToggle();" style="display: block; margin: 0 auto; width: 150px; text-align:center">show / hide featured image</a>
+    
+        <!-- Institution Featured Image -->
+        <div id="featuredImageContainer" class="photo-group" style="margin-bottom: 10px;width: 950px;position:relative;margin: 0 auto 10px;">
+            <span class="label photo-label" style="position: absolute; right: 15px; top: 15px;">
+                <a data-toggle="modal" role="button" id="institution-logo-link" class="gallerypic" data-target="#institutionFeaturedImageModal" href="#" title="Edit Featured Image"> 
+                    <i class="icon-picture"></i>
+                </a>
+            </span>
+            <div class="institution-featuredImage" style="padding: 5px; border: 1px solid #ddd">
+                {% if institution.featuredMedia %}
+                    {% set imageSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::LARGE_BANNER') %}
+                    <img alt="" src="{{ institution_media_src(institution.featuredMedia, imageSize) }}" style="width: 950px"/>
+                {% else %}
+                    <img alt="institution logo" src="{{ asset('images/default-hospital-featured-image.png') }}" />
+                {% endif %}
+            </div>
+        </div> 
+        <!-- End of Institution Featured Image -->
+
+    
+        <div class="navbar-inner">
+            <div class="span6">
+                <div class="span3" style="position:relative;">
+                    <span class="label photo-label" style="position: absolute; right: 0; top: 5px;">
+                        <a data-toggle="modal" role="button" id="institution-logo-link" class="gallerypic" data-target="#institutionLogoModal" href="#"> 
+                            <i class="icon-picture"></i>
+                        </a>
+                    </span>
+                    <div class="photo-group">
+                        <div>
+                            {% if institution.logo %}
+                                {% set imageSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::MEDIUM') %}
+                                <img alt="" src="{{ institution_media_src(institution.logo, imageSize) }}"/>                                
+                            {% else %}
+                                <img id="institution-logo-image" alt="institution logo" src="{{ asset('images/institution/default-hospital-logo.png') }}" />
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="span9">
+                    <h3 style="padding: 0">{{ institution.name }}</h3>
+                    <a href="#"><h5>Manage Your Accreditations, GlobalAwards and Awards</h5></a>
+                    <a id="view_admin_users_link" href="{{ path('admin_institution_ajaxLoadAdminUsers', {institutionId: institution.id} ) }}" data-target="#view_admin_users_modal">View Admin Users</a>
+                    {% if institutionStatusForm is defined %}
+                    <br><a id="edit_institution_status" href="{{ path('admin_institution_editStatus',{institutionId: institution.id }) }}" class="edit-status" >Edit Status</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="span6">
+                <a href="{{ path('admin_institution_edit_details', {'institutionId': institution.id } ) }}"><h5>Manage Your Institution Profile</h5></a>
+
+                <p>{#{ json_decode(institution.contactDetails.number) | join('-') }#}</p>
+                {% set _contactDetails = render_institution_contact_details(institution) %}
+                {% if _contactDetails is not null %}
+                    {% for contactDetail in _contactDetails %}
+                        <p> <i class="icon-phone"> </i>
+                            <strong><span id="profileNumberText"> {{ contactDetail.number}}  </span> </strong>
+                        </p>
+                    {% endfor %}
+                {% endif %}  
+                <p>{{ institution_address_to_string(institution) }}</p>
+                {# -- sites here <p></p> #}
+                
+            </div>
+            {% if institutionStatusForm is defined %}
+            <!-- Modal Institution Status -->
+                	{% include 'AdminBundle:Institution/Modals:edit.institutionStatus.html.twig' 
+                	     with {modalId: 'status_institution_modal_form', modalTitle: 'Edit Status'}
+                	%}
+            <!-- end Modal Institution Status -->
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+
+<div id="view_admin_users_modal" class="modal hide fade modal_form_container" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <h3>Admin Users</h3>
+    </div>
+    <div class="modal-body">
+        Loading admin users...
+    </div>
+</div>
+
+<!-- Modal Institution Logo -->
+{% include 'AdminBundle:Institution/Modals:modal.institutionLogo.html.twig'
+%} <!-- end Modal Institution name -->
+
+
+<!-- Modal Institution Logo -->
+{% include 'AdminBundle:Institution/Modals:modal.institutionFeaturedImage.html.twig'
+%} <!-- end Modal Institution name -->
+
+<!-- Old upload logo. TODO: Change this to bootstrap dialog upload.
+    {# render 'MediaBundle:Default:addMedia' with {institution: institution, context: constant('HealthCareAbroad\\MediaBundle\\MediaContext::INSTITUTION_LOGO')} #}
+-->
+<script type="text/javascript" src="{{ asset('bundles/admin/js/Institution.js') }}" ></script>
+<script type="text/javascript">
+$(function() {
+	$('#edit_institution_status').click(function(){
+    	$('div#status_institution_modal_form').modal('show');
+        return false;
+    });
+    $('a#view_admin_users_link').click(function(){
+        _link = $(this);
+        _modal = $('#view_admin_users_modal')
+        _modal.modal('show');
+        $.ajax({
+            url: _link.prop('href'),
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                _modal.find('div.modal-body').html(response.html);
+            },
+            error: function(response) {
+                
+            }
+        });
+        
+        return false;
+    });
+});
+</script>

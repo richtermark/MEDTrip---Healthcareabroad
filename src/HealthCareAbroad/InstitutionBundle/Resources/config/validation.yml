@@ -1,0 +1,92 @@
+HealthCareAbroad\InstitutionBundle\Entity\Institution:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+            message: This institution already exists!
+            groups: [editInstitutionInformation]
+    properties:
+        name:
+            - HealthCareAbroad\HelperBundle\Validator\Constraints\InstitutionUniqueName: {groups: [institutionRegistration]}
+            - NotBlank: {message: 'Please provide your hosipital name.', groups: [editInstitutionInformation]}
+        country:
+            - NotBlank: {message: 'Please provide your country.', groups: [editInstitutionInformation]}
+        city:
+            - NotBlank: {message: 'Please provide your city.', groups: [editInstitutionInformation]}
+        address1:
+            - NotBlank: {message: 'Please provide a valid address.', groups: [editInstitutionInformation] }
+        contactEmail:
+            - Email: {message: 'Please supply a valid contact email.', groups: [editInstitutionInformation] }
+        zipCode:
+            - NotBlank: {message: 'Please provide your postal code.', groups: [editInstitutionInformation] }
+            - MinLength: { limit: 3, message: 'Postal Code must be atleast 3 digits.' }
+            - MaxLength: { limit: 15, message: 'Maximum digits must be 15 only.' }
+        #state:
+            #- NotBlank: {message: 'Please provide your state.', groups: [editInstitutionInformation] }
+HealthCareAbroad\InstitutionBundle\Entity\InstitutionInvitation:
+    properties:
+        name:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+            - Email: ~
+
+HealthCareAbroad\AdminBundle\Entity\Inquiry:
+    properties:
+        firstName:
+            - NotBlank: {message: 'Please provide your first name.'}
+        lastName:
+            - NotBlank: {message: 'Please provide your last name.'}
+        email:
+            - NotBlank: {message: 'Please provide your email address.'}
+            - Email: {message: 'The email address you have provided is not valid.'}   
+        message:
+            - NotBlank: {message: "You've not written your message."}
+
+HealthCareAbroad\AdminBundle\Entity\ErrorReport:
+    properties:
+        details:
+            - NotBlank: {message: "You've not written your message."}
+            
+HealthCareAbroad\InstitutionBundle\Entity\InstitutionInquiry:
+    properties:
+        inquirerName:
+            - NotBlank: {message: 'Please provide your name.'}
+        inquirerEmail:
+            - NotBlank: {message: 'Please provide your email address.'}
+            - Email: {message: 'The email address you have provided is not valid.'}   
+        message:
+            - NotBlank: {message: "You've not written your message."}
+        #country:
+        #    - NotBlank: {message: 'Please provide your country'}
+        
+        
+HealthCareAbroad\InstitutionBundle\Entity\InstitutionUserInvitation:
+    properties:
+        firstName:
+            - NotBlank: ~
+        middleName:
+            - NotBlank: ~
+        lastName:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+            - Email: ~
+        message:
+            - NotBlank: ~
+
+          
+HealthCareAbroad\InstitutionBundle\Entity\InstitutionMedicalCenter:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name, institution]
+            message: Clinic already exists!
+    properties:
+        name:
+            - NotBlank: {message: 'Clinic name is required.'}
+       # description:
+        #    - NotBlank: {message: 'Center details is required.'}
+        # moved to  form type
+        #address:
+        #    - NotBlank: {message: 'Please provide a valid address.' }
+        contactEmail:
+            - Email: {message: 'Please supply a valid contact email.' }      

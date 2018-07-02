@@ -1,0 +1,32 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+{% set isHomePage = true %}
+{% block content %}
+
+    <!-- Main Content -->
+	<div class="span8">
+	
+	    {{ ads.homepagePremier | raw }}
+	
+	    {{ ads.featuredClinics | raw }}
+
+	    {{ ads.featuredDestinations | raw }}
+
+	</div> <!--End Main Content -->
+
+	<!--Sidebar Content -->
+	<aside class="span4">
+		<div class="widget-wrapper">
+			
+			{{ ads.featuredPosts | raw}}
+
+	    	{{ ads.commonTreatments | raw}}
+
+        	{{ ads.featuredVideo | raw}}
+
+		</div>
+
+	</aside> <!--End of Sidebar Content -->
+
+	{{ addInlineJavascript(getTemplateContents('FrontendBundle:Default:indexInline.js.twig')) }} 	
+    
+{% endblock %}

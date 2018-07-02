@@ -1,0 +1,39 @@
+{% extends 'InstitutionBundle::registration.layout.html.twig' %}
+{% set disableMainNavigation = true %}
+{% set setUpProfile = true %}
+
+{% block content %}
+
+<div class="row">
+    <div class="span12 confirm-msg">
+         {% if app.session.flashbag.get('callout') %}
+            <div class="alert alert-info"><h4>Congratulations,
+                <b> {{ institutionMedicalCenter.name | title }} </b>
+                <span>has been added to</span> {{ site_name }}.</h4> 
+                <p>Next, please add your Specializations, to help give patients a good idea of your clinic's expertise. </p>
+            </div>
+        {% endif %}
+    </div>
+    
+    <h1>{{ institutionMedicalCenter.name | title }}</h1>
+    <div class="span8">
+        <h2>Add Specializations<br><small>Please select the ones that apply to your Clinic.</small></h2>
+
+        {% include 'InstitutionBundle:Specialization/Widgets:form.multipleAdd.html.twig' with {
+            imcId: institutionMedicalCenter.id, 
+            specializations : specializations,
+            buttonLabel: 'Save and Continue',
+            saveFormAction: path('institution_signup_setup_specializations', {imcId: institutionMedicalCenter.id})
+        } %}
+    </div>
+
+    <aside class="span4">
+    {{ render_signup_steps_by_route(app.request.attributes.get('_route'), isSingleCenter is defined and isSingleCenter) | raw}}
+        <section class="aside-box info dashboard-side">
+            <p><span><i class="icon-stethoscope icon-4x pull-left"></i></span>
+                Indicating all the <b>SPECIALIZATIONS</b> of this clinic will allow you to be searchable by patients looking for specialists or treatments in your areas of expertise.
+            </p>
+        </section>
+    </aside>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+HealthCareAbroad\UserBundle\Entity\InstitutionUser:
+    type: entity
+    table: institution_users
+    repositoryClass: HealthCareAbroad\UserBundle\Repository\InstitutionUserRepository
+    fields:
+        accountId:
+            id: true
+            type: bigint
+            nullable: false
+            column: account_id
+            generator:
+                strategy: NONE
+        dateCreated:
+            type: datetime
+            nullable: false
+            column: date_created
+        jobTitle:
+            type: string
+            nullable: true
+            column: job_title
+        status:
+            type: smallint
+            nullable: false
+    manyToMany:
+        contactDetails:
+            targetEntity: HealthCareAbroad\HelperBundle\Entity\ContactDetail
+            cascade:
+                - "persist"
+            mappedBy: null
+            joinTable:
+                name: user_contact_details
+                joinColumns:
+                    -
+                        name: account_id
+                        referencedColumnName: account_id
+                inverseJoinColumns:
+                    -
+                        name: contact_detail_id
+                        referenceColumnName: id
+            orderBy: null  
+    manyToOne:
+        institution:
+            targetEntity: HealthCareAbroad\InstitutionBundle\Entity\Institution
+            cascade: {  }
+            mappedBy: null
+            inversedBy: institutionUsers
+            joinColumns:
+                institution_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        institutionUserType:
+            targetEntity: HealthCareAbroad\UserBundle\Entity\InstitutionUserType
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                institution_user_type_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

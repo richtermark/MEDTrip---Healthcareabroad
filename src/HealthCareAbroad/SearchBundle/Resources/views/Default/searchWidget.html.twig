@@ -1,0 +1,4 @@
+<form style="margin: 5px 0 0 !important;"action=" {{ path('search_admin_initiate') }}" method="post">
+    {{ form_widget(form.term, {attr: {'placeholder': 'Search', style: ''}}) }}
+    {{ form_widget(form.category, {attr: {style: 'width:auto;'} }) }}
+</form>

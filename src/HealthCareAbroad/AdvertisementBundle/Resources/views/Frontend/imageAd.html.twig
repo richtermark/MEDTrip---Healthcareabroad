@@ -1,0 +1,14 @@
+{% if imageAds is defined and (imageAds|length > 0) %}
+<section class="widget-wrapper media-ads">
+	{% for each in imageAds %}
+	    {% if each.media %}
+    	    <a href="{{ each.externalUrl }}" target="_blank">
+    	        <img src="{{ advertisement_media_src(each.media) }}">
+    	    </a>
+        	<h4><a href="{{ each.externalUrl }}" target="_blank">{{ each.title }}</a></h4>
+            <p>{{ each.description }}</p>
+	    {% endif %}
+
+    {% endfor %}
+</section>
+{% endif %}

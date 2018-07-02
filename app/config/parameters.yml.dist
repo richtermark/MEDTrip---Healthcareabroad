@@ -1,0 +1,71 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     @DATABASE_HOST@
+    database_port:     ~
+    database_name:     @DATABASE_NAME@
+    database_user:     @DATABASE_USER@
+    database_password: @DATABASE_PASSWORD@
+
+    #statistics
+    statistics_db_name: healthcareabroad_stats
+    statistics_db_user: @STATISTICS_DATABASE_USER@
+    statistics_db_password: @STATISTICS_DATABASE_PASSWORD@
+    statistics_ignored_ip: [112.199.81.42, 127.0.0.1]
+
+    # HCA Blog
+    hca_blog_db_host: @PROD_DATABASE_HOST@
+    hca_blog_db_name: hca_blog
+    hca_blog_db_user: root
+    hca_blog_db_password: hcadbadmin
+
+    couchDbBaseUrl: @COUCHDB_URL@
+    couchDbAlert: @COUCHDB_DOCUMENT@
+    couchDbCities:  @COUCHDB_DOCUMENT@
+
+    mailer_transport:  smtp
+    mailer_host:       localhost
+    mailer_user:       ~
+    mailer_password:   ~
+    mailer_port:       465
+
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    application_id:    1
+    application_secret: 620de3ad308942cb43181ed4369e8d5e0c6147907b9c670c0e132988dcccc8f1
+
+    chromedia_accounts_uri: http://accounts.dev.chromedia.com/app_dev.php
+    chromedia_api_uri: http://accounts.dev.chromedia.com/app_dev.php/api
+
+    memcached.servers:
+        - { host: 127.0.0.1, port: 11211 }
+
+    # Global and all-overriding setting; this determines whether or not
+    # notifications will be sent through, debug mode or otherwise
+    #
+    # IMPORTANT!: When copying to parameters.yml double check the settings
+    notifications.enabled: true
+
+    # When notifications.debug is true this will override the settings for
+    # the specific notifications below, however only allowed recipients will
+    # be sent notifications if the setting is false
+    notifications.debug: true
+    notifications.allowed_recipients:
+        - "haroldmodesto@gmail.com"
+        - "hazel.caballero@pinoyoutsource.com"
+        - "harold.modesto@chromedia.com"
+
+    # specific notification settings
+    notification.account_created.enabled: false
+    notification.hospital_profile_created.enabled: false
+    notification.clinic_created.enabled: false
+    notification.new_listings_approved.enabled: false
+    notification.inquiries.enabled: false
+    notification.password_reset.enabled: true
+    notification.password_confirm.enabled: true
+
+    # Enable zopim application
+    enable_zopim: true
+
+    # Enable zendesk application
+    enable_zendesk: true

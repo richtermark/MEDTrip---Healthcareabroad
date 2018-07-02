@@ -1,0 +1,94 @@
+{% extends 'HelperBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }} &raquo; Breadcrumbs {% endblock %}
+{% block content %}
+<!-- start content -->
+<div id="content">
+    <!--  start page-heading -->
+    <div id="page-heading">
+    	<h1>{{ site_name }} {{ context | title }} Breadcrumbs Management</h1>
+    </div>
+    <!-- end page-heading -->
+    
+    {% embed '::contentWrapper.admin.html.twig' %}
+        {% block wrappedContent %}
+            {% include '::notice.admin.html.twig' %}
+            
+            {# ----- Related tasks ----- #}
+            {% include 'HelperBundle:Utility:relatedTasks.html.twig' with {hideAdmin: (context == 'admin'), hideInstitution: (context == 'institution')} %}
+            {# ----- end Related tasks ----- #}
+            
+            <table class="generic-table" width="75%">
+				<tr>
+					<th class="table-header-repeat line-left minwidth-1"><a href="">Route</a></th>
+					<th class="table-header-repeat line-left"><a href="">Link Label</a></th>
+					<th class="table-header-repeat line-left"><a href="">Path</a></th>
+					<th class="table-header-options actions line-left"><a href="">Actions</a></th>
+				</tr>
+
+				{% for node in nodes %}
+				    
+					<tr class="{{ cycle(['alternate-row', ''], loop.index) }}">
+						<td>{{ node.route }}</td>
+						<td>{{ node.label }}</td>
+						<td align="center">
+						    {% set ancestors = breadcrumbService.getPathOfNode(node, false) %}
+							{% for ancestor in  ancestors  %}
+							    {{ ancestor.label }}
+							    &raquo;
+							{% endfor %}
+							{{ node.label }}
+						</td>
+						<td>
+						    <a class="add-breadcrumb" href="{{ path('helper_utility_addBreadcrumb', {parentId: node.id}) }}" title="Add a breadcrumb under {{ node.label }}">Add</a>
+						    |
+						    <a class="add-breadcrumb" href="{{ path('helper_utility_editBreadcrumb', {id: node.id}) }}" title="Edit {{ node.label }}">Edit</a>
+						</td>
+					</tr>
+				{% endfor %}
+				</table>
+			
+			
+        {% endblock %}
+        
+    {% endembed %}
+    
+</div>
+<!--  end content -->
+<div class="clear">&nbsp;</div>
+{% endblock %}
+
+{% block inlineJavascriptCode %}
+    <script type="text/javascript">
+        $(function(){
+
+        	$("#dialog-container").dialog({
+				autoOpen: false,
+				height: 400,
+				width: 600,
+				modal: true,
+				resizable: false,
+				//buttons: {"Save": function() {var bValid = true;}, Cancel: function() {$( this ).dialog( "close" );} },
+				close: function() {}
+			});
+
+        	$("a.add-breadcrumb").click(function() {
+				var elem = $(this);
+				var addProcedureUrl = elem.attr('href');
+
+				$("#dialog-container").empty();
+				$("#dialog-container").dialog({
+					open: function() {
+						$.ajax(addProcedureUrl)
+						.done(function (data) {
+							elem.attr('href', addProcedureUrl);
+							$('#dialog-container').html(data);
+						});
+					},
+				});
+				$("#dialog-container").dialog("open");
+				return false;
+			});
+        });
+	</script>	
+{% endblock %}

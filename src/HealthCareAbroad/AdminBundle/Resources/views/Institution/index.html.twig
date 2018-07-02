@@ -1,0 +1,117 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+{% set selectedTab = 'institutions'%}
+{% set selectedSubTab = 'institutions_index'%}
+
+{% block content %}
+    <div id="content">
+        <div id="page-heading"><h3>List of Institutions</h3></div>
+        {% embed '::contentWrapper.admin.html.twig' %}
+            {% block wrappedContent %}
+             <div class="alert alert-success span9" style="display:none;">
+            </div>
+            {% include '::notice.admin.html.twig' %}
+            <!-- Render Filter Box -->
+            {% autoescape false %} {{ listFilters is defined ? listFilters : '' }} {% endautoescape %}
+
+            {% set sortBy = app.request.get('sortBy') %}
+            {% set sortOrder = app.request.get('sortOrder') %}
+            {% set default = sortBy | length ? '' : 'sort-asc' %}
+            <div>
+                <table class="table table-bordered sortable-list">
+                <tr>
+                    <th width="30" align="center">Paying</a></th>
+                    <th width="200" id="column-name"><a href="{{ app.request.uri }}" class="{{ sortBy == 'name' ? 'sort-' ~ sortOrder : default }}">Name</a></th>
+                    <th width="200">Email</th>
+                    <th width="200">Insititution Type</th>
+                    <th width="100">Country</th>
+                    <th width="100" id="column-dateCreated"><a href="{{ app.request.uri }}" class="{{ sortBy == 'dateCreated' ? 'sort-' ~ sortOrder : '' }}">Date Created</a></th>
+                    <th width="100" id="column-dateModified"><a href="{{ app.request.uri }}" class="{{ sortBy == 'dateModified' ? 'sort-' ~ sortOrder : '' }}">Date Modified</a></th>
+                    <th width="130">Actions</th>
+                </tr>
+
+                {% for institution in institutions %}
+                    <tr id="institution-{{institution.id}}">
+                        <td style="text-align: center;padding: 0">
+                            {#--- 
+                            ----- new rule: paying_client will be updated every time the clinic paying_client field is changed
+                            #}
+                            <b>{{ institution.payingClient ? 'Yes' : 'No' }}</b>
+                        </td>
+                        <td>
+                            <a class="name" href="{{ path('admin_institution_view', {institutionId: institution.id}) }}" target="_blank" title="View {{ institution.name }}">{{ institution.name }}</a> 
+                        </td>
+                        <td>{{ institution.contactEmail }}</td>
+                         {% set institutionTypeLabel = get_institution_type(institution.type)%}
+                        <td>{{ institutionTypeLabel}}</td>
+                        <td>{{ institution.country }}</td>
+                        <td>{{ institution.dateCreated|date('F-d-Y h:iA') }}</td>
+                        <td>{{ institution.dateModified|date('F-d-Y h:iA') }}</td>
+
+                        <td>
+                            <a href="{{ path('admin_institution_medicalCenter_index', {institutionId:institution.id}) }}" target="_blank"><i class="icon-list"></i> View centers</a> 
+                            <br/>
+                            <a id="status-{{institution.id}}" href="{{ path('admin_institution_editStatus', {institutionId: institution.id}) }}" data-status="{{ institution.status }}" class="show-update-status">
+                                <i class="icon-edit"></i> Edit status
+                            </a>
+                            <br/>
+                            <a href="{{ path('admin_institution_edit_details', {institutionId:institution.id} ) }}" target="_blank"><i class="icon-pencil"></i> Edit institution</a>
+                        </td>
+                    </tr>
+                {% else  %}
+                    <tr><td class="empty-list" colspan="4">No records yet!</td></tr>
+                {% endfor %}
+                </table>
+                
+     
+            </div>
+            
+            {% endblock %}
+        {% endembed %}
+        
+        {% if pager.isPaginable %}
+           {{ paginate(pager, 'admin_institution_index', app.request.query.all) }}
+        {% endif %}
+    </div>
+
+    <!-- Modal Institution Status -->
+    	{% include 'AdminBundle:Institution/Modals:edit.institutionStatus.html.twig' 
+    	     with {modalId: 'status_institution_modal_form', modalTitle: 'Edit Status'}
+    	%}
+    <!-- end Modal Institution Status -->
+    
+{% endblock %}
+
+{% block inlineJavascriptCode %}
+<script type="text/javascript" src="{{ asset('bundles/admin/js/Institution.js') }}" ></script>
+<script type="text/javascript">
+    $(function(){
+
+        $("a.show-update-status").click(function() {
+            $('#status_institution_form').attr('action', $(this).attr('href'));
+            $('#status_institution_form').attr('data-element', $(this).attr('id'));
+        	$('div#status_institution_modal_form').modal('show');
+            $('#status_institution_form').find('#institution_profile_form_status').val($(this).attr('data-status'));
+
+            return false;
+        });
+
+        $('input.update-paying-client').change(function(){
+            msgElem = $(this).next().html('updating...').show(); 
+            var params = {
+                payingClient: $(this).prop('checked') ? '1' : '0' 
+            };
+
+            $.post($(this).attr('data-update-url'), params, function(response){
+            	console.log(response);
+            	msgElem.html('done!');
+            	setTimeout(function(){
+            		msgElem.fadeOut();
+                }, 1000);
+            });
+            //console.log();
+        });
+
+        
+    });
+</script>
+{% endblock %}

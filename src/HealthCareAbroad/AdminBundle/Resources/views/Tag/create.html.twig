@@ -1,0 +1,21 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+
+{% block content %}
+
+	<div id="content">
+		<div id="page-heading"><h3>{{ id is defined ? 'Edit' : 'Add' }} Tag</h3></div>
+
+		{% embed '::contentWrapper.admin.html.twig' %}
+			{% block wrappedContent %}
+
+			<form action="{{ path('admin_tagSave') }}" method="post" {{ form_enctype(form) }} class="basic-form">
+				{{ form_rest(form) }}
+				{{ form_row(form.name) }}
+				{{ form_row(form.type) }}
+			    <input type="submit" class="form-submit"/>
+			</form>
+			{% endblock %}
+		{% endembed %}
+	</div>
+
+{% endblock %}

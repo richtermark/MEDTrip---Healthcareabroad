@@ -1,0 +1,83 @@
+parameters:
+    services.institution_list : HealthCareAbroad\InstitutionBundle\Form\ListType\InstitutionListType
+    services.doctor_list: HealthCareAbroad\InstitutionBundle\Form\ListType\InstitutionDoctorListType
+
+services:
+    services.institution:
+        class: HealthCareAbroad\InstitutionBundle\Services\InstitutionService
+        arguments: [@doctrine]
+        calls:
+            - [setInstitutionUserService, [@services.institution_user]]
+            - [setInstitutionPropertyService, [@services.institution_property]]
+            - [setTimeAgoExtension, [@services.timeAgo.twig.extension]]
+            - [setMediaTwigExtension, [@services.media.twig.extension]]
+            - [setRouter, [@router]]
+    services.institution.factory:
+        class: HealthCareAbroad\InstitutionBundle\Services\InstitutionFactory
+        arguments: [@doctrine]
+        calls:
+            - [setMemcache, [@services.memcache]]
+            - [setMemcacheKeyFactory, [@services.memcache.keyFactory]]
+
+    services.institution_specialization:
+        class: HealthCareAbroad\InstitutionBundle\Services\InstitutionSpecializationService
+        arguments: [@doctrine]
+        
+    services.institution_property:
+        class: HealthCareAbroad\InstitutionBundle\Services\InstitutionPropertyService
+        arguments: [@doctrine, @services.memcache]
+        
+    services.institution_property.form_factory:
+        class: HealthCareAbroad\InstitutionBundle\Form\InstitutionPropertyType\Factory\InstitutionPropertyTypeFormFactory
+        arguments: [@form.factory]
+        calls:
+            - [setInstitutionPropertyService, [@services.institution_property]]
+
+    services.institution_medical_center_property:
+        class: HealthCareAbroad\InstitutionBundle\Services\InstitutionMedicalCenterPropertyService
+        arguments: [@doctrine, @services.memcache]   
+
+    services.institution_medical_center_property.form_factory:
+        class: HealthCareAbroad\InstitutionBundle\Form\InstitutionMedicalCenterPropertyType\Factory\InstitutionMedicalCenterPropertyTypeFormFactory
+        arguments: [@form.factory]
+        calls:
+            - [setInstitutionMedicalCenterPropertyService, [@services.institution_medical_center_property]]
+
+    services.institution_medical_center:
+        class: HealthCareAbroad\InstitutionBundle\Services\InstitutionMedicalCenterService
+        calls:
+            - [setDoctrine, [@doctrine]]
+            - [setInstitutionMedicalCenterPropertyService, [@services.institution_medical_center_property]]
+    
+    services.institution_signup:
+        class: HealthCareAbroad\InstitutionBundle\Services\SignUpService
+        calls:
+            - [setInstitutionFactory, [@services.institution.factory]]
+            - [setInstitutionMedicalCenterService, [@services.institution_medical_center]]
+            - [setSignUpSteps, [%institution_registration_steps%]]
+        
+    services.institution_list_transformer:
+        class: HealthCareAbroad\InstitutionBundle\Form\Transformer\InstitutionTransformer
+        calls: 
+            - [setInstitutionService, [@services.institution]]
+            
+    services.institution.callouts:
+        class: HealthCareAbroad\InstitutionBundle\Services\CalloutMessagesService
+        arguments: [%callouts%]
+
+    services.institution.media:
+        class: HealthCareAbroad\InstitutionBundle\Services\InstitutionMediaService
+        calls:
+            - [setFilesystem, [@institution_filesystem]] 
+            - [setEntityManager, [@doctrine.orm.entity_manager]]
+            - [setUploadDirectory, [%local_web_root%/%media_institution_subdir%]]
+            
+    services.institution.gallery:
+        class: HealthCareAbroad\InstitutionBundle\Services\InstitutionGalleryService
+        calls:
+            - [setDoctrine, [@doctrine]]
+
+    services.institution.inquiry:
+        class: HealthCareAbroad\InstitutionBundle\Services\InstitutionInquiryService
+        calls:
+            - [setDoctrine, [@doctrine]]

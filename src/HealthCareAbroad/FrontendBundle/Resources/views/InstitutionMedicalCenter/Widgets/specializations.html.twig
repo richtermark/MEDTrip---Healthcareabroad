@@ -1,0 +1,50 @@
+<div class="profile-widget-wrapper specializations">
+    <h5>Specializations</h5>
+    <div class="specializations-list-wrapper">
+        <ul>
+            {% for each in institutionSpecializations %}
+                {% set specialization = each.specialization %}
+                <li class="specialization"  >
+                
+                    {% if specialization.media and specialization.media.src %}
+                        <img class="thumbnail-wrapper default img-polaroid pull-left" src="{{ specialization.media.src }}" />
+                    {% else %}
+                        <span class="thumbnail-wrapper default img-polaroid pull-left"></span>
+                    {% endif %}
+                    
+                    {# <!-- itemscope is limited only to this a tag since in schema.org, medicalprocedure is listed as a separate property, that is availableService --> #}
+                    <a itemprop="medicalSpecialty" itemscope itemtype="http://schema.org/MedicalSpecialty">
+                        <span itemprop="name">{{ specialization.name }}</span>
+                    </a>
+                    
+                    {% set _groupedTreatments = group_treatments_by_subspecialization(each.treatments) %}
+
+                    {% for _subName, _groupedData in _groupedTreatments %}
+                        {% if _groupedData.treatments | length %}
+                            <ul class="sub-specialization">
+                                <li>
+                                    {% if _groupedData.subSpecialization is defined and _groupedData.subSpecialization | length%}
+                                    <a>{{ _groupedData.subSpecialization.name }}</a>
+                                    {% else %}
+                                    <a>Other Treatments</a>
+                                    {% endif %}
+                                    <!-- <span><i class="icon-medkit pull-left"></i></span> -->
+                                    <ul class="treatment">
+                                        {% for treatment in _groupedData.treatments %}
+                                        <li>
+                                            <a itemprop="availableService" itemscope itemtype="http://schema.org/MedicalProcedure">
+                                                <span itemprop="name">{{ treatment.name }}</span>
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul><!-- .treatment -->
+                                </li>
+                            </ul><!-- .sub-specialization -->
+                            {% endif %}
+                    {% endfor %}
+                    
+                </li><!-- .specialization -->
+            {% endfor %}
+        </ul>
+    </div><!-- .specializations-list-wrapper -->
+</div><!-- .profile-widget-wrapper -->

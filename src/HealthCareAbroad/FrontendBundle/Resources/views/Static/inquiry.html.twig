@@ -1,0 +1,127 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block content %}
+    <h2 class="page-header">Advertising Inquiries</h2>
+    <div class="page-content-wrapper">
+    <form novalidate="novalidate" method="POST" action="{{ path('frontend_page_inquiry') }}" class="span8">
+
+        <p>This form is for medical providers inquiring about adding or editing their clinics to {{ site_name }}, or for other account concerns. </p>
+        <p>If you are a patient looking to send feedback to {{ site_name }}, <a href ="#" id="feedback-form">please use this form</a>.</p>
+
+        {% if hasErrors is defined %}
+            <div class="alert alert-error">
+                {% for each in form.children %}
+                    {% if each.vars.errors|length %}
+                	    {{ each.vars.errors[0].message }} <br>
+                	{% endif %}
+            	{% endfor %}
+            </div>
+        {% else %}
+            {% for alert, message in app.session.flashes %}
+            	{% if alert == 'warning' %}
+            	    {% set class = '' %}
+            	{% elseif alert == 'error' %}
+            	    {% set class = 'alert-error' %}
+            	{% elseif alert == 'success' %}
+            	    {% set class = 'alert-success' %}
+            	{% elseif (alert == 'notice') or alert == 'info' %}
+            	    {% set class = 'alert-info' %}
+            	{% else %}
+            	    {% set class = '' %}
+            	{% endif %}
+                <div class="alert {{ class }}">
+                    {{ message | raw}}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="section row-fluid">
+            <div class="section-content">
+                <div class="control-group options-wrapper {{ (form.inquirySubject.vars.valid ? '' : 'error') }}">
+                    <label>I'm writing to: *</label>
+                    {# form_widget(form.inquirySubject) #}
+                     {% for _key, _typeChoice in form.inquirySubject.vars.choices %}
+                        {% set _inputId =  form.inquirySubject.vars.id ~ '_' ~ _key %}
+                        <label class="required options" for="{{ _inputId }}">
+                            <input id="{{ _inputId }}" type="radio" value="{{ _typeChoice.value }}" required="required" name="{{ form.inquirySubject.vars.full_name }}" {% if form.vars.value.inquirySubject and form.vars.value.inquirySubject.id == _typeChoice.value %} checked="checked"{% endif %}>
+                            {{ _typeChoice.label }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="section row-fluid">
+            <h2>Personal Details</h2>
+            <div class="section-content">
+                <div class="control-group {{ (form.firstName.vars.valid ? '' : 'error') }}">
+                    <label for="inquire_firstName">First Name *</label>
+                    {{ form_widget(form.firstName, {attr: {class: 'span12'} } )}}
+                </div>
+                <div class="control-group {{ (form.lastName.vars.valid ? '' : 'error') }}">
+                    <label for="inquire_lastName">Last Name *</label>
+                    {{ form_widget(form.lastName, {attr: {class: 'span12'} } )}}
+                </div>
+                 <div class="control-group {{ (form.clinicName.vars.valid ? '' : 'error') }}">
+                      <label for="inquire_clinicName">Clinic Name</label>
+                    {{ form_widget(form.clinicName, {attr: {class: 'span12'} } )}}
+                </div>
+                <div>
+                    <div class="control-group span12 {{ (form.country.vars.valid ? '' : 'error') }}">
+                        <label for="inquire_country">Country</label>
+                        {{ form_widget(form.country, {attr: {class: 'span8'}}) }}
+                    </div>
+                </div>
+                <div class="control-group {{ (form.contactNumber.vars.valid ? '' : 'error') }}">
+                    <label for="inquire_contactNumber">Phone</label>
+                    {{ form_widget(form.contactNumber, {attr: {class: 'span12'} } )}}
+                </div>
+                <div class="control-group {{ (form.email.vars.valid ? '' : 'error') }}">
+                    <label for="inquire_email">Email Address *</label>
+                    {{ form_widget(form.email, {attr: {class: 'span12'} } )}}
+                </div>
+                <div class="control-group {{ (form.message.vars.valid ? '' : 'error') }}">
+                    <label for="inquire_message">Message *</label>
+                    {{ form_widget(form.message, {attr: {class: 'span12', rows: 5, cols: 60} } ) }}
+                </div>
+                                            
+            </div>
+        </div>
+        <div class="section row-fluid">
+            <div class="captcha control-group {{ (form.captcha.vars.valid ? '' : 'error') }}">
+                <label for="{{ form.children.captcha.vars.id }}" class="span3">
+                    <strong>{{ form.children.captcha.vars.label }}</strong>
+                </label>
+                <div class="span9">{{ form_widget(form.captcha) }}</div>
+            </div>
+        </div>
+
+        <p>Please complete all fields marked with *</p>
+
+        <div class="align-right row-fluid">
+            <button class="btn"> Cancel </button> &nbsp;
+            <button id="inquirySubmit" class="btn btn-primary blue"> Submit </button>
+        </div>
+        {{ form_widget(form._token) }}
+    </form>
+</div>
+{% endblock %}
+{% block inlineJavascriptCode %}
+<script src="{{ asset('bundles/helper/js/Location.js') }}"></script>
+<script type="text/javascript">
+<!--
+    Location.loadCitiesUrl = '{{ path("helper_loadCities") }}';
+//-->
+    /*$('#inquirySubmit').click(function() {
+        if(!$('#inquiryCheck').attr('checked')) {
+            $('#notice').addClass('alert alert-error').html('You need to agree of the terms and privacy policy.').focus();
+            window.location.hash = '#notice';
+            return false;
+        }
+        if(!$('input[name="inquirySubject"]:checked').val()) {
+            $('#notice').append('<ul><li>Inquiry Subject is required.</li></ul>');
+            window.location.hash = '#notice';
+            return false;
+        }
+        $('#inquirySubmit').submit();
+    });*/
+</script>
+{% endblock %}

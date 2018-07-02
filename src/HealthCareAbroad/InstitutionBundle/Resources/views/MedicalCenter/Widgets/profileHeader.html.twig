@@ -1,0 +1,29 @@
+<section class="section row-fluid hca-clinic-heading">
+    <div class="span3">
+        <form class="ajaxUploadLogoForm hidden" enctype="multipart/form-data" action="{{ path('institution_medicalCenter_logo_upload', { imcId: institutionMedicalCenter.id } ) }}" method="POST">
+            <a href="javascript:void(0)" class="file-browse-btn logo-wrapper" onclick="$(this).next().click()">
+                <span class="rollover hca-profile-photo-rollover"></span>
+                {% set logoSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::MEDIUM') %}
+                <img id="imcLogo" src="{{ institutionMedicalCenter.logo ? institution_media_src(institutionMedicalCenter.logo, logoSize) :  imageplaceholder.imcDefaultLogo}}" alt="" class="imgborder"/>
+            </a>
+            <input type="file" accept="image/*" onchange="$(this).parent().submit()" name="logo">
+        </form>
+    </div>
+    <div class="span9">
+       <h1><a href="#edit-medical-center-name" data-toggle="modal"> <span id="clinicNameText">{{ institutionMedicalCenter.name | title}}</span>  </a>  </h1>
+       <h4><small>under</small> <a href="{{ path('institution_account_profile') }}">{{ institution.name | title }}</a>
+        </h4>
+    </div>
+</section>
+
+{% embed 'InstitutionBundle:Embed:modalBox.base.html.twig' with {'modal': {'id' : 'edit-medical-center-name', 'title': 'Edit Clinic Name' }} %}
+    {% block modalBody %}
+        {% include 'InstitutionBundle:MedicalCenter/Widgets:inlineEditForm.html.twig' with {formId: 'nameModalForm', fields: ['name'], hideSubmitButton: true } %}
+    {% endblock %}
+    {% block modalFooter %}
+        <div class="align-right">
+            <button class="btn" data-dismiss="modal" aria-hidden="true"> Cancel</button>
+    		<button class="btn pull-right btn-primary _submit-button" onclick="return InstitutionMedicalCenter.submitMedicalCenterForm($('#nameModalForm'));">Submit</button>
+		</div>
+    {% endblock %}
+{% endembed %}

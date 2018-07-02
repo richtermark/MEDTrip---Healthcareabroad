@@ -1,0 +1,6 @@
+institution_medicalCenter_ajaxEditGlobalAward:
+    pattern: /institution/medical-center/{imcId}/awards-certificates-and-affiliations/ajaxEdit
+    defaults: { _controller: InstitutionBundle:MedicalCenterProperties:ajaxEditGlobalAward, imcId: ~}
+    requirements:
+        _method: POST
+        imcId: \d+

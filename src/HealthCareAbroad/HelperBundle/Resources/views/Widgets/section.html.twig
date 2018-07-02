@@ -1,0 +1,30 @@
+<div class="section title">
+    <h4>
+        {{ title }}
+        {% if actions is defined %}
+            {% for action in actions %}
+            
+                 {% if action.class is defined %}
+                    <a href="{{ action.link }}" class="{{ action.class }}">
+                  {% else %}
+                    <a href="{{ action.link }}">
+                {% endif %}
+                
+            	<button class="btn btn-mini pull-right">
+            	
+            	    {% if action.icon is defined %}
+            	        <i class="{{ action.icon }}"></i>
+            	    {% endif %}
+
+            		{{ action.label }}
+                </button>
+                </a>
+            {% endfor %}
+        {% endif %}
+    </h4>
+
+    <div class="" style="border: 1px solid #E5E5E5;padding: 10px;margin-top:1px">
+        {% block sectionContent %}{% endblock %}
+    </div>
+    
+</div>

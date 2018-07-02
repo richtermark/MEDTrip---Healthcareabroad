@@ -1,0 +1,116 @@
+{% embed 'InstitutionBundle:Embed:modalBox.base.html.twig' with {'modal': {'id' : 'add-media', class: 'hca-file-modal', 'title': 'Add New Media' }} %}
+    {% block modalBody %}            
+
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#pane1" data-toggle="tab"><i class="icon-upload"></i>Upload Photo</a></li>
+           <!--<li><a href="#pane2" data-toggle="tab"><i class="icon-facetime-video"></i>Add Video</a></li> -->
+        </ul>
+        <div class="tab-content">
+            <div id="pane1" class="tab-pane active">
+                <!-- form id="custom-dropzone" class="dropzone" action="{{ path('institution_mediaGallery_upload') }}">
+                    <div class="dropzone-controls">
+                        <label>Drag Photo or if you prefer...</label>
+                        <span class="btn btn-primary" onclick="$('#custom-dropzone').click()">
+                            Select Photo from your Computer
+                        </span>
+                    </div>
+                </form -->
+                
+                <div id="custom-dropzone" class="dropzone">
+                    <div id="previews" class="dropzone-previews"></div>
+                    <input name="file" type="file" accept="image/*" style="visibility:hidden"/>
+                    <div class="dropzone-controls">
+                        <label>Drag Photo or if you prefer...</label>
+                        <span class="btn btn-primary" id="clickable">
+                            Select Photo from your Computer
+                        </span>
+                    </div>
+                </div>
+                
+                <form id="addInstitutionMediaForm" action="{{ path('institution_mediaGallery_linkFileToClinics') }}" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="media_ids" id="mediaIds">
+                    <p><small>Maximum upload file size:</small>2MB</p>
+
+                    {% if uploadFromMedicalCenterContext is defined %}
+                        <input type="hidden" value="{{ institutionMedicalCenter.id }}" name="medical_center_ids[]" checked="checked">
+                    {% else %}
+                        {% if not isSingleCenter %}
+                            {% include 'InstitutionBundle:MediaGallery/Widgets:medicalCenterList.html.twig' with {selectedClinics: []} %}
+                        {% endif %}
+                    {% endif %}
+                </form>
+                
+                <div class="alert" style="display: none" id="_confirm-save-container">
+                    You have not selected a clinic for this photo. This will be added to the hospital main gallery. <br/> 
+                    <b>Click Confirm button to proceed.</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    
+    {% block modalFooter %}
+        <div class="align-right action-buttons">
+            <button class="btn cancel" onclick="$('#add-media').modal('hide')" type="button">Cancel</button> &nbsp;
+            <button class="btn btn-success finish" disabled="disabled" type="button">Finish</button>
+        </div>
+    {% endblock %}
+    
+{% endembed %}
+
+{% block inlineJavascriptCode %}
+<script type="text/javascript" src="/js/dropzone.js" ></script>
+
+<script type="text/javascript">
+    $(function(){
+    
+    	Dropzone.autoDiscover = false;
+    	var addMediaFormElem = $('#addInstitutionMediaForm');
+    	var buttonsContainer = $('#add-media .modal-footer .action-buttons:first'); 
+    
+        $("#custom-dropzone").dropzone({
+            url: "{{ path('institution_mediaGallery_upload') }}",
+            method: "post",
+            clickable: "#clickable",
+            previewsContainer: "#previews",
+            
+            sending: function(file) {
+            	HCA.closeAlertMessage();
+                addMediaFormElem.find('.action-buttons > button').attr('disabled', 'disabled');
+            },
+
+            success: function(file, response) {
+                if(response.status) {
+                	$(file.previewTemplate).addClass('success');
+                	$('#mediaIds').val($('#mediaIds').val() == '' ? response.mediaId : $('#mediaIds').val() + ',' + response.mediaId);
+                	addMediaFormElem.find('.medical-center-checkbox:first').change();
+                	buttonsContainer.find('button.cancel').remove();
+                	buttonsContainer.find('button.finish').removeAttr('disabled');
+                } else {
+                	$(file.previewTemplate).addClass('error');
+                }
+            }
+        });
+
+        buttonsContainer.find('button.finish').click(function(){
+            selectedCentersCount = addMediaFormElem.find('.medical-center-checkbox:checked').length;
+            msgContainer = $('#_confirm-save-container'); 
+
+        	if(msgContainer.is(':hidden') && !selectedCentersCount && $('#_clinic-list').length) {
+        		msgContainer.fadeIn();
+        		$(this).html('Confirm');
+        		return false;
+            }
+
+        	$(this).html('processing...').attr('disabled', true);
+        	
+            if(selectedCentersCount || !$('#_clinic-list').length) {
+            	$('#addInstitutionMediaForm').submit();
+            } else { 
+            	window.location.reload(); 
+            }
+        });
+    });
+</script>
+{% endblock %}

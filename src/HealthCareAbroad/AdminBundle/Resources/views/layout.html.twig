@@ -1,0 +1,29 @@
+{% extends '::base.admin.html.twig' %}
+
+{% block title %}{{ parent() }} &raquo; Admin Panel{% endblock %}
+
+{% block body %}
+
+<body>
+    {% include 'AdminBundle:Embed:header.layout.html.twig' %}  
+
+    <div id="main-content"  class="container maincontent">
+
+            {% include '::notice.admin.html.twig' %}
+
+            {% if breadcrumbs is defined %}
+                {% autoescape false %}{{ breadcrumbs }}{% endautoescape %}
+            {% endif %}
+            
+            {% block content %}{% endblock %}
+    </div>
+
+    {% include '::footer.admin.html.twig' %}
+
+    <div id="dialog-container"></div>
+
+    {% block inlineJavascriptCode %}{% endblock %}
+</body>
+
+{% endblock %}
+

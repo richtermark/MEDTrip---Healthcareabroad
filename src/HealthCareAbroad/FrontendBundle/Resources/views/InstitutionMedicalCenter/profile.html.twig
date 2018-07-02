@@ -1,0 +1,110 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+{% set mainContentItemType = 'http://schema.org/MedicalClinic' %}
+
+{% set streetAddress = medical_center_complete_address_to_string(institutionMedicalCenter, ['address'], ', ', {wrapWithMicrodata: true}) %}
+{% set mainAddress = medical_center_complete_address_to_string(institutionMedicalCenter, ['city', 'state', 'country', 'zipCode'], ', ', {wrapWithMicrodata: true}) %}
+
+{% block content %}
+    {% include 'FrontendBundle:Institution/Widgets:commonHeading.html.twig' with {viewData: {
+            subHeader: { text: institution.name, url: get_institution_frontend_url(institution)},
+            headerText: institutionMedicalCenter.name,
+            featuredMediaSource: institutionMedicalCenter.featuredMedia is defined and institutionMedicalCenter.featuredMedia.src 
+                ? institutionMedicalCenter.featuredMedia.src 
+                : imageplaceholder.institutionFeaturedImage,
+            logoSource: institutionMedicalCenter.logo and institutionMedicalCenter.logo.src
+                ? institutionMedicalCenter.logo.src
+                : null,
+            defaultLogoClass: 'clinic-default-logo',
+            contactNumber: institutionMedicalCenter.mainContactNumber,
+            streetAddress: streetAddress,
+            mainAddress: mainAddress,
+            institutionInquiryLink: '#form',
+            social: institutionMedicalCenter.socialMediaSites,
+            contactEmail:institutionMedicalCenter.contactEmail,
+            website:institutionMedicalCenter.websites,
+        }}
+    %}
+    
+    <div class="profile-wrapper span8">
+    
+        {{ institutionMedicalCenter.description | raw }}
+        
+        {% include 'FrontendBundle:InstitutionMedicalCenter/Widgets:specializations.html.twig' 
+            with { institutionSpecializations: institutionMedicalCenter.institutionSpecializations } 
+        %}
+        
+        {% include 'FrontendBundle:Widgets:profileAwardsAndServicesSection.html.twig' %}
+        
+        {% if institutionMedicalCenter.doctors|length %}
+            {% embed 'FrontendBundle:Embed:profileSection.html.twig' with {title: 'Doctors', class: 'doctors' } %}
+                {% block sectionContent %}
+                    {% include 'FrontendBundle:Widgets:profileDoctorsList.html.twig' with { 
+                        doctors: institutionMedicalCenter.doctors 
+                    } %}
+                {% endblock %}                
+            {% endembed %}
+        {% endif %}
+        
+        {#
+        <!--
+        FIXME: streetAddress and mainAddress are of different format from above since the one above has microdata format 
+         -->
+         #}
+        {% include 'FrontendBundle:Institution/Widgets:commonContactAndAddress.html.twig' 
+            with { 
+                streetAddress: medical_center_complete_address_to_string(institutionMedicalCenter, ['address']), 
+                mainAddress: medical_center_complete_address_to_string(institutionMedicalCenter, ['city', 'state', 'country', 'zipCode']),
+                social: institutionMedicalCenter.socialMediaSites,
+                contactEmail:institutionMedicalCenter.contactEmail,
+                contactNumber: institutionMedicalCenter.mainContactNumber,
+                website:institutionMedicalCenter.websites 
+            } 
+        %}
+        
+    </div>
+    <aside class="span4 aside-wrapper">
+        {% set coordinates = institutionMedicalCenter.coordinates ?: medical_center_complete_address_to_string(institutionMedicalCenter, ['city', 'country', 'zipCode']) %}
+
+        {% include 'FrontendBundle:Widgets:profileLocationAside.html.twig' with {coordinates: coordinates} %}
+
+        {% include 'FrontendBundle:Widgets:profileMediaAside.html.twig' with { photos: institutionMedicalCenter.media.photos } %}
+
+        {% include 'FrontendBundle:Widgets:profileScheduleAside.html.twig' %}
+
+        {% include 'FrontendBundle:Institution/Widgets:inquiryFormAside.html.twig' with {title: 'Email this Clinic', form: form} %}
+        
+    </aside> <!--End of aside_content-->
+   <div class="span12">
+            <p>Copyright 2013, <b>{{ institutionMedicalCenter.name }}</b> 
+            </p>
+        </div>
+
+{% endblock %}
+
+{% block inlineJavascriptCode %}
+<script src="{{ asset('bundles/frontend/js/institution.js') }}"></script>
+<script type="text/javascript">
+<!--
+(function($){
+    $(function(){
+         $('[rel=popover]').popover({
+             placement: 'top',
+             html: true,
+             trigger: 'click',
+             content: function() {
+                 return $('#_call-content-wrapper').html();
+             }
+         }).click(function(e) {
+             e.preventDefault();
+         });
+
+         $('#inquiry_submitButton').institutionInquiryModalForm({
+             submitButton: $('#inquiry_submitButton'),
+             form: $('form#inquiryForm') ,
+             path: "{{ path('frontend_institutionMedicaCenter_ajaxSaveImcInquiry', {institutionId : institution.id, imcId: institutionMedicalCenter.id}) }}"
+         });
+    });
+})(jQuery);
+//-->
+</script>
+{% endblock %}

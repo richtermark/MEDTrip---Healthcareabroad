@@ -1,0 +1,33 @@
+<form class="add_treatments_form" action="{{ path('admin_medicalCenter_ajaxEditSpecialization', {'imcId':institutionMedicalCenter.id, 'isId':institutionSpecialization.id,'institutionId':institution.id} ) }}" method="POST" >
+
+<div class="accordion-group" style="display: block;">
+    <div class="accordion-heading" style="font-size: 18px; padding: 8px 15px; display: block;">{{ specialization.name }}</div>
+    <div class="accordion-body"  style="height: auto; padding: 0 20px !important">
+        {{ specialization.description }}
+        {% set groupedTreatments = group_treatments_by_subspecialization(availableTreatments) %}
+        <div class="accordion-inner" style="border-top: none; !important">
+        {% for subSpecializationId, _data in groupedTreatments %}
+            {% set _subSpecialization = _data.subSpecialization %}
+            {% if _subSpecialization %}
+                <h5>{{ _subSpecialization.name | length ? _subSpecialization.name :"Other treatments"  }}</h5>
+            {% endif %}
+              <ul>
+            {% for _treatment in _data.treatments %}
+                <li style="list-style:none;">
+                    <label>
+                        <input  style="width: auto;!important" type="checkbox" name="{{ formName }}[{{ specialization.id }}][treatments][]" value="{{ _treatment.id }}" /> 
+                        {{ _treatment.name }}
+                    </label>
+                </li>
+                
+            {% endfor %}
+            </ul>
+        
+        {% endfor %}
+        </div>
+        
+    </div>
+</div>
+
+<input type="hidden" name="{{ formName }}[{{ specialization.id }}][{{form.children._token.vars.name}}]" value="{{ form.children._token.vars.value }}" />
+</form>

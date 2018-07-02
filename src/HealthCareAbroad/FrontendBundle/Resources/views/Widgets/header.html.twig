@@ -1,0 +1,52 @@
+<div id="main-top-wrapper">
+<header id="header-wrapper" class="homepage-header-wrapper"> <!--Header-->
+    <div class="container">
+    {% if isHomePage is not defined or status_code is defined %} <!-- added condition for error pages (status_code)-->
+        <a href="{{ path('frontend_main_homepage') }}">
+            <h1 class="logo">{{ site_name }}</h1>
+        </a>
+    {% endif %}
+    <ul class="inline-list pull-right">
+        <!-- li><a href="#">Search</a></li -->
+        <li class="{{ app.request.get('_route') == 'frontend_treatment_list' ? 'active' : '' }}">
+            <a href="{{ path('frontend_treatment_list') }}">Treatments</a>
+        </li>
+
+        <li class="{{ app.request.get('_route') == 'frontend_destination_list' ? 'active' : '' }}">
+            <a href="{{ path('frontend_destination_list') }}">Destinations</a>
+        </li>
+        <li>
+            <a href="/news/">Medical Tourism News</a>
+        </li>
+    </ul>
+    {#--
+    <div class="beta-banner">
+        <span class="message">Currently in BETA</span>
+    </div>
+    #}
+    </div>
+</header> <!--End of header-->
+{% if isHomePage is defined and isHomePage %}
+    <div id="top-content-wrapper"> <!--Hero Unit-->
+        <div class="container">
+            <div class="row">
+                {#<!-- add itemprops for WebPage -->#}
+                <meta itemprop="image" content="{{ app.request.getSchemeAndHttpHost() ~ asset('images/frontend/logo.png') }}">
+                <meta itemprop="name" content="{{ site_name }}">
+                <meta itemprop="description" content="Patients from all over the world are searching "{{ site_name }}>
+                <a href="{{ path('frontend_main_homepage') }}">
+                    <h1 class="logo" >
+                        {{ site_name }}
+                    </h1>
+                </a>
+                <h3>A global directory and resource for <span>Medical Tourism</span></h3>
+            </div>
+            {% block searchBox %}
+                {# set searchParams = searchParams|merge({context : app.request.attributes.get('_route')}) #}
+
+                {{ render_search_homepage_widget({}, null, true) | raw }}
+            {% endblock %}
+        </div>
+    </div>
+{% endif %}
+</div>

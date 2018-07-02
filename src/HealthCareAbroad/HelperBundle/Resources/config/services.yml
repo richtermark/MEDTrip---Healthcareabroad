@@ -1,0 +1,176 @@
+parameters:
+    services.chromedia_request_class: HealthCareAbroad\HelperBundle\Services\ChromediaGlobalRequest
+    services.create_invitation_class: HealthCareAbroad\HelperBundle\Services\CreateInvitation
+    services.location_class: HealthCareAbroad\HelperBundle\Services\LocationService
+    services.contact_detail_class: HealthCareAbroad\HelperBundle\Services\ContactDetailService
+    services.invitation_class: HealthCareAbroad\HelperBundle\Services\InvitationService
+    services.token_class: HealthCareAbroad\HelperBundle\Services\TokenService
+    #services.alert_class: HealthCareAbroad\HelperBundle\Services\AlertService
+    services.couch_db_class: HealthCareAbroad\HelperBundle\Services\CouchDbService
+    services.tagtype_list: HealthCareAbroad\HelperBundle\Form\ListType\TagTypeListType
+    services.news_list: HealthCareAbroad\HelperBundle\Form\ListType\NewsListType
+    services.language_list: HealthCareAbroad\HelperBundle\Form\ListType\LanguageListType
+    services.advertisement_list: HealthCareAbroad\HelperBundle\Form\ListType\AdvertisementListType
+    #services.user_class: HealthCareAbroad\UserBundle\Services\UserService
+    services.static_page_class: HealthCareAbroad\HelperBundle\Services\StaticPageService
+services:
+
+    services.helper.couchDb:
+        class: %services.couch_db_class%
+        arguments: [%couchDbBaseUrl%]
+
+    services.helper.ancillary_service:
+        class: HealthCareAbroad\HelperBundle\Services\AncillaryServicesService
+        arguments: [@doctrine]
+
+    services.global_award:
+        class: HealthCareAbroad\HelperBundle\Services\GlobalAwardService
+        arguments: [@doctrine]
+        
+    services.recentlyApprovedListing:
+        class: HealthCareAbroad\HelperBundle\Services\RecentlyApprovedListingService
+        calls: 
+            - [setEntityManager, [@doctrine.orm.entity_manager]]
+        
+    services.helper.institution_name_validator:
+        class: HealthCareAbroad\HelperBundle\Validator\Constraints\InstitutionUniqueNameValidator
+        arguments: [@doctrine]
+        tags:
+            - {name: validator.constraint_validator, alias: helper.institution_name.validator}
+
+    services.helper.account_email_validator:
+        class: HealthCareAbroad\HelperBundle\Validator\Constraints\ValidAccountEmailValidator
+        calls:
+            #- [setUserService, [@services.user]]
+            - [setUserService, [@services.institution_user]]
+        tags:
+            - {name: validator.constraint_validator, alias: helper.account_email.validator}
+
+    # factory class for creating named events
+    events.factory:
+        class: HealthCareAbroad\HelperBundle\Factory\EventFactory
+        arguments: [@service_container]
+
+
+    services.chromedia_request:
+        class: %services.chromedia_request_class%
+        calls:
+            - [setAppId, [%application_id%]]
+            - [setAppSecret, [%application_secret%]]
+
+    services.invitation:
+        class: %services.invitation_class%
+        arguments: [@doctrine]
+        calls:
+            - [setTwig, [@twig]]
+            - [setMailer, [@mailer]]
+
+    services.token:
+        class: %services.token_class%
+        arguments: [@doctrine]
+
+    services.location:
+        class: %services.location_class%
+        calls:
+            - [setChromediaGlobalRequest, [@services.chromedia_request]]
+            - [setChromediaApiUri, [%chromedia_api_uri%]]
+            - [setDoctrine, [@doctrine]]
+            - [setCouchDbService, [@services.helper.couchDb, %couchDbCities%]]
+    services.contact_detail:
+        class: %services.contact_detail_class%
+        calls:
+            - [setDoctrine, [@doctrine]]
+    services.breadcrumb_tree:
+        class: HealthCareAbroad\HelperBundle\Services\BreadcrumbTreeService
+        arguments: [@doctrine]
+
+    services.static_page:
+        class: %services.static_page_class%
+        scope: request
+        arguments: [@doctrine]
+        calls:
+            - [setLogger, [@logger]]
+            - [setDoctrine, [@doctrine]]
+            - [setRequest, [@request]]
+            - [setSession, [@session]]
+            
+    #listener for static page router
+    #listener.static_page.router:
+    #    class: HealthCareAbroad\HelperBundle\Listener\StaticPageRouterListener
+    #    scope: request
+    #    calls:
+    #        - [setRouterService, [@services.static_page]]
+    #    tags:
+    #        - {name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 34 }
+
+    #MISPLACED
+    services.user.twig.extension:
+        class: HealthCareAbroad\UserBundle\Twig\UserTwigExtension
+        public: false
+        calls:
+            - [setUserService, [@services.twig_user]]
+        tags:
+            - { name: twig.extension }
+            
+    services.helper.page_meta_configuration:
+        class: HealthCareAbroad\HelperBundle\Services\PageMetaConfigurationService
+        calls:
+            - [setDoctrine, [@doctrine]]
+            - [setSiteName, [%site_name%]]
+
+    listener.helper.adminBreadcrumbBeforeController:
+        class: HealthCareAbroad\HelperBundle\Listener\Breadcrumbs\AdminBreadcrumbBeforeControllerListener
+        calls:
+            - [setBreadcrumbService, [@services.breadcrumb_tree]]
+            - [setTwig, [@twig]]
+            - [setRouter, [@router]]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    listener.helper.institutionBreadcrumbBeforeController:
+        class: HealthCareAbroad\HelperBundle\Listener\Breadcrumbs\InstitutionBreadcrumbBeforeControllerListener
+        calls:
+            - [setBreadcrumbService, [@services.breadcrumb_tree]]
+            - [setTwig, [@twig]]
+            - [setRouter, [@router]]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+
+    listener.helper.ListFilterBeforeController:
+        class: HealthCareAbroad\HelperBundle\Listener\ListFilterBeforeController
+        calls:
+            - [setTwig, [@twig]]
+            - [setDoctrine, [@doctrine]]
+            - [setRouter, [@router]]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    listener.helper.preExecute:
+        class: HealthCareAbroad\HelperBundle\Listener\PreExecuteController
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController, priority: -10 }
+
+    listener.mailer.error_report.create:
+        class: HealthCareAbroad\MailerBundle\Listener\ErrorReportListener
+        calls:
+            - [setTwig, [@twig]]
+            - [setMailer, [@mailer]]
+        tags:
+            - { name: kernel.event_listener, event: event.errorReport.create, method: onCreate }
+
+
+    listener.helper.globalOnKernelController:
+        class: HealthCareAbroad\HelperBundle\Listener\GlobalOnKernelListener
+        calls:
+            - [setTwig, [@twig]]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    listener.helper.globalOnKernelResponse:
+        class: HealthCareAbroad\HelperBundle\Listener\GlobalOnKernelListener
+        calls:
+            - [setStatisticsFactoryTracker, [@factory.statistics.dailyTracker]]
+            - [setStatisticsIgnoredIp, [%statistics_ignored_ip%]]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

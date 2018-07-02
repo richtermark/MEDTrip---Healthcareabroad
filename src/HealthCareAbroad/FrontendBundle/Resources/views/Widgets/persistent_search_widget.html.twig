@@ -1,0 +1,37 @@
+<div id="persistent-search">
+    <div class="container">
+        <!-- append search widget here -->
+    </div>
+</div>
+
+{% block inlineJavascriptCode %}
+ <script type="text/javascript">
+    $(document).ready(function(){
+        // fade in #back-top
+        $(function () {
+            $(window).scroll(function () {
+            	_parentDiv = $('#top-content-wrapper');
+
+                _form = $('form[name=search_box]');
+                _persistentDiv = $('#persistent-search');
+
+                if ($(this).scrollTop() > 210) {
+                	_persistentDiv.fadeIn("fast");
+                    $(_form).prependTo('#persistent-search > .container');
+                } else {
+                	_persistentDiv.fadeOut("fast");
+                	$(_form).appendTo('#top-content-wrapper > .container');
+                }
+            });
+
+            // scroll body to 0px on click
+            $('#back-top a').click(function () {
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 800);
+                return false;
+            });
+        });
+    });
+</script>
+{% endblock %}

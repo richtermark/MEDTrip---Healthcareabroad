@@ -1,0 +1,35 @@
+parameters:
+    services.subSpecialization_list: HealthCareAbroad\TreatmentBundle\Form\ListType\SubSpecializationListType
+
+services:
+    services.treatment_bundle:
+        class: HealthCareAbroad\TreatmentBundle\Services\TreatmentBundleService
+        calls:
+            - [setMemcache, [@services.memcache]]
+            - [setDoctrine, [@doctrine]]
+    form.specialization:
+        class: HealthCareAbroad\TreatmentBundle\Form\SpecializationType
+        tags:
+            - { name: form.type, alias: specialization_form }
+    form.treatment_list:
+        class: HealthCareAbroad\TreatmentBundle\Form\ListType\TreatmentListType
+        tags:
+            - { name: form.type, alias: treatment_list }
+    form.subSpecialization_list:
+        class: "%services.subSpecialization_list%"
+        tags:
+            - { name: form.type, alias: subSpecialization_list }
+    form.specialization_list:
+        class: HealthCareAbroad\TreatmentBundle\Form\ListType\SpecializationListType
+        tags:
+            - { name: form.type, alias: specialization_list }
+    form.specialization_statusSelector:
+        class: HealthCareAbroad\TreatmentBundle\Form\SpecializationStatusSelectorType
+        tags:
+            - { name: form.type, alias: specializationStatusSelector }
+    services.specialization.media:
+        class: HealthCareAbroad\TreatmentBundle\Services\SpecializationMediaService
+        calls:
+            - [setFilesystem, [@specialization_filesystem]] 
+            - [setEntityManager, [@doctrine.orm.entity_manager]]
+            - [setUploadDirectory, [%local_web_root%/%media_specialization_subdir%]]

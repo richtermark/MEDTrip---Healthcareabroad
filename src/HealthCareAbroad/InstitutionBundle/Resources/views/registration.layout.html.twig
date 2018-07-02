@@ -1,0 +1,18 @@
+{% extends '::base.institution.html.twig' %}
+{% set include_zopim = enable_zopim %}
+{% set include_zendesk = enable_zendesk %}
+
+{% block body %}
+    {% include 'InstitutionBundle:Widgets:confirmation.html.twig' %}
+    <div id="main-wrap">
+        {% include 'InstitutionBundle:Widgets:registrationHeader.layout.html.twig' %}
+        <!-- Page content here -->
+        <div id="content" class="container">
+            {% block content %}{% endblock %}
+        </div>
+        
+           {% include 'InstitutionBundle:Widgets:footer.layout.html.twig' %}
+    </div><!-- end main wrap -->
+
+    {% block inlineJavascriptCode %}{% endblock %}
+{% endblock %}

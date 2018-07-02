@@ -1,0 +1,67 @@
+HealthCareAbroad\HelperBundle\Entity\ContactDetail:
+    type: entity
+    table: contact_details
+    repositoryClass: HealthCareAbroad\HelperBundle\Repository\ContactDetailRepository
+    gedmo:
+        loggable:
+            logEntryClass: HealthCareAbroad\LogBundle\Entity\VersionEntry
+    fields:
+        id:
+            id: true
+            type: bigint
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        type:
+            type: smallint
+            nullable: false
+            column: type
+        number:
+            type: string
+            length: 25
+            fixed: false
+            nullable: false
+            column: number
+            gedmo:
+                - versioned
+        countryCode:
+            type: string
+            length: 25
+            nullable: false
+            column: country_code
+            gedmo:
+                - versioned
+        areaCode:
+            type: string
+            length: 25
+            nullable: false
+            column: area_code
+            gedmo:
+                - versioned
+        abbr:
+            type: string
+            length: 25
+            nullable: false
+            column: abbr
+        ext:
+            type: string
+            length: 5
+            nullable: true
+            column: extension
+            gedmo:
+                - versioned
+        fromNewWidget:
+            type: boolean
+            nullable: true
+            column: from_new_widget
+        isInvalid:
+            type: boolean
+            nullable: true
+            column: is_invalid
+    manyToOne:
+        country:
+            targetEntity: HealthCareAbroad\HelperBundle\Entity\Country
+            joinColumns:
+                country_id:
+                    referencedColumnName: id
+            orphanRemoval: false

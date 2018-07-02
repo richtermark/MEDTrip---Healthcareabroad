@@ -1,0 +1,75 @@
+api:
+    resource: "@ApiBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gregwar_captcha_routing:
+    resource: "@GregwarCaptchaBundle/Resources/config/routing/routing.yml"
+
+statistics:
+    resource: "@StatisticsBundle/Resources/config/routing.yml"
+    prefix: /
+
+term:
+    resource: "@TermBundle/Resources/config/routing.yml"
+    prefix: /
+
+doctor:
+    resource: "@DoctorBundle/Resources/config/routing.yml"
+    prefix: /
+
+memcache:
+    resource: "@MemcacheBundle/Resources/config/routing.yml"
+    prefix: /
+
+advertisement:
+    resource: "@AdvertisementBundle/Resources/config/routing.yml"
+    prefix: /
+
+SearchBundle:
+    resource: "@SearchBundle/Resources/config/routing.yml"
+    prefix: /
+
+InstitutionBundle:
+    resource: "@InstitutionBundle/Resources/config/routing.yml"
+    prefix: /
+    requirements:
+        #_scheme: https
+
+MediaBundle:
+    resource: "@MediaBundle/Resources/config/routing.yml"
+    prefix: /
+MailerBundle:
+    resource: "@MailerBundle/Resources/config/routing.yml"
+    prefix: /
+
+
+#ProcedureBundle:
+# resource: "@ProcedureBundle/Resources/config/routing.yml"
+# prefix: /
+
+HelperBundle:
+    resource: "@HelperBundle/Resources/config/routing.yml"
+    prefix: /
+
+UserBundle:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix: /
+
+AdminBundle:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix: /
+    requirements:
+        #_scheme: https
+
+# Internal routing configuration to handle ESI
+#_internal:
+# resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+# prefix: /_internal
+
+
+# This MUST be in the last line
+FrontendBundle:
+    resource: "@FrontendBundle/Resources/config/routing.yml"
+    prefix: /
+    requirements:
+        _scheme: http

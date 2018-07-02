@@ -1,0 +1,34 @@
+{% extends '::base.institution.html.twig' %}
+{% set include_zopim = enable_zopim %}
+{% set include_zendesk = enable_zendesk %}
+{% set include_google_analytics = true%}
+
+{% block body %}
+    {% include 'InstitutionBundle:Widgets:confirmation.html.twig' %}
+    <div id="main-wrap">
+        <header id="header">
+            <div class="container">
+                <div class="row">
+                    <div class="span4">
+                        <a href="{{ path('frontend_main_homepage') }}" target="_blank"><img src="{{ asset('images/institution/medtrip-logo.png') }}" alt="{{ site_name }} Logo"></a>
+                    </div>
+                    {% if 'institution_login' != app.request.attributes.get('_route') and 'institution_signUp' == app.request.attributes.get('_route') %}
+                    <div class="navbar pull-right">
+                        <ul class="nav">
+                            <li>
+                                <a href="{{ path('institution_login') }}" target="_blank"><i class="icon-lock"></i>Login</a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+    <!-- Page content here -->
+    {% block content %}{% endblock %}
+    {% include 'InstitutionBundle:Widgets:footer.layout.html.twig' %}
+</div>
+
+    
+{% block inlineJavascriptCode %}{% endblock %}
+{% endblock %}

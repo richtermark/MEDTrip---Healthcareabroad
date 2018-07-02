@@ -1,0 +1,7 @@
+{% set contents = json_decode(adsTypeObj) %}
+
+{% include 'HelperBundle:Widgets:subMenu.html.twig'
+    with {
+        links: contents
+    }
+%}

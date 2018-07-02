@@ -1,0 +1,46 @@
+{% block fancy_business_hours_widget %}
+<div class="clinictime" id="fancy_business_hour_root_container">
+    
+    {#-- get selector widget prototype #}
+    {% set _prototype = getTemplateContents("HelperBundle:Form/Partials:fbh.selectorWidget.html.twig") %}
+    
+    {#-- get selected business hour prototype #}
+    {% set _selectedHourPrototype = getTemplateContents("HelperBundle:Form/Partials:fbh.selectedHour.html.twig") %}
+    
+    <h4>Selected Working Hours</h4>
+    <div id="fbh_data_container"></div>
+    
+    {# -- holder for form data, do not remove --#}
+    <div id="fbh_value_elements_container"></div>
+    
+</div>
+<script type="text/javascript">
+<!--
+(function($){
+    $(function(){
+
+        var fbh = new FancyBusinessHours({
+            rootContainer: $('#fancy_business_hour_root_container'),
+            selectorWidgetPrototype: '{{ _prototype | raw }}',
+            selectedHourPrototype: '{{ _selectedHourPrototype | raw }}',
+            formValuePrototype: '{{ form_widget(form.vars.prototype) | raw }}'
+        });
+        fbh.initialize();
+
+        {% for _bh in form.parent.vars.value.businessHours %}
+            {# javascript code below #}
+            fbh.addData(
+                fbh._extractDaysFromWeekdayBitValue({{ _bh.weekdayBitValue }}), 
+                new Date('{{ _bh.opening | date("F d, Y H:i")}}'), 
+                new Date('{{ _bh.closing | date("F d, Y H:i")}}'), 
+                '{{_bh.notes}}'
+            );
+            {# end javascript code #}
+        {% endfor %}
+
+        
+    });
+})(jQuery);
+//-->
+</script>
+{% endblock %}

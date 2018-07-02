@@ -1,0 +1,46 @@
+services:
+
+    form.institution_specialization:
+        class: HealthCareAbroad\InstitutionBundle\Form\InstitutionSpecializationFormType
+        #calls:
+        #    - [setInstitutionTreatmentEventSubscriber, [@form_subscriber.institutionTreatmentChoice]]
+        tags:
+            - { name: form.type, alias: institutionSpecialization }
+        
+    form.institution_list:
+        class: "%services.institution_list%"
+        calls:
+          - [setContainer, [@service_container]]
+        tags:
+            - { name: form.type, alias: institution_list }
+            
+    form.institutionGlobalAwardExtraValue.field:
+        class: HealthCareAbroad\InstitutionBundle\Form\FieldType\InstitutionGlobalAwardExtraValueFieldType
+        tags:
+            - { name: form.type, alias: institution_global_award_extra_value }
+    
+    form.doctor_list:
+        class: "%services.doctor_list%"
+        calls:
+            - [setDoctrine, [@doctrine]]
+        tags:
+            - { name: form.type, alias: doctor_list }
+            
+    form.institutionTreatment_list:
+        class: HealthCareAbroad\InstitutionBundle\Form\ListType\InstitutionTreatmentListType
+        tags:
+            - { name: form.type, alias: institutionTreatment_list }
+    
+    form.medicalProviderGroup_list:
+        class: HealthCareAbroad\InstitutionBundle\Form\ListType\MedicalProviderGroupListType
+        calls:
+            - [setDoctrine, [@doctrine]]
+        tags:
+            - { name: form.type, alias: medicalProviderGroup_list }
+     
+    form.specialization_selector:
+        class: HealthCareAbroad\InstitutionBundle\Form\InstitutionSpecializationSelectorFormType
+        calls:
+            - [setDoctrine, [@doctrine]]
+        tags:
+            - { name: form.type, alias: institution_specialization_selector }

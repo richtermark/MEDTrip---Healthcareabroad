@@ -1,0 +1,39 @@
+{% set number = contact_details_to_json(institutionMedicalCenter.contactDetails, true) %}
+
+<div class="clinic-header-wrapper">
+    <div class="logo-wrapper pull-left">
+        {% if institutionMedicalCenter.logo and institutionMedicalCenter.logo.src %}
+            <img src="{{ institutionMedicalCenter.logo.src }}" class="clinic-logo" />
+        {% else %}
+            <span class="hca-sprite clinic-default-logo logo"></span>
+        {% endif %}
+    </div>
+    
+    <div class="right-column-wrapper">
+    	<h2>{{ institutionMedicalCenter.name }}</h2>
+		<div class="address-wrapper">
+		    <span class="hca-sprite address-icon-dark"></span>
+			<address>
+			    {{ medical_center_complete_address_to_string(institutionMedicalCenter, ['address']) }}
+			    <strong>{{ medical_center_complete_address_to_string(institutionMedicalCenter, ['city', 'state', 'country', 'zipCode']) }}</strong>
+			</address>
+		</div>
+
+    	<div>
+    	    {% if number %}
+        	    <a id="clinicCallUs" rel="tooltip" href="#" class="btn green" data-contact-number="{{ number }}"><span class="hca-sprite call-icon"></span> Call Us</a>
+            {% endif %}
+    		<a href="#modal_imc_inquiry_form" data-toggle="modal" id="email" class="btn green"><span class="hca-sprite email-icon"></span> Email</a>
+        	{% if institutionMedicalCenter.websites %}
+        		<a href="{{ institution.websites }}" class="website btn green" target="_blank">Visit Website</a>
+            {% endif %}
+
+            <!-- Modal InstitutionMedicalCenter Inquiry -->
+            	{% include 'FrontendBundle:InstitutionMedicalCenter/Widgets:inquire.imc.html.twig' 
+            	     with { modalId: 'modal_imc_inquiry_form', modalTitle: 'Email ' ~ institutionMedicalCenter.name } 
+            	%}
+           <!-- end Modal InstitutionMedicalCenter Inquiry -->
+    	</div>    
+    </div>
+</div>
+

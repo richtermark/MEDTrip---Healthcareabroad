@@ -1,0 +1,238 @@
+HealthCareAbroad\InstitutionBundle\Entity\Institution:
+    type: entity
+    table: institutions
+    repositoryClass: HealthCareAbroad\InstitutionBundle\Repository\InstitutionRepository
+    gedmo:
+        loggable:
+            logEntryClass: HealthCareAbroad\LogBundle\Entity\VersionEntry
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        name:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+            gedmo:
+                - versioned
+        description:
+            type: text
+            nullable: false
+            gedmo:
+                - versioned
+        contactEmail:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+            column: contact_email
+            gedmo:
+                - versioned
+        contactNumber:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+            column: contact_number
+        websites:
+            type: text
+            nullable: false
+            gedmo:
+                - versioned
+        websiteBackUp:
+            type: text
+            nullable: true
+            column: website_back_up
+        socialMediaSites:
+            type: text
+            nullable: true  
+            column: social_media_sites
+            gedmo:
+                - versioned
+        address1:
+            type: text
+            nullable: false
+            gedmo:
+                - versioned
+        addressHint:
+            type: text
+            nullable: true
+            column: address_hint
+            gedmo:
+                - versioned
+        zipCode:
+            type: string
+            length: 10
+            nullable: false
+            column: zip_code
+            gedmo:
+                - versioned
+        coordinates:
+            type: string
+            length: 100
+            column: coordinates
+        payingClient:
+            type: smallint
+            nullable: false
+            column: paying_client
+        totalClinicRankingPoints:
+            type: float
+            nullable: true
+            column: total_clinic_ranking_points
+            gedmo:
+                - versioned
+        signupStepStatus:
+            type: smallint
+            nullable: false
+            column: signup_step_status
+        dateModified:
+            type: datetime
+            nullable: false
+            column: date_modified
+        dateCreated:
+            type: datetime
+            nullable: false
+            column: date_created
+        slug:
+            type: string
+            length: 100
+            fixed: true
+            nullable: false
+            gedmo:
+              slug:
+                separator: -
+                updatable: true
+                fields:
+                  - name
+        isFromInternalAdmin:
+            type: smallint
+            nullable: true
+            column: is_from_internal_admin
+        status:
+            type: smallint
+            nullable: false
+            gedmo:
+                - versioned
+        type:
+            type: integer
+            unsigned: true
+            nullable: false
+            column: institution_type
+            gedmo:
+                - versioned
+        stateBak:
+            type: string
+            length: 255
+            nullable: true
+            column: state_bak
+    oneToMany:
+        institutionMedicalCenters:
+            targetEntity: HealthCareAbroad\InstitutionBundle\Entity\InstitutionMedicalCenter
+            mappedBy: institution
+            cascade:
+                - "persist"
+            orderBy: {"id": "ASC"}
+        institutionUsers:
+            targetEntity: HealthCareAbroad\UserBundle\Entity\InstitutionUser
+            mappedBy: institution
+    manyToMany:
+        medicalProviderGroups:
+            targetEntity: HealthCareAbroad\InstitutionBundle\Entity\MedicalProviderGroup
+            cascade:
+                - "persist"
+            mappedBy: null
+            joinTable:
+                name:  institution_groups
+                joinColumns:
+                    -
+                        name: institution_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: medical_provider_group_id
+                        referencedColumnName: id
+            orderBy: null
+        contactDetails:
+            gedmo:
+                - versioned
+            targetEntity: HealthCareAbroad\HelperBundle\Entity\ContactDetail
+            cascade:
+                - "persist"
+            mappedBy: null
+            joinTable:
+                name: institution_contact_details
+                joinColumns:
+                    -
+                        name: institution_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: contact_detail_id
+                        referencedColumnName: id
+            orderBy: null  
+    manyToOne:
+        country:
+            gedmo:
+                - versioned
+            targetEntity: HealthCareAbroad\HelperBundle\Entity\Country
+            cascade: 
+                - "persist"
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                country_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        city:
+            gedmo:
+                - versioned
+            targetEntity: HealthCareAbroad\HelperBundle\Entity\City
+            cascade:
+                - "persist"
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                city_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        state:
+            gedmo:
+                - versioned
+            targetEntity: HealthCareAbroad\HelperBundle\Entity\State
+            joinColumns:
+                state_id:
+                    referencedColumnName: id
+            cascade: 
+                - "persist"
+            orphanRemoval: false
+
+        logo:
+            gedmo:
+                - versioned
+            targetEntity: HealthCareAbroad\MediaBundle\Entity\Media
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                logo_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+
+        featuredMedia:
+            gedmo:
+                - versioned
+            targetEntity: HealthCareAbroad\MediaBundle\Entity\Media
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                featured_media_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+
+    lifecycleCallbacks: {  }

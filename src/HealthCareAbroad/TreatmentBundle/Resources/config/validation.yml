@@ -1,0 +1,30 @@
+HealthCareAbroad\TreatmentBundle\Entity\Specialization:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+            message: This specialization already exists!
+    properties:
+        name:
+            - NotBlank: ~
+
+HealthCareAbroad\TreatmentBundle\Entity\SubSpecialization:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name, specialization]
+            message: This sub-specialization already exists!
+    properties:
+        name:
+            - NotBlank: ~
+        specialization:
+            - NotBlank: ~
+
+HealthCareAbroad\TreatmentBundle\Entity\Treatment:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name, specialization]
+            message: This treatment already exist for selected specialization!
+    properties:
+        name:
+            - NotBlank: ~
+        specialization:
+            - NotBlank: ~

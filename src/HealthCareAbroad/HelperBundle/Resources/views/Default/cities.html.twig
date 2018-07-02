@@ -1,0 +1,2 @@
+<li class="custom-select-item" data-value="">Select City</li>
+{% for city in cities %}<li class="custom-select-item" data-value="{{ city.id }}"{% if selectedCity == city.id %} selected="selected"{% endif %}>{{ city.name }}</li>{% endfor %}

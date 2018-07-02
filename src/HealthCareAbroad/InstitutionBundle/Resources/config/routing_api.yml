@@ -1,0 +1,18 @@
+institutions_api:
+    pattern: /api/institutions
+    defaults: { _controller: InstitutionBundle:Api:institutions }
+    requirements:
+        _method: GET
+        
+        
+institution_medical_centers_api:
+    pattern: /api/institution-medical-centers
+    defaults: { _controller: InstitutionBundle:Api:listInstitutionMedicalCenters }
+    requirements: 
+        _method: GET
+        
+medical_centers_api:
+    pattern: /api/medical-centers
+    defaults: { _controller: InstitutionBundle:Api:listMedicalCenters }
+    requirements:
+        _method: GET

@@ -1,0 +1,19 @@
+{% if selectedTab is not defined %}
+    {% set selectedTab = 'dashboard' %}
+{% endif %}
+
+{% if selectedSubTab is not defined %}
+    {% set selectedSubTab = '' %}
+{% endif %}
+
+<ul class="nav pull-right" id="right-nav">
+    <li class="dropdown {{ selectedTab == 'myaccount' ? 'active' : '' }}">
+        <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-user"></i></a>
+        <ul class="dropdown-menu">
+            <li class="{{ selectedSubTab == 'institutions_index' ? 'active' : '' }}"><a href="{{ path('admin_edit_account') }}">Edit account</a></li>
+            <li class="{{ selectedSubTab == 'institutions_add' ? 'active' : '' }}"><a href="{{ path('admin_change_password') }}">Change password</a></li>
+        </ul>
+    </li>
+    <li class="divider-vertical"></li>
+    <li><a href="{{ path('admin_logout') }}">logout</a></li>
+</ul>

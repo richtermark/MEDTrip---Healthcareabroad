@@ -1,0 +1,4 @@
+services:
+    services.terms:
+        class: HealthCareAbroad\TermBundle\Services\TermsService
+        arguments: [@doctrine]

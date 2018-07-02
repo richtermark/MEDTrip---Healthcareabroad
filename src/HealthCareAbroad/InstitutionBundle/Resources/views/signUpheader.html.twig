@@ -1,0 +1,32 @@
+{% extends '::base.institution.html.twig' %}
+
+{% block title %}{{ parent() }} &raquo; Institution Panel{% endblock %}
+
+{% block body %}   
+   <div class="container">
+		<div class="span5" style="float:none; margin:0 auto; background-color: #F4F4F4; border-radius: 6px 6px 6px 6px; margin-bottom: 30px; margin-top: 20px; padding: 25px 25px 10px 25px;">
+			
+			<div style="margin: -85px 0 20px 55px;"><img src="{{ asset('images/institution/medical-clip.png') }}" alt="Medical Clip" longdesc="#">
+			</div>
+			
+			<a href="{{ path('frontend_main_homepage') }}"><img src="{{ asset('images/institution/HCA-logo-small.png') }}" alt="Health Care Abroad Logo" longdesc="#" style="float:left; margin-right: 5px;">
+			
+			<h1 style="color: #002A5C;">{{ site_name }}</h1></a>
+			<h3 style="margin-top: 10px;">Registration form</h3>
+			
+			<p>Please provide the correct information below, and we will create an exclusive medical account listing for you.</p>
+			<div class="row-fluid">
+		  			{% block content %}{% endblock %}	  
+			</div>
+		
+		
+		</div>
+	</div>
+	<div class="container">
+		<br/>
+		<hr>
+		<footer>
+			<p>&copy; Chromedia Far East Inc. <a href="{{ path('frontend_main_homepage') }}">www.{{ site_name }}</a>. All rights reserved.</p>
+		</footer>
+	</div>
+{% endblock %}

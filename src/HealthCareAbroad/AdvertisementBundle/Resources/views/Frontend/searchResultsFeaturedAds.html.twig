@@ -1,0 +1,108 @@
+{% if featuredAds %}
+
+<div class="featured-type-wrapper box-shadow">
+	{% for each in featuredAds %}
+	    {% if each.institution %}
+
+	        {#-- set statistic parameters for this advertisement --#}
+	        {% set _impressionStatisticParametersAttribute = get_statistics_parameter_attribute_name() ~ '=' ~ encode_advertisement_impressions_parameters(each)  %}
+	        {#-----------------------------------------------------#}
+	        
+	        {#-- BE CAREFUL WHEN MODIFYING ELEMENTS WITH STATS TRACKERS --#}
+	        <div class="featured-item {{ get_impression_tracker_class() }}"  {{ _impressionStatisticParametersAttribute }} >
+    		    
+    		    {% if each.institutionMedicalCenter and each.institutionMedicalCenter.id > 0 %}
+                    {% set primaryUrl = get_institution_medical_center_frontend_url(each.institutionMedicalCenter) %}
+                    {% set primaryLogo = render_institution_medical_center_logo(each.institutionMedicalCenter) %}
+                    {% set secondaryUrl = get_institution_frontend_url(each.institution) %}
+                {% else %}
+                    {% set primaryLogo = render_institution_logo(each.institution, {attr: {class: 'small', alt: 'hospital logo'}}) %}
+                    {% set primaryUrl = get_institution_frontend_url(each.institution) %}
+    		    {% endif %}
+    		    
+                {% if each.title %}
+                <div class="title-ads">
+                    <h4 class="title">
+                        {% include 'FrontendBundle:Widgets/Statistics:advertisement.clickthroughLink.html.twig' with {
+                                statisticsDataObject: each,
+                                link: {url: primaryUrl, html: each.title }
+                        } %}
+                    </h4>
+                </div>
+                {% endif %}    
+
+    			<div class="content row">
+    				<div class="clinic-box">
+
+                        {% include 'FrontendBundle:Widgets/Statistics:advertisement.clickthroughLink.html.twig' with {
+            			        statisticsDataObject: each,
+            			        link: {
+            			            class: 'small-logo-wrapper',
+            			            url: primaryUrl,
+                    			    html: primaryLogo
+            			        }
+            			    }
+            			%}
+
+    					<!-- User Ratings Temporarily Commented -->
+                        {# include 'FrontendBundle:Widgets:ratings.html.twig' #}
+    
+    				</div>
+    				<div class="description-box">
+
+                        {% if secondaryUrl is defined %}
+                        <h3 class="heading">
+                            {% include 'FrontendBundle:Widgets/Statistics:advertisement.clickthroughLink.html.twig' with {
+                                    statisticsDataObject: each,
+                                    link: {url: primaryUrl, html: each.institution.name }
+                            } %}
+                        </h3>
+                        {% endif %}
+    					
+                        <span class="location">
+                            {{ institution_address_to_string(each.institution, ['city', 'country']) }}
+                        </span>
+
+    					<p>{{ each.description | raw }}</p>
+    				</div>
+
+                    {% if each.media %}
+                        {% set thumbnailSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::ADS_FEATURED_IMAGE') %}
+                        <div class="thumbnail-frame pull-right">
+                            <img src="{{ advertisement_media_src(each.media, thumbnailSize) }}" class="img-polaroid" alt=""/>
+                        </div>
+                    {% endif %}
+
+                    {% include 'FrontendBundle:Widgets/Statistics:advertisement.clickthroughLink.html.twig' with {
+        			        statisticsDataObject: each,
+        			        link: {url: primaryUrl, class: 'btn blue pull-right', html: '<span class="white-icon-search"></span> Learn More'}
+        			} %}
+    			</div>
+                <div class="ad-highlights-wrapper row-fluid">
+                    {% set clinicHighlights = json_decode(each.highlights) %}
+                    {% set iconSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::MINI') %}
+                    {% for clinicHighlight in clinicHighlights %}
+                        {% if clinicHighlight.label %}
+                        <div class="item-wrapper span6">
+                            {% if clinicHighlight.icon %}
+                                {% set imageSrc = clinicHighlight.icon.src_thumbnail is defined ? clinicHighlight.icon.src_thumbnail : advertisement_media_src(clinicHighlight.icon, iconSize) %}
+                                <img class="media-object img-circle pull-left" src="{{ imageSrc }}" alt="logo" width="50"/>
+                            {% else %}
+                                <span class="{{ ad_highlight_placeholder_class(clinicHighlight.type) }} img-circle pull-left default"></span>
+                            {% endif %}
+
+                            {% if clinicHighlight.header %}
+                                <h5>{{ clinicHighlight.header }}</h5>
+                            {% endif %}
+                            <span class="title">{{ clinicHighlight.label }}</span>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+    		    </div>
+            </div><!--End of featured_item 1-->
+	    {% endif %}
+		
+    {% endfor %}
+	</div>
+
+{% endif %}

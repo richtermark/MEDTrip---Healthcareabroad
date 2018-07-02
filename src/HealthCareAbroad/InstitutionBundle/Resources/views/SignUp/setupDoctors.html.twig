@@ -1,0 +1,29 @@
+{% extends 'InstitutionBundle::registration.layout.html.twig' %}
+{% set disableMainNavigation = true %}
+{% set setUpProfile = true %}
+                
+{% block content %}
+    <div class="row">
+        <h1>{{ institutionMedicalCenter.name | title }}</h1>
+    
+        <div class="span8">
+            <section class="row-fluid" style="margin-bottom: 12px;">
+                <h2>
+                    List of Doctors 
+                    <a id="addDoctorButton" href="#add-doctor" class="btn btn-primary btn-large pull-right" data-toggle="modal"><i class="icon-plus"></i> Add New Doctor</a>
+                </h2>
+                
+            </section>
+
+            {% include 'InstitutionBundle:Doctor/Widgets:doctors.html.twig' with { addDoctorFormAction: path('institution_signup_setup_doctors', {imcId: institutionMedicalCenter.id }) } %}
+
+            <section id="doneSection" style="margin-top: 15px;display: {{ institutionMedicalCenter.doctors|length ? '' : 'none' }}">
+                <a href="{{ path('institution_signup_finish') }}" class="btn pull-right btn-success btn-large">Done Adding Doctors</a>
+            </section>
+        </div>
+
+        <aside class="span4">
+            {{ render_signup_steps_by_route(app.request.attributes.get('_route'), isSingleCenter is defined and isSingleCenter) | raw}}
+        </aside>
+    </div>
+{% endblock %}

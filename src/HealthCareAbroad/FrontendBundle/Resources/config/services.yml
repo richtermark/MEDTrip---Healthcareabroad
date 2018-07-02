@@ -1,0 +1,44 @@
+parameters:
+    services.inquiry_list: HealthCareAbroad\FrontendBundle\Form\ListType\InquirySubjectListType
+    services.inquiry_class: HealthCareAbroad\FrontendBundle\Services\InquireService
+    services.breadcrumb_class: HealthCareAbroad\FrontendBundle\Services\FrontendBreadcrumbService
+
+services:
+    services.frontend.router:
+        class: HealthCareAbroad\FrontendBundle\Services\FrontendRouteService
+        scope: request
+        calls:
+            - [setLogger, [@logger]]
+            - [setDoctrine, [@doctrine]]
+            - [setRequest, [@request]]
+            - [setSession, [@session]]
+
+    listener.frontend.router:
+        class: HealthCareAbroad\FrontendBundle\Listener\DefaultRouterListener
+        scope: request
+        calls:
+            - [setRouterService, [@services.frontend.router]]
+        tags:
+            - {name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 33 }
+
+    services.inquire:
+        class: %services.inquiry_class%
+        arguments: [@doctrine]
+        calls:
+
+    form.inquiry_subject_list:
+        class: "%services.inquiry_list%"
+        calls:
+            - [setContainer, [@service_container]]
+        tags:
+            - { name: form.type, alias: inquiry_subject_list }
+
+    services.frontend_breadcrumb:
+        class: %services.breadcrumb_class%
+        arguments: [@service_container]
+
+    twig.frontend_breadcrumb_widget:
+        class: HealthCareAbroad\FrontendBundle\Twig\BreadcrumbWidgetTwigExtension
+        arguments: [@services.frontend_breadcrumb]
+        tags:
+            - name: twig.extension

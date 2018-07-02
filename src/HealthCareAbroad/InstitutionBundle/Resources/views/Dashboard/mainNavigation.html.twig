@@ -1,0 +1,54 @@
+<!--  start nav -->
+<div class="nav">
+    <div class="table">
+        {% if selectedTab is not defined %}
+            {% set selectedTab = 'dashboard' %}
+        {% endif %}
+        
+        <ul class="{{ selectedTab == 'dashboard' ? 'current' : 'select' }}">
+            <li>
+                <a href="{{ path('institution_homepage') }}"><b>Dashboard</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            </li>
+        </ul>
+    
+        <div class="nav-divider">&nbsp;</div>
+        
+        <ul class="{{ selectedTab == 'medical_centers' ? 'current' : 'select' }}">
+            <li>
+                <a href="{{ path('institution_medicalCenter_index') }}"><b>Specializations</b><!--[if IE 7]><!--></a><!--<![endif]-->
+                
+            </li>
+        </ul>
+        
+        <div class="nav-divider">&nbsp;</div>
+        
+        <ul class="{{ selectedTab == 'gallery' ? 'current' : 'select' }}">
+            <li>
+                <a href="{{ path('institution_gallery') }}"><b>Gallery</b><!--[if IE 7]><!--></a><!--<![endif]-->
+            </li>
+        </ul>
+        
+        <div class="nav-divider">&nbsp;</div>
+                        
+        <ul class="{{ selectedTab == 'staff' ? 'current' : 'select' }}">
+            <li>
+                <a href="{{ path('institution_view_all_staff')}}"><b>Staff</b><!--[if IE 7]><!--></a><!--<![endif]-->
+                <!--[if lte IE 6]><table><tr><td><![endif]-->
+                <div class="select_sub {{ selectedTab == 'staff' ? 'show' : '' }}">
+                	<ul class="sub">
+                		<li><a href="{{ path('institution_view_all_staff')}}">View all staff</a></li>
+                		<li><a href="{{ path('institution_invite_user') }}">Invite staff</a></li>
+                		<li><a href="{{ path('institution_userType_index') }}">User Types</a></li>
+                		<li><a href="{{ path('institution_userRole_index') }}">User permissions</a></li>
+                		<li><a href="{{ path('institution_view_all_doctors') }}">Doctors</a></li>
+                	</ul>
+                </div>
+                <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+            </li>
+        </ul>
+        
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<!--  end nav -->

@@ -1,0 +1,2084 @@
+  {% extends 'FrontendBundle::layout.campaign.html.twig' %}
+  {% block content %}
+ <!-- Home starts 
+    <div id="home_superslide">
+
+        <div class="container">
+            <a href="{{ path('frontend_main_default') }}" targe="_blank"><img src="{{ asset('images/frontend/campaign/healthcareabroad-logo-big.png') }}" alt="client_1" /></a>
+            <h1>
+                the resource for global
+                <span>
+                    healthcare
+                </span>
+                <br>
+                a comprehensive,
+                <span>
+                    unbiased
+                </span>
+                directory
+            </h1>
+        </div>
+        <div class="clr">
+        </div>
+    </div>
+    Home end -->
+    <!-- Menu starts -->
+    <div id="menu" class="row-fluid">
+        <!-- Content wrapper starts -->
+        <div class="container">
+            <!-- Logo starts -->
+            <div class="span3 pull-left">
+                <a href="{{ path('frontend_main_homepage') }}" target="_blank"><img src="{{ asset('images/frontend/campaign/healthcareabroad-logo.png') }}" alt="client_1" /></a>
+            </div>
+            <div class="span9 pull-right">
+                <div class="menu_nav">
+                    <div id="nav_wrap">
+                        <ul class="arrowunderline" id="nav">
+                            <li class="services">
+                                <a href="#services">&nbsp;&nbsp;Introduction</a>
+                            </li>
+                            <li>
+                                <a href="#homepage-view">Homepage</a>
+                            </li>
+                            <li>
+                                <a href="#results-view">Results Page</a>
+                            </li>
+                            <li>
+                                <a href="#news">Clinic Page</a>
+                            </li>
+                            <li>
+                                <a href="#media">Hospital Page</a>
+                            </li>
+                            <li>
+                                <a href="#pricing">Who is HealthCareAbroad?</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- // Content wrapper -->
+    </div>
+    <!-- // Menu -->
+    <!-- Intro starts -->
+    <div id="services">
+        <!-- Container starts -->
+        <div class="pattern_glow">
+            <div class="container">
+                <h1>
+                    <small>Advertising Guide for</small> {{ site_name }}
+                </h1>
+                <h3>What We Do</h3>
+                <p><b>{{ site_name }}</b> is a high-quality, targeted B2C medical tourism portal and marketing platform. Our mission is to provide a no-cost, comprehensive and unbiased directory to assist patients in matching international healthcare options with their medical needs. We are <em>not</em> a medical tourism facilitator.</p>
+                <h3>Why We Do It</h3>
+                <p>Today’s patients are mobile and willing to travel for high quality, affordable healthcare.  {{ site_name }} fills the information void in Medical Tourism by creating a central source to help educate patients, instil confidence and build awearness of the industry.  Through our collaborations with hospitals, clinics, and government agencies, we create value for our clients, your patients, and the Medical Tourism industry as a whole.</p>
+                <h3>How {{ site_name }} Works for Patients</h3>
+                <p>Patients search {{ site_name }} for specific treatments and/or destination. Our search engine returns matched clinic and hospital profiles side-by-side with paid upgraded profiles and features.</p>
+                <h3>How {{ site_name }} Works for Hospitals and Clinics</h3>
+                <div class="media">
+                    <h3 class="pull-left">1.</h3>
+                    <div class="media-body">
+                        <h4>Get your clinic/hospital Profile on {{ site_name }} (FREE)</h4>
+                        <p>Clinic and Hospital Profiles are Forever Free. YES, Free! With no subscriptions, affiliation agreements, commissions, hidden fees, setup costs nor expiration dates. Additionally you maintain full control of your profile. Add and access your profile through our management system by visiting: <a href="{{ path('institution_signUp') }}" taget="_blank"></a>{{ site_name }}</a></p>
+                    </div>
+                </div>
+                <div class="media">
+                    <h3 class="pull-left">2.</h3>
+                    <div class="media-body">
+                        <div class="row-fluid">
+                            
+                                <h4>Upgrade your Profile (BEST value)</h4>
+                                <p>Increase exposure, generate additional leads, build your brand and gain access to advanced features within your profile.</p>
+                            <div class="span8">
+                                <p>Upgrade Profiles include:</p>
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <ul class="nav nav-list">
+                                            <li><i class="icon-globe icon-2x"></i>Clinic URL (web link)</li>
+                                            <li><i class="icon-phone icon-2x"></i>Clinic Phone Number</li>
+                                            <li><i class="icon-h-sign icon-2x"></i>Clinic Logo</li>
+                                            <li><i class="icon-picture icon-2x"></i>Clinic Cover Photo</li>
+                                        </ul>
+                                    </div>
+                                    <div class="span6">
+                                        <ul class="nav nav-list">
+                                            <li><i class="icon-film icon-2x"></i>Clinic Photo Gallery</li>
+                                            <li><i class="icon-facetime-video icon-2x"></i>Clinic Video</li>
+                                            <li><i class="icon-facebook icon-2x"></i>Clinic Social Media Links</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p>In addition, Upgraded Profiles are <b>higher in the search engine results pages</b> and include a logo* and photo* <small>(*depends on upgrade package selected)</small></p>
+                                <p>
+                                <small>See the <a href="#results-view">Results Page</a> and <a href="#news">Clinic Page</a> examples in this guide for details and pricing. </small>
+                                </p>
+                                
+                            </div>
+                            {# <div class="span3">
+                                <img src="{{ asset('images/frontend/campaign/lead-seal-small.png') }}" alt="client_1" />
+                            </div> #}
+                        </div>
+                        {# <div class="alert alert-info">
+                                    <h5><strike>For as little as $1 a day clinics can greatly increase the amount of quality leads generated from {{ site_name }}</strike></h5>
+                                </div> #}
+                    </div>
+                </div>
+                <div class="media">
+                    <h3 class="pull-left">3.</h3>
+                    <div class="media-body">
+                        <h4>Schedule Features (High Visibility)</h4>
+                        <p>Build brand awareness through high visibility, smart and effective features. Features include photos, logo, calls-to-action, important text and highlights.</p>
+                        <p>
+                        <small>See the <a href="#results-view">Results Page</a> and <a href="#news">Clinic Page</a> examples in this guide for details and pricing. </small>
+                        </p>
+                    </div>
+                </div>
+                <br><br>
+                <p>Our team is always available for questions or assistance. <a href="mailto:help@{{ domain_name }}" target="_top">help@{{ domain_name }}</a>
+            </div>
+        <!-- // Container -->
+            <div class="clr">&nbsp;</div>
+        </div>
+    </div>
+    <!-- // Services -->
+    <!-- circle navigator / seperator -->
+                <div class="circle_arrows">
+                    <div class="circle_uparrow">
+                        <a href="#services" class="circle_uparrow">&nbsp;</a>
+                    </div>
+                    <div class="circle_downarrow">
+                        <a href="#results-view" class="circle_downarrow">&nbsp;</a>
+                    </div>
+                    <div class="clr">
+                    </div>
+                </div>
+    <!-- // circle navigator / seperator -->
+    <!-- About starts -->
+    <div id="homepage-view">
+        <div class="pattern_glow">
+            <!-- Container starts -->
+            <div class="container">
+                <h2>
+                    <small>
+                        Website Overview -
+                    </small>
+                    Homepage
+                </h2>
+                <div class="image-map-homepage">
+                    <img src="{{ asset('images/frontend/campaign/healthcareabroad-homepage.jpg') }}" alt="client_1" />
+                    <div id="parts-images">
+                        {# <a data-toggle="popover" data-content="<h2><i class='icon-link'></i>Quick Links</h2>Links to see all of the treatments and destinations displayed alphabetically. Allows users to narrow down their search in multiple ways, based on their personal style and technological comfort level." 
+                        class="circle a-home">A</a> #}
+                        <a data-toggle="popover" data-content="<h2><i class='icon-search'></i>Modern, clear, search function</h2>Predictive text and drop boxes provide fast, easy, and accurate access to {{ site_name }} directories. Multiple input methods allow users to search in whatever manner is most natural and intuitive to them."
+                        class="circle b-home">A</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-asterisk'></i>The Showcase Feature</h2>This is the most visible spot on the entire site. A compact, targeted feature with the most important text, rotating photos, and logo on the whole site. The only spot that is guaranteed to be seen upon first loading the page. This rotates with other showcased features and links directly to a hospital or clinic listing. Subscription is on an annual basis. Limited to 6 features." class="circle c-home">B</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-file-alt'></i>Instant Access to high quality content</h2>Links to guides, news, travel information, and educational pieces add value for site visitors, and help educate and encourage further exploration."
+                        class="circle d-home">C</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-medkit'></i>Homepage Featured Clinic</h2>A listing with text, a photo, logo, and 2 key points. An excellent way to drive awareness and traffic. Limited to 6 features. Subscription is based on a calendar month." class="circle e-home">D</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-beaker'></i>Common Treatments</h2>Picked by editors based on search volume and trends, this list of Common Treatments with description gives site visitors another way to find services they may be interested in."
+                        class="circle f-home">E</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-picture'></i>Side Column Media Feature</h2>Either a high quality photo advertisement, or a short promotional video can be embedded here. Helps reinforce brand recognition and presence." class="circle g-home">F</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-map-marker'></i>Destinations Feature</h2>Allows national and tourism agencies to promote entire country or regions medical facilities as a whole." class="circle h-home">G</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-envelope'></i>Newsletter Signup</h2>Users can join the newsletter which will allow them to stay up to date on any important events or deals." class="circle i-home">H</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-envelope'></i>Client Registration and Login</h2>Allows new clinics to quickly and easily join the site, and allows existing clinics to access and manage their accounts." class="circle i-home">I</a>
+                    </div>
+                </div>
+                <h1>
+                    Homepage
+                </h1>
+                <h3>
+                    Content and Navigation:
+                </h3>
+{#                 <div class="media">
+                    <span class="circle pull-left">
+                        A
+                    </span>
+                    <div class="media-body">
+                        <h4>
+                            Quick Links
+                            <br>
+                            <small>
+                                Links to see all of the treatments and destinations displayed alphabetically.
+                                Allows users to narrow down their search in multiple ways, based on their
+                                personal style and technological comfort level.
+                            </small>
+                        </h4>
+                        <p>
+                        </p>
+                    </div>
+                </div> #}
+                <div class="media">
+                    <span class="circle pull-left">
+                        A
+                    </span>
+                    <div class="media-body">
+                        <h4>
+                            Modern, clear, search function
+                            <br>
+                            <small>
+                                 Predictive text and drop boxes provide fast, easy, and accurate access to {{ site_name }} directories.  Multiple input methods allow prospective patients to search in whatever manner is most natural and intuitive to them.
+                            </small>
+                        </h4>
+                        <p>
+                        </p>
+                    </div>
+                </div>
+                <div class="media">
+                    <span class="circle pull-left">
+                        C
+                    </span>
+                    <div class="media-body">
+                        <h4>
+                            Instant Access to high quality content
+                            <br>
+                            <small>
+                                Links to guides, news, travel information, and educational pieces add value for site visitors, and help educate and encourage further exploration.
+                            </small>
+                        </h4>
+                        <p>
+                        </p>
+                    </div>
+                </div>
+                <div class="media">
+                    <span class="circle pull-left">
+                        E
+                    </span>
+                    <div class="media-body">
+                        <h4>
+                            Common Treatments
+                            <br>
+                            <small>
+                                Picked by editors based on search volume and trends, this list of Common Treatments with description gives prospective patients another way to find services they may be interested in.
+                            </small>
+                        </h4>
+                        <p>
+                        </p>
+                    </div>
+                </div>
+                <div class="media">
+                    <span class="circle pull-left">
+                        H
+                    </span>
+                    <div class="media-body">
+                        <h4>
+                            Newsletter Signup
+                            <br>
+                            <small>
+                                Users can join the newsletter which will allow them to stay up to date on any important events or deals
+                            </small>
+                        </h4>
+                        <p>
+                        </p>
+                    </div>
+                </div>
+                <div class="media">
+                    <span class="circle pull-left">
+                        I
+                    </span>
+                    <div class="media-body">
+                        <h4>
+                            Client Registration and Login
+                            <br>
+                            <small>
+                                Allows new clinics to quickly and easily join the site, and allows existing clinics to access and manage their accounts.
+                            </small>
+                        </h4>
+                        <p>
+                        </p>
+                    </div>
+                </div>
+                <br>
+                <h3>Advertising Opportunities:</h3>
+                    <div class="media">
+                        <span class="circle pull-left">B</span>
+                            <div class="media-body">
+                                
+                                    <h4>
+                                        The Showcase Feature
+                                        <br>
+                                        <small>
+                                            This is the most visible spot on the entire site.  A compact, targeted feature with important text, rotating photos, highlights, and logo.  The only spot that is guaranteed to be seen upon first loading the page.  This rotates with other Showcased Features and links to the URL of your choice.  Subscription is on an annual basis. Limited to 6 features.  
+
+                                            {# <span class="alert2 span7">
+                                               <i class="icon-info-sign icon-2x"></i><em> <a href="{{path('frontend_page_inquiry')}}" target="_blank">Great value and high traffic. Not many spots left.</a>
+                                            </em></span> #}
+                                  
+                                    </small>
+                                   
+                                     
+                                    </h4>
+                               
+{#                                 <div class="media-image pull-right">
+                                    <img src="{{ asset('images/frontend/campaign/lead-seal-small.png') }}" alt="Guarantee" />
+                                </div> #}
+                            </div>
+                        </div>
+                        <div class="clr">
+                            &nbsp;
+                        </div>
+
+                             <div class="media">
+                        <span class="circle pull-left">D</span>
+                            <div class="media-body">
+                                
+                                    <h4>
+                                        Homepage Featured Clinic
+                                        <br>
+                                        <small>
+                                         A Feature with text, a photo, logo, and 2 highlights.  An excellent way to drive awareness and traffic.  Limited to 6 features.  Subscription is based on a calendar month.
+
+                                  
+
+                                        {#  <span class="alert2 span7">
+                                               <i class="icon-info-sign icon-2x"></i><em> <a href="{{path('frontend_page_inquiry')}}" target="_blank">First come first served. Months are already filling up through the next year.</a>
+                                            </em></span> #}
+                                    </small>
+                                   
+                                    </h4>
+                             
+                               {#  <div class="media-image pull-right">
+                                    <img src="{{ asset('images/frontend/campaign/lead-seal-small.png') }}" alt="Guarantee" />
+                                </div> #}
+                            </div>
+                        </div>
+                        <div class="clr">
+                            &nbsp;
+                        </div>
+                        <div class="media">
+                            <span class="circle pull-left">
+                                F
+                            </span>
+                            <div class="media-body">
+                                <h4>
+                                    Side Column Media Feature
+                                    <br>
+                                    <small>
+                                        Either a high quality photo advertisement, or a short promotional video can be embedded here.  Helps reinforce brand recognition and presence. 
+                                    </small>
+                                    
+                                </h4>
+                            </div>
+                        </div>
+                        {# <a href="{{path('frontend_page_inquiry')}}" target="_blank"
+                        class="btn btn-hca-inquire btn-large btn-inquire">INQUIRE FOR PRICING and Availability</a> #}
+                    </div>
+                        <!-- // Container <-->
+            <div class="clr">
+            </div>
+        </div>
+        <div class="clr">
+        </div>
+    </div>
+    <!-- // About -->
+    <!-- circle navigator / seperator -->
+    <div class="circle_arrows">
+        <div class="circle_uparrow">
+            <a href="#homepage-view" class="circle_uparrow">&nbsp;</a>
+        </div>
+        <div class="circle_downarrow">
+            <a href="#news" class="circle_downarrow">&nbsp;</a>
+        </div>
+        <div class="clr">
+        </div>
+    </div>
+    <!-- // circle navigator / seperator -->
+    <!-- Team starts -->
+    <div id="results-view">
+        <!-- Container starts -->
+        <div class="container">
+            <h2>
+                <small>
+                    Website Overview -
+                </small>
+                Results Page
+            </h2>
+            <div class="image-map-homepage">
+                <img src="{{ asset('images/frontend/campaign/healthcareabroad-results.jpg') }}" alt="client_1" />
+                <div id="parts-images">
+                    <a data-toggle="popover" data-content="<h2><i class='icon-medkit'></i>Targeted Feature Clinic </h2>  A targeted highly visible option for a month-long burst of traffic on a specific speciality, country, city or combination search results page. This feature is at the top of the page and includes a description, logo, photo and 2 highlights with thumbnail images." class="circle a-results">B</a>
+
+                    <a data-toggle="popover" data-content="<h2><i class='icon-picture'></i>Logo and Photo Profile Upgrade <b>(Top Tier)</b></h2>A Logo and Photo Profile Upgrade includes all of the same features as a Logo Profile Upgrade with 2 additional advantages.  This upgrade positions your profile in the top tier of the results page to insure high traffic all year long. Additionally, a photo is embedded into your profile on the results page to grab patient’s attention." class="circle c-results">F</a>
+
+                    <a data-toggle="popover" data-content="<h2><i class='icon-search'></i>Filter Search -</h2>Allows site visitors to easily zero in on a clinic by selecting the treatment, country, or the city that they are interested in."
+                    class="circle b-results">A</a>
+
+                    <a data-toggle="popover" data-content="<h2><i class='icon-cog'></i>Results Global Media Ad</h2>The Results Global Media Ad appears sitewide for all searches, regardless of specialization or destination.  It is the only advertising space available to non-clinics.  Due to its wide reaching exposure this ad is limited to a rotation of 5 and those advertisers may only buy 2 months out of 12.  Finally, priority for this ad space is given to non-clinic or non-hospital advertisers." class="circle d-results">G</a>
+
+                    <a data-toggle="popover" data-content="<h2><i class='icon-file-alt'></i>Logo Profile Upgrade<b>(Middle Tier)</b></h2>A Logo Profile Upgrade includes all of the same features as a “Basic Profile Upgrade” with 2 important advantages. This upgrade positions your Profile in the 2nd tier and includes your logo side-by-side with your profile on the Results Page to build brand awareness." class="circle e-results">E</a>
+
+                    <a data-toggle="popover" data-content="<h2><i class='icon-file-alt'></i>Basic Profile Upgrade (Base Tier) <b>(Base Tier)</b></h2>A Basic Profile Upgrade includes all of the same features as a Forever Free Profile with many additional benefits to build your brand and make it much easier for you to directly reach your patients.  On the Clinic Profile page, patients can connect through social media, web links, and have access to your phone number.  Strengthen your clinic’s brand by including a cover photo, logo, photo gallery, and videos on your Clinic Profile page. On the Results Page, this ad option boosts a listing’s ranking into the 3rd tier on the page, above all the free listings.  The best part is that these benefits are global, meaning they are seen everywhere your listing shows up in our results pages." class="circle f-results">D</a>
+                    <a data-toggle="popover" data-content="<h2><i class='icon-file-alt'></i>Forever Free Profile (Bottom Tier)</h2>Your clinic profile includes a full description, services, certifications, treatments, address and location of your clinic.  Doctors can be added to your listing along with their training, specializations, and awards.  All of these details can be controlled through an easy-to-use, intelligent client interface." class="circle g-results">C</a>
+                </div>
+            </div>
+            <h1>
+                Results Page
+            </h1>
+            <h3>
+                Navigation:
+            </h3>
+            <div class="media">
+                <span class="circle pull-left">
+                    A
+                </span>
+                <div class="media-body">
+                    <h4>
+                        Filter Search
+                        <br>
+                        <small>
+                            Allows site visitors to easily zero in on a clinic by selecting the treatment, country, or the city that they are interested in.
+                        </small>
+                    </h4>
+                    <p>
+                    </p>
+                </div>
+                </div>
+                <br>
+                <h3>
+                    Advertising Opportunities:
+                </h3>
+                <div class="media">
+                    <span class="circle pull-left">
+                        B
+                    </span>
+                    <div class="media-body">
+                        <h4>
+                            Targeted Feature
+                            <br>
+                            <small>
+                                A targeted and highly visible feature for a month-long burst of traffic on a specific speciality, country, city or combination search results page. This feature is at the top of the page and includes a description, logo, photo and 2 highlights with thumbnail images.   
+                            </b>
+                            </small>
+                        </h4>
+                        
+                    </div>
+                </div>
+                <div class="clr">&nbsp;</div>
+                <div class="media">
+                    <span class="circle pull-left">
+                        C
+                    </span>
+                    <div class="media-body">
+                        <h4>
+                            <u>
+                                Forever Free
+                            </u>
+                            Profile (Bottom Tier)
+                            <br>
+                            <small>
+                                Your clinic profile includes a full description, services, certifications, treatments, address and location of your clinic.  Doctors can be added to your listing along with their training, specializations, and awards.  All of these details can be controlled through an easy-to-use, intelligent client interface.  
+                            </b>
+                            </small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="media">
+                    <span class="circle pull-left">
+                        D
+                    </span>
+                    <div class="media-body">
+                        <h4><u>Basic </u>Profile Upgrade - Linked Clinic (Base Tier)<br>
+                            <small>
+                                A Basic Profile Upgrade includes all of the same features as a Forever Free Profile with many additional benefits to build your brand and make it much easier for you to directly reach your patients.  On the Clinic Profile page, patients can connect through social media, web links, and have access to your phone number.  Strengthen your clinic’s brand by including a cover photo, logo, photo gallery, and videos on your Clinic Profile page. On the Results Page, this ad option boosts a listing’s ranking into the 3rd tier on the page, above all the free listings.  The best part is that these benefits are global, meaning they are seen everywhere your listing shows up in our results pages. 
+                            </small>
+                        </h4>
+                        {# <p><small>Pay-Per-Lead payment option is available for $5 per lead.</small></p>
+                        <div class="seal-list row-fluid">
+                            <div class="span3">
+                            <img src="{{ asset('images/frontend/campaign/lead-seal-small.png') }}" alt="Guarantee" />
+                            </div>
+                            <div class="span9">
+                                <p><b>Annual Upgrade</b></p>
+                                <ul>
+                                    <li>1-2 clinics: $300 per clinic</li>
+                                    <li>3-5 clinics: $250 per clinic</li>
+                                    <li>6+ clinics: $225 per clinic</li>
+                                </ul>
+                            </div>
+                        </div> #}
+                    </div>
+                </div>
+                <div class="media">
+                    <span class="circle pull-left">
+                        E
+                    </span>
+                    <div class="media-body">
+                        <h4><u>Logo Profile</u> Upgrade (Middle Tier)<br>
+                            <small>
+                                A Logo Profile Upgrade includes all of the same features as a “Basic Profile Upgrade” with 2 important advantages. This upgrade positions your Profile in the 2nd tier and includes your logo side-by-side with your profile on the Results Page to build brand awareness.
+                            </small>
+                        </h4>
+                        {# <p><small>Pay-Per-Lead payment option is available for $7 per lead.</small></p>
+                        <div class="seal-list row-fluid">
+                            <div class="span3">
+                            <img src="{{ asset('images/frontend/campaign/lead-seal-7.png') }}" alt="Guarantee" />
+                            </div>
+                            <div class="span9">
+                                <p><b>Annual Upgrade</b></p>
+                                <ul>
+                                    <li>1-2 clinics: $500 per clinic</li>
+                                    <li>3-5 clinics: $400 per clinic</li>
+                                    <li>6+ clinics: $350 per clinic</li>
+                                </ul>
+                            </div>
+                        </div> #}
+                    </div>
+                </div>
+                <div class="media">
+                    <span class="circle pull-left">
+                        F
+                    </span>
+                    <div class="media-body">
+                        <h4><u>Logo and Photo Profile</u> Upgrade (Top Tier)<br>
+                            <small>
+                                A Logo and Photo Profile Upgrade includes all of the same features as a Logo Profile Upgrade with 2 additional advantages.  This upgrade positions your profile in the top tier of the results page to insure high traffic all year long. Additionally, a photo is embedded into your profile on the results page to grab patient’s attention.
+                            </small>
+                        </h4>
+                        {# <p><small>Pay-Per-Lead payment option is available for $9 per lead.</small></p>
+                        <div class="seal-list row-fluid">
+                            <div class="span3">
+                            <img src="{{ asset('images/frontend/campaign/lead-seal-9.png') }}" alt="Guarantee" />
+                            </div>
+                            <div class="span9">
+                                <p><b>Annual Upgrade</b></p>
+                                <ul>
+                                    <li>1-2 clinics: $700 per clinic</li>
+                                    <li>3-5 clinics: $600 per clinic</li>
+                                    <li>6+ clinics: $550 per clinic</li>
+                                </ul>
+                            </div>
+                        </div> #}
+                    </div>
+                </div>
+                <div class="clr">
+                    &nbsp;
+                </div>
+                <div class="media">
+                <span class="circle pull-left">G</span>
+                    <div class="media-body">
+        
+                            <h4>
+                                Results Global Media Ad
+                                <br>
+                            
+                                <small>
+                                    The Results Global Media Ad appears <b>sitewide</b> for all searches, regardless of specialization or destination.  It is the only advertising space available to non-clinics.  Due to its wide reaching exposure this ad is limited to a rotation of 5 and those advertisers may only buy 2 months out of 12.  Finally, priority for this ad space is given to non-clinic or non-hospital advertisers.
+                            </small>
+                            
+                            </h4>
+ 
+
+                    </div>
+                </div>
+                <div class="clr">
+                    &nbsp;
+                </div>
+                <br>
+                <br>
+                <section id="content">
+                    <div class="container" style="padding-left:0; padding-right:0">
+                    <h3>Compare The Benefits Of Upgrading Your Profile On the Results Page</h3>
+                    <hr>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="span3">
+                                    <div class="pricing-box-alt">
+                                        <div class="pricing-heading alert alert-block">
+                                            <h4>
+                                                Forever Free Listing
+                             
+                                            </h4>
+                                        </div>
+                                        
+                                        <div class="pricing-terms">
+                                            <h4>
+                                                Bottom Tier
+                                            </h4>
+                                        </div>
+                                        <div class="pricing-content">
+                                            <ul>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Abbreviated Clinic / Hospital Description
+                                                </li>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Link to Clinic / Hospital Profile
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span3">
+                                    <div class="pricing-box-alt">
+                                        <div class="pricing-heading alert alert-success">
+                                            <h4>
+                                                Linked Clinic Listing
+                                  
+                                            </h4>
+                                        </div>
+                                        
+                                         <div class="pricing-terms">
+                                            <h4>
+                                                Base Tier
+                                            </h4>
+                                        </div>
+                                        <div class="pricing-content">
+                                            <ul>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Abbreviated Clinic / Hospital Description
+                                                </li>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Link to Clinic / Hospital Profile
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                       
+                                        
+                                    </div>
+                                </div>
+                                <div class="span3">
+                                    <div class="pricing-box-alt">
+                                        <div class="pricing-heading alert alert-info">
+                                            <h4>
+                                                Logo Package
+                                        
+                                            </h4>
+                                        </div>
+                                        
+                                         <div class="pricing-terms">
+                                            <h4>
+                                                Middle Tier
+                                            </h4>
+                                        </div>
+                                        <div class="pricing-content">
+                                            <ul>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Abbreviated Clinic / Hospital Description
+                                                </li>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Link to Clinic / Hospital Profile
+                                                </li>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Logo side-by-side with listing
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class="span3">
+                                    <div class="pricing-box-alt">
+                                        <div class="pricing-heading alert alert-danger">
+                                            <h4>
+                                                Logo &amp; Photo Package
+                                          
+                                            </h4>
+                                        </div>
+                                        
+                                         <div class="pricing-terms">
+                                            <h4>
+                                               Top Tier
+                                            </h4>
+                                        </div>
+                                        <div class="pricing-content">
+                                            <ul>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Abbreviated Clinic / Hospital Description
+                                                </li>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Link to Clinic / Hospital Profile
+                                                </li>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Logo side-by-side with listing
+                                                </li>
+                                                <li>
+                                                    <i class="icon-ok pull-left">
+                                                    </i>
+                                                    Photo side-by-side with listing
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="comparison"><p>Profile upgrades have significant benefits on Clinic and Hospital Pages. <a href="#news">See below for details</a>.</p></div>
+                </section>
+                <br>
+                <br>
+            <a href="{{path('frontend_page_inquiry')}}" target="_blank" class="btn btn-large btn-inquire btn-hca-inquire">INQUIRE FOR PRICING and Availability</a>
+        </div>
+        <!-- // Container -->
+        <div class="clr">
+        </div>
+    </div>
+    <!-- // Team -->
+    <!-- circle navigator / seperator -->
+    <div class="circle_arrows">
+        <div class="circle_uparrow">
+            <a href="#results-view" class="circle_uparrow">&nbsp;</a>
+        </div>
+        <div class="circle_downarrow">
+            <a href="#media" class="circle_downarrow">&nbsp;</a>
+        </div>
+        <div class="clr">
+        </div>
+    </div>
+    <!-- // circle navigator / seperator -->
+    <!-- News starts -->
+    <div id="news">
+        <div class="pattern_glow">
+            <!-- Container starts -->
+            <div class="container">
+                <h2>
+                    <small>
+                        Website Overview -
+                    </small>
+                    Clinic Page
+                </h2>
+                <div class="image-map-homepage">
+                    <img src="{{ asset('images/frontend/campaign/healthcareabroad-clinic.jpg') }}" alt="client_1" />
+                    <div id="parts-images">
+                        <a data-toggle="popover" data-content="<h2><i class='icon-hospital'></i>Hospital Group</h2>If the clinic
+                        is associated or affiliated with a parent organization a link to their profile will be shown. This helps increase brand awareness across an entire organization, and allows site visitors to quickly and easily see what other               services and procedures a hospital offers." class="circle a-clinic">A</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-picture'></i>Clinic Logo</h2>A logo allows you to establish brand recognition and builds trust and credibility with site users. Available with enhanced listing."
+                        class="circle b-clinic">B</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-envelope'></i>Clinic Contact Information</h2>A simple and easy way for prospective patients to contact your clinic via email."
+                        class="circle c-clinic">C</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-map-marker'></i>Map Location of Clinic</h2>Using Google Maps we mark the location of your clinic to build validity and credibility."
+                        class="circle d-clinic">D</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-file-alt'></i>Long-form Description</h2>The history, capacity, capabilities and technologies of your clinic can be described in detail.  This is your chance to set your clinic apart."
+                        class="circle e-clinic">E</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-time'></i>Operating Hours</h2>Your clinic’s hours of operation are clearly listed by day."
+                        class="circle f-clinic">F</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-stethoscope'></i>Specializations and Treatments</h2>List all of the Specialities, Sub-Specialities and specific treatments you clinic offers. These are searchable through our search engine. "
+                        class="circle g-clinic">G</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-picture'></i>Photos and Videos</h2>Photos and videos are effective in generating quality leads. In addition they help build a strong brand and engage prospective patients."
+                        class="circle h-clinic">H</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-ambulance'></i>Services and Awards &amp; Accreditations</h2>List unique services, such as hospital pickup and dropoff, concierge, or any other amenities.  Additionally, if your clinic has any recognized accreditations such as JCI, ISO, or another recognized accreditation agency, they will be listed here."
+                        class="circle i-clinic">I</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-group'></i>Social Media Links</h2>Prospective patients will connect through your social network channels such as Twitter, Facebook, or Google+."
+                        class="circle j-clinic">K</a>
+                        <a data-toggle="popover" data-content="<h2><i class='icon-user-md'></i>Doctor List</h2>Profiles of the doctors that work in the clinic, along with their specialties."
+                        class="circle k-clinic">J</a>
+                        <!-- <a data-toggle="popover" data-content="Clinic Contact Information
+                       Enhanced listings will also be able to contact you by phone and directly
+                        link to your website." class="circle c2-clinic">C</a> -->
+                                </div>
+                            </div>
+                            <h1>
+                                Clinic Page
+                            </h1>
+                            <h3>
+                                Content and Navigation:
+                            </h3>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    A
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Hospital Group
+                                        <br>
+                                        <small>
+                                            If the clinic is associated or affiliated with a parent institution a link to their profile will be shown.  This helps increase brand awareness across an entire institution, and allows prospective patients to quickly and easily see what other services and procedures a hospital offers.
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    C
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Clinic Contact Information
+                                        <br>
+                                        <small>
+                                            A simple and easy way for prospective patients to contact your clinic via email.
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    D
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Map Location of Clinic
+                                        <br>
+                                        <small>
+                                            Using Google Maps we mark the location of your clinic to build validity and credibility.
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    E
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Long-form Description
+                                        <br>
+                                        <small>
+                                            The history, capacity, capabilities and technologies of your clinic can be described in detail.  This is your chance to set your clinic apart.
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    F
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Operating Hours
+                                        <br>
+                                        <small>
+                                            Your clinic’s hours of operation are clearly listed by day.
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    G
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Specializations and Treatments
+                                        <br>
+                                        <small>
+                                            List all of the Specialities, Sub-Specialities and specific treatments you clinic offers. These are searchable through our search engine. 
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    I
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Services and Awards &amp; Accreditations
+                                        <br>
+                                        <small>
+                                            List unique services, such as hospital pickup and dropoff, concierge, or any other amenities.  Additionally, if your clinic has any recognized accreditations such as JCI, ISO, or another recognized accreditation agency, they will be listed here.
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    J
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Doctor List
+                                        <br>
+                                        <small>
+                                            Profiles of the doctors that work in the clinic, along with their specialties.
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <br>
+                       
+                       
+                                    <h1 style="padding-top:10px;">
+                                        Advertising Opportunities <br><small>(Included with any Profile Upgrade):</small>
+                                    </h1>
+            
+
+                     
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    B
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Hospital/Clinic Logo
+                                        <br>
+                                        <small>
+                                            Establish brand recognition, build trust and credibility with prospective patients.
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    C
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Clinic Contact Details
+                                        <br>
+                                        <small>
+                                            Prospective patients will be able to contact you directly by phone and/or link to your website. 
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    H
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Photos and Videos
+                                        <br>
+                                        <small>
+                                            Photos and videos are effective in generating quality leads. In addition they help build a strong brand and engage prospective patients.
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <span class="circle pull-left">
+                                    K
+                                </span>
+                                <div class="media-body">
+                                    <h4>
+                                        Social Media Links
+                                        <br>
+                                        <small>
+                                            Prospective patients will connect through your social network channels such as Twitter, Facebook, or Google+..
+                                        </small>
+                                    </h4>
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                        <br>
+                        <br>
+                        <section id="content">
+
+                            <div class="container" style="padding-left:0; padding-right:0">
+                            <h3>Benefits of upgrading your Clinic Listing On the Clinic Profile Page</h3>
+                            <hr>
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <div class="span3">
+                                            <div class="pricing-box-alt">
+                                                <div class="pricing-heading alert alert-block">
+                                                    <h4>
+                                                        Forever Free Listing
+                                                    </h4>
+                                                </div>
+                                                
+                                                <div class="pricing-content">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Full Clinic Description
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Address
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Google Map Location
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Specializations and Treatments
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Hours of Operation
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Services
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Certifications and Awards
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Doctor Profiles with Photo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Doctor's Specializations
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Contact Form for Patients
+                                                        </li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="span3">
+                                            <div class="pricing-box-alt">
+                                                <div class="pricing-heading alert alert-success">
+                                                    <h4>
+                                                        Linked Clinic Listing
+                                                    </h4>
+                                                </div>
+                                                
+                                                <div class="pricing-content">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Full Clinic Description
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Address
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Google Map Location
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Specializations and Treatments
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Hours of Operation
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Services
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Certifications and Awards
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Doctor Profiles with Photo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Doctor's Specializations
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Contact Form for Patients
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Social Media Links
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic URL (web link)
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Phone Number
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Logo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Cover Photo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Photo Gallery
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Video
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="span3">
+                                            <div class="pricing-box-alt">
+                                                <div class="pricing-heading alert alert-info">
+                                                    <h4>
+                                                        Logo Package
+                                                    </h4>
+                                                </div>
+                                                
+                                                <div class="pricing-content">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Full Clinic Description
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Address
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Google Map Location
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Specializations and Treatments
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Hours of Operation
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Services
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Certifications and Awards
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Doctor Profiles with Photo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Doctor's Specializations
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Contact Form for Patients
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Social Media Links
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic URL (web link)
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Phone Number
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Logo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Cover Photo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Photo Gallery
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Video
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="span3">
+                                            <div class="pricing-box-alt">
+                                                <div class="pricing-heading alert alert-danger">
+                                                    <h4>
+                                                        Logo &#38; Photo Package
+                                                    </h4>
+                                                </div>
+                                                
+                                                <div class="pricing-content">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Full Clinic Description
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Address
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Google Map Location
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Specializations and Treatments
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Hours of Operation
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Services
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Certifications and Awards
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Doctor Profiles with Photo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Doctor's Specializations
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Contact Form for Patients
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Social Media Links
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic URL (web link)
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Phone Number
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Logo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Cover Photo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Photo Gallery
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Clinic Video
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <br>
+                        
+                            <a href="{{path('frontend_page_inquiry')}}" target="_blank" class="btn btn-large btn-inquire btn-hca-inquire">INQUIRE FOR PRICING and Availability</a>
+                        </div>
+                        <!-- // Container -->
+        </div>
+        <div class="clr">
+        </div>
+    </div>
+    <!-- // News -->
+    <!-- circle navigator / seperator -->
+    <div class="circle_arrows">
+        <div class="circle_uparrow">
+            <a href="#news" class="circle_uparrow">&nbsp;</a>
+        </div>
+        <div class="circle_downarrow">
+            <a href="#pricing" class="circle_downarrow">&nbsp;</a>
+        </div>
+        <div class="clr">
+        </div>
+    </div>
+    <!-- // circle navigator / seperator -->
+    <!-- Media starts -->
+    <div id="media">
+        <!-- Container starts -->
+        <div class="container">
+            <h2>
+                <small>
+                    Website Overview -
+                </small>
+                Hospital Page
+            </h2>
+            <div class="image-map-homepage">
+                <img src="{{ asset('images/frontend/campaign/healthcareabroad-hospital.jpg') }}" alt="client_1" />
+                <div id="parts-images">
+                    <a data-toggle="popover" data-content="<h2><i class='icon-picture'></i>Header Image</h2>A large image to establish your brand and reputation. Available with enhanced listing."
+                    class="circle a-hospital">A</a>
+                    <a data-toggle="popover" data-content="<h2><i class='icon-picture'></i>Logo</h2>Your logo for the entire organization. Logos allows you to establish brand recognition and builds trust and credibility with site users. Available with enhanced listing."
+                    class="circle b-hospital">B</a>
+                    <a data-toggle="popover" data-content="<h2><i class='icon-envelope'></i>Contact Information -</h2> {{ site_name }} makes it easy for site users to get in contact with you. With just a click, they can send you a contact email, get the contact number, and find your physical location. Additionally, all of these inquiries are logged and presented in the tools to manage your listing, which are provided with every Healthcare Abroad listing. Phone contact Available with enhanced listing."
+                    class="circle c-hospital">C</a>
+                    <a data-toggle="popover" data-content="<h2><i class='icon-columns'></i>Tabbed Navigation</h2>Users can easily switch between howing an overview of the hospital to a list of all the doctors that work at the hospital, along with their corresponding specialties."
+                    class="circle d-hospital">D</a>
+                    <a data-toggle="popover" data-content="<h2><i class='icon-medkit'></i>Clinic List</h2>A list of all the clinics in your organization, with links to their personal clinic listings." class="circle e-hospital">E</a>
+                    <a data-toggle="popover" data-content="Map Location"
+                    class="circle f-hospital">F</a>
+                    <a data-toggle="popover" data-content="<h2><i class='icon-picture'></i>Photos and Videos- </h2>Photos and videos help give users a more complete image of your organization, and makes decisions easier and more likely. Available with enhanced listing.<a href='{{path("frontend_page_inquiry")}}' class='btn btn-large btn-hca-inquire' target='_blank'>INQUIRE FOR PRICING <br>and Availability</a>"
+                    class="circle g-hospital">G</a>
+                    <a data-toggle="popover" data-content="<h2><i class='icon-group'></i>Social Media Integration</h2>Allow users to contact you through as many social channels as you maintain. Be it Twitter, Facebook, or Google+, users will be able to quickly and easily access your social media. Available with enhanced listing.<a href='{{path("frontend_page_inquiry")}}' class='btn btn-large btn-hca-inquire' target='_blank'>INQUIRE FOR PRICING <br>and Availability</a>"
+                    class="circle h-hospital">I</a>
+                    <a data-toggle="popover" data-content="<h2><i class='icon-ambulance'></i>Services and Awards &amp; Accreditations</h2>If your clinic offers unique services, such as hospital pickup and drop off, concierge, or any other amenities, they will be listed here. Additionally, if your clinic has any recognized accreditations, be they from JCI, ISO, or another recognized accreditation agency, they will be listed here as well."
+                    class="circle i-hospital">H</a>
+                </div>
+            </div>
+            <h1>
+                Hospital Page
+            </h1>
+            <h3>
+                Content and Navigation:
+            </h3>
+            <div class="media">
+                <span class="circle pull-left">
+                    A
+                </span>
+                <div class="media-body">
+                    <h4>
+                        Header Image
+                        <br>
+                        <small>
+                            A large image to establish your brand and reputation. Available with enhanced
+                            listing.
+                        </small>
+                    </h4>
+                    <p>
+                    </p>
+                </div>
+            </div>
+            <div class="media">
+                <span class="circle pull-left">
+                    B
+                </span>
+                <div class="media-body">
+                    <h4>
+                        Logo
+                        <br>
+                        <small>
+                            Your logo for the entire organization. Logos allows you to establish brand
+                            recognition and builds trust and credibility with site users. Available
+                            with enhanced listing.
+                        </small>
+                    </h4>
+                    <p>
+                    </p>
+                </div>
+            </div>
+            <div class="media">
+                <span class="circle pull-left">
+                    C
+                </span>
+                <div class="media-body">
+                    <h4>
+                        Contact Information
+                        <br>
+                        <small>
+                            {{ site_name }} makes it easy for site users to get in contact with
+                            you. With just a click, they can send you a contact email, get the contact
+                            number, and find your physical location. Additionally, all of these inquiries
+                            are logged and presented in the tools to manage your listing, which are
+                            provided with every Healthcare Abroad listing. Phone contact Available
+                            with enhanced listing.
+                        </small>
+                    </h4>
+                    <p>
+                    </p>
+                </div>
+            </div>
+            <div class="media">
+                <span class="circle pull-left">
+                    D
+                </span>
+                <div class="media-body">
+                    <h4>
+                        Tabbed Navigation
+                        <br>
+                        <small>
+                            Users can easily switch between showing an overview of the hospital to
+                            a list of all the doctors that work at the hospital, along with their corresponding
+                            specialties.
+                        </small>
+                    </h4>
+                    <p>
+                    </p>
+                </div>
+            </div>
+            <div class="media">
+                <span class="circle pull-left">
+                    H
+                </span>
+                <div class="media-body">
+                    <h4>
+                        Services and Awards &amp; Accreditations
+                        <br>
+                        <small>
+                            If your clinic offers unique services, such as hospital pickup and drop
+                            off, concierge, or any other amenities, they will be listed here. Additionally,
+                            if your clinic has any recognized accreditations, be they from JCI, ISO,
+                            or another recognized accreditation agency, they will be listed here as
+                            well.
+                        </small>
+                    </h4>
+                    <p>
+                    </p>
+                </div>
+            </div>
+
+            <div class="media">
+                <span class="circle pull-left">
+                    E
+                </span>
+                <div class="media-body">
+                    <h4>
+                        Clinic List
+                        <br>
+                        <small>
+                            A list of all the clinics in your organization, with links to their personal
+                            clinic listings.
+                        </small>
+                    </h4>
+                    <p>
+                    </p>
+                </div>
+            </div>
+            <div class="media">
+                <span class="circle pull-left">
+                    F
+                </span>
+                <div class="media-body">
+                    <h4>
+                        Map Location of Hospital
+                        <br>
+                        <small>
+                            Using Google Maps we mark the location of your hospital to build validity and credibility.
+                        </small>
+                    </h4>
+                </div>
+            </div>
+
+                    <h1 style="padding-top:60px;">
+                        Advertising Opportunities <br><small>(Included with a Listing Upgrade Package):</small>
+                    </h1>
+
+
+            <div class="media">
+                <span class="circle pull-left">
+                    I
+                </span>
+                <div class="media-body">
+                    <h4>
+                        Social Media Integration
+                        <br>
+                        <small>
+                            Allow users to contact you through as many social channels as you maintain.
+                            Be it Twitter, Facebook, or Google+, users will be able to quickly and
+                            easily access your social media. Available with enhanced listing.
+                        </small>
+                    </h4>
+                    <p>
+                    </p>
+                </div>
+            </div>
+            <div class="media">
+                <span class="circle pull-left">
+                    G
+                </span>
+                <div class="media-body">
+                    <h4>
+                        Photos and Videos
+                        <br>
+                        <small>
+                            Photos and videos help give users a more complete image of your organization,
+                            and makes decisions easier and more likely. Available with enhanced listing.
+                        </small>
+                    </h4>
+                    <p>
+                    </p>
+                </div>
+            </div>
+                                    <br>
+                        <br>
+                        <section id="content">
+                            <div class="container" style="padding-left:0; padding-right:0">
+                            <h3>Benefits of upgrading your Clinic Listing On the Hospital Profile Page&nbsp;&nbsp;<small>(If Applicable)</small></h3>
+                            <hr>
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <div class="span3">
+                                            <div class="pricing-box-alt">
+                                                <div class="pricing-heading alert alert-block">
+                                                    <h4>
+                                                        Forever Free Listing
+                                                    </h4>
+                                                </div>
+                                                
+                                                <div class="pricing-content">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Overview Description
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Address
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            List of Clinics
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Google Map Location
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Services
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Certifications and Awards
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            List of All Doctors
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="span3">
+                                            <div class="pricing-box-alt">
+                                                <div class="pricing-heading alert alert-success">
+                                                    <h4>
+                                                        Linked Clinic Listing
+                                                    </h4>
+                                                </div>
+                                                
+                                                <div class="pricing-content">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Overview Description
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Address
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            List of Clinics
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Google Map Location
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Services
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Certifications and Awards
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            List of All Doctors
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Logo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Cover Photo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Photo Gallery
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Socail Media Links
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Phone Number
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital URL (web link)
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="span3">
+                                            <div class="pricing-box-alt">
+                                                <div class="pricing-heading alert alert-info">
+                                                    <h4>
+                                                        Logo Package
+                                                    </h4>
+                                                </div>
+                                                
+                                                <div class="pricing-content">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Overview Description
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Address
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            List of Clinics
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Google Map Location
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Services
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Certifications and Awards
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            List of All Doctors
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Logo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Cover Photo
+                                                        </li>
+                                                     <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Photo Gallery
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Socail Media Links
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Phone Number
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital URL (web link)
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="span3">
+                                            <div class="pricing-box-alt">
+                                                <div class="pricing-heading alert alert-danger">
+                                                    <h4>
+                                                        Logo &#38; Photo Package
+
+                                                    </h4>
+                                                </div>
+                                                
+                                                <div class="pricing-content">
+                                                    <ul>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Overview Description
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Address
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            List of Clinics
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Google Map Location
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Services
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Certifications and Awards
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            List of All Doctors
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Logo
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Cover Photo
+                                                        </li>
+                                                             <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Photo Gallery
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Socail Media Links
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital Phone Number
+                                                        </li>
+                                                        <li>
+                                                            <i class="icon-ok pull-left">
+                                                            </i>
+                                                            Hospital URL (web link)
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <br><br><br>
+            <a href="{{path('frontend_page_inquiry')}}" target="_blank" class="btn btn-large btn-inquire btn-hca-inquire">INQUIRE FOR PRICING and Availability</a>
+        </div>
+        <!-- // Container -->
+        <div class="clr">
+        </div>
+    </div>
+    <!-- // Media -->
+    <!-- circle navigator / seperator -->
+    <div class="circle_arrows">
+        <div class="circle_uparrow">
+            <a href="#media" class="circle_uparrow">&nbsp;</a>
+        </div>
+        <div class="circle_downarrow">
+            <a href="#portfolio" class="circle_downarrow">&nbsp;</a>
+        </div>
+        <div class="clr">
+        </div>
+    </div>
+    <!-- // circle navigator / seperator -->
+
+    <!-- Pricing starts -->
+    <div id="pricing">
+                       
+
+        <div class="pattern_glow_dark">
+            <!-- Container starts -->
+            <div class="container">
+
+
+ <h3>{{ site_name }}’s philosophy of internet marketing:</h3>
+                <div class="media">
+                    <h3 class="pull-left"><i class="icon-asterisk"></i></h3>
+                    <div class="media-body">
+                        <h4>Prospective patients look for content.  </h4>
+                        <p>Our smart ad options blend content with graphic and text ads, designed to capture visitors’ attention.</p>
+                    </div>
+                </div>
+                 <div class="media">
+                    <h3 class="pull-left"><i class="icon-asterisk"></i></h3>
+                    <div class="media-body">
+                        <h4>Prospective patients like headlines and short bursts of text. </h4>
+                        <p>Our results pages deliver your message in concise news and bullet-point format. </p>
+                    </div>
+                </div>
+                 <div class="media">
+                    <h3 class="pull-left"><i class="icon-asterisk"></i></h3>
+                    <div class="media-body">
+                        <h4>Prospective patients’ eyes follow pre-determined patterns when they look at a screen.</h4>
+                        <p>Our layout strategically distributes important information where it is most likely to be seen.</p>
+                    </div>
+                </div> <div class="media">
+                    <h3 class="pull-left"><i class="icon-asterisk"></i></h3>
+                    <div class="media-body">
+                        <h4>Photos are compelling draws for prospective patients. </h4>
+                        <p>Beautiful photos build strong brands and engage potential patients.</p>
+                    </div>
+                </div> <div class="media">
+                    <h3 class="pull-left"><i class="icon-asterisk"></i></h3>
+                    <div class="media-body">
+                        <h4>Prospective patients respond poorly to multiple fonts, rapid movement, and other visual clutter. </h4>
+                        <p>The simple but elegant aesthetic of {{ site_name }} is one of the most important aspects of our design. The spacing and layout are designed to keep prospective patients from becoming overwhelmed, and the structure helps guide </p>
+                    </div>
+                </div> <div class="media">
+                    <h3 class="pull-left"><i class="icon-asterisk"></i></h3>
+                    <div class="media-body">
+                        <h4>Prospective patients respond best to branding and logos. </h4>
+                        <p>{{ site_name }} keeps your logo together with your clinic profiles and photos, so prospective patients make an instant brand connection between your clinic and the treatments you offer.</p>
+                    </div>
+                </div>
+
+
+                <h1>
+                    Who is {{ site_name }}
+                </h1>
+                <h2>
+                    History
+                </h2>
+                <p>
+                    {{ site_name }} was conceptualized from the co-owners positive personal
+                    international healthcare experiences and their frustrations in searching
+                    for information on the internet.
+                </p>
+                <p>
+                    After a decade living, working and starting our families abroad while
+                    building the online directory GoAbroad.com, {{ site_name }}'s co-founders
+                    asked "why can't we take the business experience learned at GoAbroad.com
+                    and apply it towards Global Healthcare?". It seemed impossible that in
+                    the early 2010's all the existing sources on the internet were referral
+                    and commission based businesses or paid only directories that were incomplete
+                    and inaccurate. Given the seismic political changes to healthcare in the
+                    west, the business trends towards globalization and the growing numbers
+                    of prospective patients who are looking abroad it seemed obvious and logical
+                    that a quality internet portal was needed.
+                </p>
+                <p>
+                    For over 14 years, the team behind {{ site_name }} has been creating
+                    successful international directories. Building advanced, modern technologies
+                    with easy to use web sites the team created a comprehensive directory of
+                    unbiased healthcare providers worldwide. Research and planning began in
+                    2011. Design and production continued through 2012. The site was launched
+                    in the first quarter of 2013.
+                </p>
+                <p>
+                    To learn more about our founders and the talented Cebu, Philippine based
+                    technical team please visit:
+                    <a href="http://www.chromedia.com/#who" target="_blank">http://www.chromedia.com/#who</a>
+                </p>
+                <p>
+                    {{ site_name }} is an American corporation based in Colorado
+                    and a wholly owned subsidiary of Chromedia Inc.
+                </p>
+                <div class="row-fluid">
+                    <h4>
+                        Contact Us:
+                    </h4>
+                    <div class="media">
+                        <span class="pull-left">
+                            <i class="icon-envelope-alt">
+                            </i>
+                        </span>
+                        <div class="media-body">
+                            <p class="media-heading">
+                                7050 West Custer Avenue Lakewood, Colorado 80226 U.S.A.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <span class="pull-left">
+                            <i class="icon-phone-sign">
+                            </i>
+                        </span>
+                        <div class="media-body">
+                            <p class="media-heading">
+                                US Office: 720.257.5277
+                            </p>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <span class="pull-left">
+                            <i class="icon-print">
+                            </i>
+                        </span>
+                        <div class="media-body">
+                            <p class="media-heading">
+                                US Fax: 720.230.5431
+                            </p>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+                <!-- // Container -->
+            </div>
+            <div class="clr">
+            </div>
+        </div>
+        <!-- // Pricing -->
+        <!-- Footer starts -->
+        <div id="footer">
+            <!-- Container starts -->
+            <div class="container">
+                <div class="footer_copy">
+                    &copy; 2013 <a href="{{path('frontend_main_homepage')}}" target="_blank">{{ site_name }}</a> All rights reserved.
+                </div>
+            </div>
+            <!-- // Container -->
+        </div>
+        <!-- // Footer -->
+    </div>
+{% endblock %}
+            

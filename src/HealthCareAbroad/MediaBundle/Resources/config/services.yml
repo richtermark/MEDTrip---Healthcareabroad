@@ -1,0 +1,72 @@
+services:
+    services.media.twig.extension:
+        class: HealthCareAbroad\MediaBundle\Twig\Extension\MediaExtension
+        public: true
+        calls:
+            - [setFilesystemMapper, [@knp_gaufrette.filesystem_map]]
+            - [setMediaContext, [%media_context%]]
+        tags:
+            - { name: twig.extension }
+
+    services.media.amazonS3:
+        class: AmazonS3
+        arguments: [{key: %amazonS3_key%, secret: %amazonS3_secret%}]            
+
+
+    # Media Gaufrette Filesystem Adapters config.
+    services.media.advertisement_s3_adapter:
+        class: HealthCareAbroad\MediaBundle\Gaufrette\Adapter\AmazonS3Adapter
+        arguments:
+            - @services.media.amazonS3
+            - %amazonS3_bucket_name% 
+            - {create: true, directory: %media_advertisement_subdir%}
+
+    services.media.advertisement_local_adapter:
+        class: HealthCareAbroad\MediaBundle\Gaufrette\Adapter\LocalAdapter
+        arguments:
+            - %media_directory%
+            - %local_web_root%/%media_advertisement_subdir%
+            - true
+
+    services.media.doctor_s3_adapter:
+        class: HealthCareAbroad\MediaBundle\Gaufrette\Adapter\AmazonS3Adapter
+        arguments:
+            - @services.media.amazonS3
+            - %amazonS3_bucket_name% 
+            - {create: true, directory: %media_doctor_subdir%}
+
+    services.media.doctor_local_adapter:
+        class: HealthCareAbroad\MediaBundle\Gaufrette\Adapter\LocalAdapter
+        arguments:
+            - %media_directory%
+            - %local_web_root%/%media_doctor_subdir%
+            - true
+
+    services.media.institution_s3_adapter:
+        class: HealthCareAbroad\MediaBundle\Gaufrette\Adapter\AmazonS3Adapter
+        arguments:
+            - @services.media.amazonS3
+            - %amazonS3_bucket_name% 
+            - {create: true, directory: %media_institution_subdir%}
+
+    services.media.institution_local_adapter:
+        class: HealthCareAbroad\MediaBundle\Gaufrette\Adapter\LocalAdapter
+        arguments:
+            - %media_directory%
+            - %local_web_root%/%media_institution_subdir%
+            - true
+
+    services.media.specialization_s3_adapter:
+        class: HealthCareAbroad\MediaBundle\Gaufrette\Adapter\AmazonS3Adapter
+        arguments:
+            - @services.media.amazonS3
+            - %amazonS3_bucket_name% 
+            - {create: true, directory: %media_specialization_subdir%}
+
+    services.media.specialization_local_adapter:
+        class: HealthCareAbroad\MediaBundle\Gaufrette\Adapter\LocalAdapter
+        arguments:
+            - %media_directory%
+            - %local_web_root%/%media_specialization_subdir%
+            - true
+            

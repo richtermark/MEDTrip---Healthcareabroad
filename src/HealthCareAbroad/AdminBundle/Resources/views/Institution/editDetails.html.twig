@@ -1,0 +1,176 @@
+{% extends 'AdminBundle::layout.institution.html.twig' %}
+{% set selectedTab = 'institutions'%}
+{% set selectedSubTab = 'institutions_edit'%}
+{% set insitutionDetailLabels = getClassLabel('institution_detail') %}
+{% block content %}
+    <div class="span9"> 
+    	 {% embed 'HelperBundle:Widgets:section.html.twig' with { 
+                title: ( form.vars.value.id ? 'Edit ' : 'Add ' ) ~ insitutionDetailLabels.singular | title ,
+                actions: [{link: path('admin_institution_add'), label: 'Add New Institution', 'icon' : 'icon-list' }]
+            }
+        %}
+    	
+        	{% block sectionContent %}
+			      {% include '::notice.admin.html.twig' %}
+				<form novalidate="novalidate" action="{{ path('admin_institution_edit_details', {institutionId: institution.id }) }}" method="POST"  class="basic-form">
+		            <div class="name control-group {{ (form.name.vars.valid ? '' : 'error') }}">
+                        <label for="name"> Medical Institution Name  </label>
+                        {{ form_widget(form.name, {'attr': {class: 'span6'} })  }}
+                        {{ form_errors(form.name) }}
+                    </div>
+                    {{ form_row( form.description, {attr: {class:'tinymce', style: 'width: 750px;'} } ) }}
+                    <div class="control-group">
+                        <label for="network-group">  Medical Provider Group/Network </label>
+                            {% for _i in form.medicalProviderGroups %}
+                                 {{ form_widget(_i, {'attr': {class: 'span3'} })  }}
+                                 {% else %}
+                                 <input id="institution_profile_form_medicalProviderGroups_0" class="span3" type="text" name="institution_profile_form[medicalProviderGroups][0]" value="">
+                             {% endfor %}
+                         <div id="autoDiv">
+                         </div>
+                    </div>
+                    {{ form_row( form.type ) }}
+                    <div class="contactEmail control-group {{ (form.contactEmail.vars.valid ? '' : 'error') }}">
+                        <label for="{{ form.children.contactEmail.vars.id }}">
+                            {{ form.children.contactEmail.vars.label }}
+                        </label>
+                        {{ form_widget( form.contactEmail ) }}
+                        {{ form_errors(form.contactEmail) }}
+                    </div>
+                     {{ form_row( form.websites) }}
+                    <hr />
+                    <h5 style="margin-bottom: 10px;"> Institution Address </h5>
+                    {{ form_widget( form.address1 ) }}
+                     <div class="span12">
+                        <div class="span4 control-group {{ (form.country.vars.valid ? '' : 'error') }}">
+                             <label for="{{ form.children.country.vars.id }}">
+                                {{ form.children.country.vars.label }} *
+                            </label>
+                              {{ form_widget( form.country ) }}
+                              {{ form_errors(form.country) }}
+                        </div>
+                        
+                        <div class="state control-group {{ (form.city.vars.valid ? '' : 'error') }} span4">
+                            <label>State / Province </label>
+                            {{ form_widget( form.state ) }}         
+                            {{ form_errors(form.state) }}    
+                        </div>
+                        
+                    </div>
+                    <div class="span12"> 
+                        <div class="city control-group span4">
+                            <label for="{{ form.children.city.vars.id }}">  City *  </label>
+                            {{ form_widget( form.city ) }}
+                            {{ form_errors(form.city) }}
+                        </div>     
+                        <div class="zipCode control-group {{ (form.zipCode.vars.valid ? '' : 'error') }} span4">
+                            <label for="{{ form.children.zipCode.vars.id }}">
+                            {{ form.children.zipCode.vars.label }} *</label>
+                            {{ form_widget(form.zipCode, { attr: {class: 'span3 addressFields'} } )}}
+                            {{ form_errors(form.zipCode) }}
+                         </div>   
+                     </div>
+                     <div class="control-group row-fluid">
+                        {{ form_label(form.addressHint )}}
+                        {{ form_widget(form.addressHint, { attr: {class: 'span12'} } )}}
+                    </div>
+                    
+                     <hr />
+                    
+                    <div class="row-fluid">
+                        {% for _widget in form.contactDetails %}
+                            {{ form_widget(_widget) }}
+                        {% endfor %}
+                    </div>
+                     <div class="row-fluid">
+                         <div class="span7">
+                         <h5 style="margin-bottom: 10px;">Social Media Sites</h5>
+                            {{ form_widget(form.socialMediaSites) }}
+                        </div>
+                    </div>
+		  			{{ form_widget(form._token) }}
+	  			    <input type="submit" name="submit" value="Submit" class="btn-large btn-primary"/>
+	  			</form>
+  			{% endblock %}
+		{% endembed %}
+	</div>
+{% endblock %}
+{% block inlineJavascriptCode %}
+<script src="{{ asset('bundles/helper/js/Location.js') }}"></script>
+<script type="text/javascript">
+<!--
+    Location.loadCitiesUrl = '{{ path("helper_loadCities") }}';
+    
+    $(function(){
+
+        $("#{{ form.getChild('medicalProviderGroups').vars.id }}_0").autocomplete({
+            appendTo: "#autoDiv",
+            source: $.parseJSON('{{ add_slashes(medicalProvidersJSON) | raw }}'),
+        });
+
+        var countryWidget = $('#{{ form.country.vars.id ~ "_widget" }}');
+        countryWidget.on('selectedCountry', function(e){
+            var fancyAutocomplete = $(e.target).data('fancyAutocomplete');
+            var countryValue = fancyAutocomplete.options.valueContainer.val();
+            var contactWidget = '#{{ form.contactDetails.vars.id ~ "_0_country"}} option[value='+ countryValue +']';
+            $(contactWidget+'option[value='+countryValue+']').attr('selected', true);
+        });
+        
+        $('#institution_profile_form_country').change();
+
+        $('#dialog-container').dialog({
+            position: ['center', 100],
+            autoOpen: false,
+            width: 750,
+            modal: true,
+            resizable: false,
+            close: function() {}
+        });
+
+        $('a.addLanguageButton').click(function(){
+        	var elem = $(this);
+			var _url = elem.attr('href');
+
+			$("#dialog-container").empty();
+			//$('#dialog-container').dialog('option','title', (elem.hasClass("edit") ? 'Edit' : 'Add') + ' GlobalAwards');
+            $('#dialog-container').dialog({
+            	title: 'Add Languages',
+                open: function() {
+                    $.ajax(_url)
+                        .done(function (data) {                        
+                        	$('#dialog-container').html(data);
+                        }
+                    );
+                },
+            });
+
+        	$('#dialog-container').dialog("open");
+
+             	return false;           
+        });
+
+        $('a.addofferedServices').click(function(){
+        	var elem = $(this);
+			var _url = elem.attr('href');
+
+			$("#dialog-container").empty();
+			//$('#dialog-container').dialog('option','title', (elem.hasClass("edit") ? 'Edit' : 'Add') + ' GlobalAwards');
+            $('#dialog-container').dialog({
+            	title: 'Add Offered Services',
+                open: function() {
+                    $.ajax(_url)
+                        .done(function (data) {        
+                        	$('#dialog-container').html(data);
+                        }
+                    );
+                },
+            });
+
+        	$('#dialog-container').dialog("open");
+
+             	return false;           
+        });
+    });
+//-->
+</script>
+{% endblock %}

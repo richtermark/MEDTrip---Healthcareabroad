@@ -1,0 +1,36 @@
+HealthCareAbroad\TermBundle\Entity\Term:
+    type: entity
+    table: terms
+    repositoryClass: HealthCareAbroad\TermBundle\Repository\TermRepository
+    fields:
+        id:
+            id: true
+            type: bigint
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        name:
+            type: string
+            length: 250
+            fixed: false
+            unique: true
+            nullable: false
+        internal:
+            type: boolean
+        slug:
+            type: string
+            length: 250
+            fixed: true
+            nullable: false
+            gedmo:
+              slug:
+                separator: -
+                fields:
+                  - name
+    oneToMany:
+        termDocuments:
+            targetEntity: HealthCareAbroad\TermBundle\Entity\TermDocument
+            mappedBy: term
+            cascade:
+                - "persist"
+    lifecycleCallbacks: {  }

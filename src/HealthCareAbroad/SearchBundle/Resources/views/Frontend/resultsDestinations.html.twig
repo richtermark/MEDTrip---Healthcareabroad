@@ -1,0 +1,43 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="search-results-wrapper span8">
+        {% include 'SearchBundle:Frontend/Widgets:resultsHeader.html.twig' with {type: 'destination'} %}
+
+        <!-- Cached View Data -->
+        {{ render_search_results_featured_institution_ad(featuredClinicParams) | raw }}
+
+        {% set _featuredInstitutionIds = get_featured_institutions_by_search_parameters(featuredClinicParams) %}
+
+        {% for searchResultVo in searchResults %}
+            {% set institution = searchResultVo.institution is defined ? searchResultVo.institution : searchResultVo %}
+
+            {% if institution.id not in _featuredInstitutionIds %}
+                {% include 'SearchBundle:Frontend/Widgets:base.resultItem.html.twig' with {
+                       'statisticsDataObject': searchResultVo.institution,
+                       'searchResultItem' : get_search_result_item(institution),
+                       'resultItemSchemaType' : 'http://schema.org/Hospital'
+              }%}
+            {% endif %}
+        {% endfor %}
+
+        {% if searchResults.isPaginable %}
+            {{ paginate(searchResults, routeName, paginationParameters, 'PagerBundle:Pager:paginate_frontend_search.html.twig') }}
+        {% endif %}
+
+    </div> <!--End of main_content-->
+
+    <aside class="aside-wrapper span4">
+        <!-- Cached View Data -->
+        {{ render_search_results_featured_posts() | raw }}
+        
+        <!-- Cached View Data -->
+        {{ render_search_results_image_ad() | raw }}
+    </aside>
+{% endblock %}
+
+{% block inlineJavascriptCode %}
+<script type="text/javascript">
+    $(window).ready(function() {$(".link-tooltip").tooltip()});
+</script>
+{% endblock%}

@@ -1,0 +1,37 @@
+{% if photos|length and institution.payingClient %}
+
+    {% embed 'FrontendBundle:Embed:asideBox.html.twig' with {title: 'Photos'} %}
+    
+        {% block asideContent %}
+            {% set firstPhoto = photos[0] %}
+            <div class="gallery-wrapper">
+                {% set bigThumbnailSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::GALLERY_LARGE_THUMBNAIL') %}
+                <a class="fancybox large-thumbnail thumbnail" rel="gallery" href="{{ institution_media_src(firstPhoto) }}" title="{{ firstPhoto.caption }}">
+                    <img src="{{ institution_media_src(firstPhoto, bigThumbnailSize) }}" alt=""/>
+                </a>
+        		<ul class="small-thumbnail-list thumbnails">
+                    {% set thumbnailSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::MINI') %}
+                    {% for i, each in photos if i > 0 %}
+                        <li class="thumbnail">
+                            <a class="fancybox" rel="gallery" href="{{ institution_media_src(each) }}" title="{{ each.caption }}">
+                                <img src="{{ institution_media_src(each, thumbnailSize) }}" alt="" width="60">
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+        	</div>
+    	{% endblock %}
+    	
+    {% endembed %}
+    
+    <!-- Add fancyBox -->
+    <link rel="stylesheet" href="{{ asset('bundles/media/js/fancybox/jquery.fancybox.css?v=2.1.0') }}" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{ asset('bundles/media/js/fancybox/jquery.fancybox.pack.js?v=2.1.0') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".fancybox").fancybox();
+        });
+    </script>
+
+{% endif %}

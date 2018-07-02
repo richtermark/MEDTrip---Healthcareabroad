@@ -1,0 +1,83 @@
+## ADMIN BUNDLE
+
+#search_admin_showWidget:
+#    pattern:  /admin/search/widget/{context}
+#    defaults: { _controller: SearchBundle:Default:showWidget }
+#
+search_admin_showWidget:
+    pattern:  /admin/search/widget/{context}
+    defaults: { _controller: SearchBundle:Admin:showWidget }
+
+search_admin_initiate:
+    pattern: /admin/search
+    defaults: { _controller: SearchBundle:Admin:initiate }
+
+##INSTITUTION BUNDLE
+institution_medicalCenter_search:
+    pattern: /medical-center/search
+    defaults: { _controller: SearchBundle:InstitutionSearch:search }
+    requirements:
+        _method: GET|POST
+
+
+## FRONTEND BUNDLE #############################################################
+
+# Seach widget routes
+SearchBundle_widget:
+    resource: "@SearchBundle/Resources/config/routing.widget.yml"
+    prefix:   /
+
+frontend_search_process:
+    pattern: /search-process
+    defaults: { _controller: SearchBundle:Frontend:searchProcess }
+
+frontend_search_results_related_terms:
+    pattern: /related-search/{tag}/{page}
+    defaults: { _controller: SearchBundle:Frontend:searchResultsRelated, page: 1, breadcrumbLabel: 'Related Search' }
+    #defaults: { _controller: SearchBundle:Frontend:searchResultsRelated, page: 1 }
+    requirements:
+        page: \d+
+
+frontend_search_results_related_terms_country:
+    pattern: /related-search/{country}/{tag}/{page}
+    defaults: { _controller: SearchBundle:Frontend:searchResultsRelated, page: 1, breadcrumbLabel: 'Related Search' }
+    #defaults: { _controller: SearchBundle:Frontend:searchResultsRelated, page: 1 }
+    requirements:
+        page: \d+
+
+frontend_search_results_related_terms_city:
+    pattern: /related-search/{country}/{city}/{tag}/{page}
+    defaults: { _controller: SearchBundle:Frontend:searchResultsRelated, page: 1, breadcrumbLabel: 'Related Search' }
+    #defaults: { _controller: SearchBundle:Frontend:searchResultsRelated, page: 1 }
+    requirements:
+        page: \d+
+
+frontend_search_results_countries:
+    pattern: /destination/{country}/{page}
+    defaults: { _controller: SearchBundle:Frontend:searchResultsCountries, page: 1 }
+    requirements:
+        page: \d+
+
+frontend_search_results_cities:
+    pattern: /destination/{country}/{city}/{page}
+    defaults: { _controller: SearchBundle:Frontend:searchResultsCities, page: 1 }
+    requirements:
+        page: \d+
+
+frontend_search_results_treatments:
+    pattern: /treatment/{specialization}/{treatment}/treatment/{page}
+    defaults: { _controller: SearchBundle:Frontend:searchResultsTreatments, page: 1 }
+    requirements:
+        page: \d+
+
+frontend_search_results_specializations:
+    pattern: /treatment/{specialization}/{page}
+    defaults: { _controller: SearchBundle:Frontend:searchResultsSpecializations, page: 1 }
+    requirements:
+        page: \d+
+
+frontend_search_results_subSpecializations:
+    pattern: /treatment/{specialization}/{subSpecialization}/{page}
+    defaults: { _controller: SearchBundle:Frontend:searchResultsSubSpecializations, page: 1 }
+    requirements:
+        page: \d+

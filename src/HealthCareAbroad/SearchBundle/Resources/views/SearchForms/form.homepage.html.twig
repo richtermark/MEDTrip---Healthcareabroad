@@ -1,0 +1,58 @@
+<form class="home-search broad_search_form form-inline {{ attr.class is defined ? attr.class : '' }}" name="search_box" method="post" action="{{ path('frontend_search_process') }}">
+    <div class="combo-wrapper">
+        <label>Search</label>
+
+        <input class="type_in" type="text" name="sb_treatment" id="treatment_input_field" placeholder="Specialization or Treatment" data-container="#treatments_list" >
+        <input type="hidden" name="treatment_id" id="treatment_id" />
+        <div class="combolist-wrapper hide"></div>
+
+        <button id="treatments_dropdown_button" class="show-menu btn text-left small default" type="button">
+            <span class="icon-chevron-down pull-right"></span>
+        </button>
+    </div>
+
+    <div class="combo-wrapper">
+        <label>Near</label>
+        <input class="type_in" type="text" name="sb_destination" id="destination_input_field" placeholder="City or Country" autocomplete="off" data-container="#destinations_list" data-allow-empty="1">
+        <input type="hidden" name="destination_id" id="destination_id"/>
+        <div class="combolist-wrapper hide"></div>
+
+        <button id="destinations_dropdown_button" class="show-menu btn text-left small default" type="button">
+            <span class="icon-chevron-down pull-right"></span>
+        </button>
+    </div>
+
+    <button type="submit" class="btn pull-right">Let's Go</button>
+
+    <div class="helper-link">
+        <a class="treatment-link" href="{{ path('frontend_treatment_list') }}"> View all specializations</a>
+        <a class="white tiny destination-link" href="{{ path('frontend_destination_list') }}"> View all destinations</a>
+    </div>
+</form>
+
+<script type="text/javascript" src="{{ asset('bundles/search/js/widgets.js') }}"></script>
+<script type="text/javascript">
+{% if destinations is defined %}
+BroadSearchWidget.preloadedDestinations = {{ destinations | raw }};
+{% endif %}
+{% if treatments is defined %}
+BroadSearchWidget.preloadedTreatments = {{ treatments | raw }};
+{% endif %}
+
+BroadSearchWidget
+    .setSourceUri('{{ path("frontend_search_ajaxLoadAllSearchOptions") }}')
+    .initializeForm($('form.broad_search_form'), {
+        treatments: {
+            //'mainInputField': $('input#treatment_input_field'),
+            'dropdownButton': $('#treatments_dropdown_button'),
+            'autocompleteField': $('input#treatment_input_field'),
+            'dropdown': $('#treatments_dropdown_menu')
+        },
+        destinations: {
+            //'mainInputField': $('input#destination_input_field'),
+            'dropdownButton': $('#destinations_dropdown_button'),
+            'autocompleteField': $('input#destination_input_field'),
+            'dropdown': $('#destinations_dropdown_menu')
+        }
+    });
+</script>

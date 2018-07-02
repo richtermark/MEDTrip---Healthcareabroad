@@ -1,0 +1,124 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+{% set selectedTab = 'logs'%}
+
+{% block content %}
+    <div id="content">
+        <div id="page-heading">
+            <h3>Edits History</h3>
+        </div>
+        {% embed '::contentWrapper.admin.html.twig' %}
+            {% block wrappedContent %}
+                {% include '::notice.admin.html.twig' %}
+                <!-- Render Filter Box -->
+                <div>
+                <div id="filter-wrapper">
+                        <div>
+                    		<label>View Client Users Only:</label>
+                    		<input type="checkbox" id="filter-isClientOnly" class="filter-params styledselect_form_1" name =isClientOnly value="1" {{ filter.isClientOnly is defined ? 'checked' : '' }}>
+                		</div>
+                		<div>
+                			<label>Actions:</label>
+                			<select name="action" id="filter-actions" class="filter-params styledselect_form_1">
+                			
+                			    <option value="" {{ filter.action is defined and filter.action == ''  ? 'selected' : ''}}>All</option>
+                				{% for label, value in options %}
+                					<option value="{{ value }}" {{ filter.action is defined and value == filter.action ? 'selected' : ''}}>{{ label }}</option>
+                				{% endfor %}
+                			</select>
+                		</div>
+                		<div>
+                    		<label>Start Date:</label>
+                    		<input type="text" id="filter-startDate" class="filter-params styledselect_form_1 span2"  name ="startDate" data-date-format="mm/dd/yyyy" value="{{ filter.startDate is defined ? filter.startDate|date('m/d/Y') : '' }}" >
+                		</div>
+                		<div>
+                    		<label>End Date:</label>
+                    		<input type="text" id="filter-endDate" class="filter-params styledselect_form_1 span2"  name ="endDate" data-date-format="mm/dd/yyyy" value="{{ filter.endDate is defined ? filter.endDate|date('m/d/Y') : '' }}" >
+                		</div>
+                	<button class="btn btn-success" type="button" onclick="HCA.filterResult('{{ path('admin_history_index') }}')">Go</button>
+                </div>
+                
+                <table class="table table-bordered sortable-list">
+                    <thead>
+                        <tr>
+                            <td>Log Date</td>
+                            <td>Action</td>
+                            <td>User</td>
+                            <td width="10%">Class</td>
+                            <td>Subject Object</td>
+                            <td>Changed Data</td>
+                        </tr>
+                    </thead>
+                    {% for version in entries %}
+                    <tr>
+                        <td>{{ version.loggedAt | date("M-d-Y g:i A")}}</td>
+                        <td>{{ version.action }}</td>
+                		<td>
+                		    {{ version.user.fullName }}
+                		    <br />
+                		    <i>{{ version.user.email }}</i>
+                		</td>
+                		<td>
+                		    {% set _classLabel = get_class_label_by_fully_qualified_name(version.objectClass) %}
+                		    {% if _classLabel %}
+                		    <b>{{ _classLabel.singular | title }}</b>
+                		    {% endif %}
+                		    <i>{{ version.objectClass }}</i>
+                		</td>
+                		<td>
+                		    <ul style="list-style:none;">
+                		    {% for key, value in version.object %}
+                		        <li>
+                		            <i>{{ key }}</i>: 
+                		            <b>{{ value }}</b>
+                		        </li>
+                		    {% endfor %}
+                		    </ul>
+                		    <a target="_blank" href="{{ path('admin_showEditHistory', {objectId: version.object.id, objectClass: base64_encode(version.objectClass)}) }}">
+                                View Related History
+                            </a>
+                		</td>
+                		<td>
+                		    <ul style="list-style:none;">
+                		    
+                		    {% for key, value in version.data %}
+                		        <li>
+                		            <label class="label"> {{ key  }}</label>
+                		            {{ value | raw}}
+                		        </li>
+                		    {% endfor %}
+                		    </ul>
+                		</td>
+                    </tr>
+                    {% else  %}
+                        <tr>
+                            <td class="empty-list" colspan="5">No records yet!</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                
+     
+            </div>
+            
+            {% endblock %}
+        {% endembed %}
+        
+        {% if pager.isPaginable %}
+           {{ paginate(pager, 'admin_history_index', app.request.query.all) }}
+        {% endif %}
+        
+    </div>
+    
+{% endblock %}
+{% block inlineJavascriptCode %}
+<script type="text/javascript">
+    $(function(){
+    	$('#filter-startDate').datepicker();
+    	$('#filter-endDate').datepicker();
+
+    	 $('#filter-isClientOnly').on('change', function() {
+		    var val = this.checked ? '1' : '';
+		    $(this).val(val);
+		});
+    });
+</script>
+{% endblock %}

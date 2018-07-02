@@ -1,0 +1,185 @@
+{% extends 'InstitutionBundle::layout.html.twig' %}
+{% set mainNavigation = {selected: 'clinics' , label : institution.name , url: path('institution_account_profile') } %}
+{% set subNavigation = {selected: 'clinics' , label : institutionMedicalCenter.name } %}
+{% set _csrf_token_widget = form_widget(institutionMedicalCenterForm._token) %}
+{% set clinicClassLabel = getClassLabel('clinic') %}
+{% block content %}
+
+    {% embed 'InstitutionBundle:Embed:contentWrapper.authenticated.html.twig' %}
+        {% block wrappedContent %}
+            <div class="tab-content span8">
+                {% include 'InstitutionBundle:MedicalCenter/Widgets:profileHeader.html.twig' %}
+                <div class="tabbable">
+                    {% include 'InstitutionBundle:Widgets:tabNavigation.html.twig' with {
+                        tabNavigation: { links: [
+                            { label: 'Clinic Details', 'active': true, 'href' : '#profile_tab', 'icon' : 'medkit' },
+                            { label: 'Specializations', 'href' : '#specializations_tab_content', 'icon' : 'beaker', 'id' : 'specializations_tab'},
+                            { label: 'Doctors', 'href' : '#doctors_tab_content', 'icon' : 'user-md', 'id' : 'doctors_tab' },
+                        ]}
+                    } %}
+
+                    <div class="tab-content" id="tabbed_content">
+                        <div id="profile_tab" class="tab-pane active">
+                            {% include 'InstitutionBundle:MedicalCenter/Widgets:profile.details.html.twig' %}
+                        </div>
+                        <div id="specializations_tab_content" class="tab-pane">
+                           {% include 'InstitutionBundle:Widgets/Profile:specializations.html.twig' %}
+                        </div>
+                        <div id="doctors_tab_content" class="tab-pane">
+                            {% embed 'InstitutionBundle:Widgets:tabbedContent.base.html.twig' %}
+                                {% block tabbedContent %}
+                                     <section class="doctors-listing">
+                                        <h3> Your Doctors
+                                            <a id="addDoctorButton" href="#add-doctor" class="btn btn-primary pull-right" data-toggle="modal"> <i class="icon-plus"></i> Add New Doctor</a>
+                                        </h3>
+                                        {% include 'InstitutionBundle:Doctor/Widgets:doctors.html.twig' with {addDoctorFormAction: path('institution_medicalCenter_addDoctor', {imcId: institutionMedicalCenter.id}) }  %}
+                                    </section>
+                                {% endblock %}
+                            {% endembed %}
+                        </div>
+                   </div><!-- /.tab-content -->
+                </div>
+            </div><!-- end .span9 -->
+
+            {% embed 'InstitutionBundle:Embed:wrapper.sidebar.html.twig' %}
+                {% block sidebarWrappedContent %}
+                     {% include 'InstitutionBundle:MedicalCenter/Widgets:sidebar.html.twig' %}
+                {% endblock %}
+            {% endembed %}
+
+            {% include 'InstitutionBundle:MediaGallery/Widgets:addModalForm.html.twig' with {uploadFromMedicalCenterContext: true} %}
+            
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+
+{% block inlineJavascriptCode %}
+<script type="text/javascript">
+/* This is a quick and dirty solution. Will refactor when I get the time. (HAM)
+ * TODO: move to external js file.
+ */
+(function() {
+    var hashMatch = (function() {
+        switch (window.location.hash) {
+        case '#specializations':
+            return { 'action': 'openTab', 'tab': 'specializations_tab', 'content': 'specializations_tab_content' };
+        case '#doctors':
+            return { 'action': 'openTab', 'tab': 'doctors_tab', 'content': 'doctors_tab_content' };
+        }
+        return false;
+    })();
+
+    if (hashMatch) {
+        if (hashMatch.action == 'scrollTo') {
+            $('html, body').animate({
+                 'scrollTop': $('#' + hashMatch.section).offset().top
+            }, 1000);
+        } else if (hashMatch.action == 'openTab') {
+            /*are the selectors unique enough?*/
+            $("ul.nav-tabs > li").each(function() {
+                $(this).attr('id') == hashMatch.tab ? $(this).addClass('active') : $(this).removeClass('active');
+            });
+            $("div#tabbed_content > div").each(function() {
+                $(this).attr('id') == hashMatch.content ? $(this).addClass('active') : $(this).removeClass('active');
+            });
+        }
+    }
+})();
+</script>
+
+<script type="text/javascript" src="{{ asset('bundles/helper/js/Location.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('bundles/helper/js/fancy_business_hours.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('bundles/institution/js/institutionMedicalCenter.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('bundles/institution/js/properties.js') }}" ></script>
+
+<script type="text/javascript" src="{{ asset('js/bootstrap-timepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/institution/js/institutionTreatments.js') }}"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="{{ asset('bundles/helper/js/HCAGoogleMap.js') }}"></script>
+
+<script type="text/javascript">
+    Location.loadCitiesUrl = '{{ path("helper_loadCities") }}';
+
+    console.log("{{ medical_center_complete_address_to_string(institutionMedicalCenter, ['address','city','country']) }}");
+    console.log("{{ medical_center_complete_address_to_string(institutionMedicalCenter, ['city','country']) }}");
+    
+    (function($){
+        $(function(){
+            // display businesshours
+            //InstitutionMedicalCenter.displayBusinessHoursView();
+
+            HCAGoogleMap.initialize({
+                latLngString: '{{ institutionMedicalCenter.coordinates }}',
+                address: "{{ medical_center_complete_address_to_string(institutionMedicalCenter, ['address','city','country']) }}",
+                defaultAddress: "{{ medical_center_complete_address_to_string(institutionMedicalCenter, ['city','country']) }}",
+                mapOnChangeCallback: function() {
+                	$("#{{ institutionMedicalCenterForm.getChild('coordinates').vars.id }}").val(HCAGoogleMap.latLngString);
+                }
+            });
+
+            var ajaxFormUploadElem;
+            $('form.ajaxUploadLogoForm').ajaxForm({
+               success: function(response) {
+                   if(response.status) {
+                       ajaxFormUploadElem.find('img').attr('src',response.mediaSrc).css('opacity', 1).prev().show();
+                       HCA.alertMessage('success', 'Your Logo has been updated!');
+                   } else {
+                       HCA.alertMessage('error', 'Unable to your upload Logo!');
+                   }
+               },
+               complete: function(xhr) {}
+            }).submit(function() {
+            	HCA.closeAlertMessage();
+               ajaxFormUploadElem = $(this);
+               $(this).find('img').css('opacity', 0.5).prev().hide();
+            });
+
+            InstitutionMedicalCenter.isEditView = true;
+
+
+            /* Note: Has duplicate code in form.multipleAdd.html.twig */
+            $('form[name="specializationsForm"] input:checkbox[name="subSpecialization"]').live('change', function(e) {
+                var subSpecializationContainerElem = $(this).parents('.sub-specialization-wrapper:first');
+                subSpecializationContainerElem.find('input:checkbox[id^="treatments"]').prop('checked', $(this).is(':checked'));
+            });
+
+            $('form[name="specializationsForm"] input:checkbox[id^="treatments"]').live('change', function(e) {
+                var subSpecializationContainerElem = $(this).parents('.sub-specialization-wrapper:first');
+                var subSpecializationCheckbox = subSpecializationContainerElem.find('input[name=subSpecialization]');
+                var checkedTreatmentElems = subSpecializationContainerElem.find('input:checkbox[id^="treatments"]:checked');
+
+                subSpecializationCheckbox.prop('checked', true);
+                if(checkedTreatmentElems.length == 0) {
+                    subSpecializationCheckbox.prop('checked', $(this).is(':checked'));
+                }
+            });
+            /* End of Note: Has duplicate code in form.multipleAdd.html.twig */
+
+        });
+
+    })(jQuery);
+
+    function getAddress() {
+
+
+        var streetAddress = $("#{{ institutionMedicalCenterForm.getChild('address').vars.id }}_street").val();
+        //var buildingAddress = $("#{{ institutionMedicalCenterForm.getChild('address').vars.id }}_building").val();
+        var city = $("#{{ institutionMedicalCenterForm.getChild('city').vars.id }}").val();
+        var country = $("#{{ institutionMedicalCenterForm.getChild('country').vars.id }}").val();
+
+        var address = '';
+        //if(buildingAddressElem.val() != '') { address += buildingAddressElem.val() + ', '; }
+        if(streetAddress != '') { address += streetAddress + ', '; }
+        if(city != '') { address += city + ', '; }
+        if(country != '') { address += country; }
+
+        return address;
+    }
+
+    function updateInstitutionStaticMap() {
+        HCAGoogleMap.updateMap(getAddress());
+    }
+</script>
+{% endblock %}

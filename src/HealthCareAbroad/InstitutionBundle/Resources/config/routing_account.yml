@@ -1,0 +1,23 @@
+institution_account_profile:
+    pattern:  /institution/profile.html
+    defaults: {_controller: InstitutionBundle:InstitutionAccount:profile }
+    requirements:
+        _method:  GET|POST
+
+institution_users:
+    pattern: /institution/users
+    defaults: { _controller: InstitutionBundle:Institution:viewAllStaff }
+    requirements:
+        _method: GET|POST
+        
+institution_ajaxUpdateProfileByField:
+    pattern: /institution/ajax/update-profile-by-field
+    defaults: {_controller: InstitutionBundle:InstitutionAccount:ajaxUpdateProfileByField }
+    requirements:
+        _method:  GET|POST
+
+institution_ajaxUpdateCoordinates:
+    pattern: /institution/ajax/update-coordinates
+    defaults: {_controller: InstitutionBundle:InstitutionAccount:ajaxUpdateCoordinates }
+    requirements:
+        _method:  POST

@@ -1,0 +1,50 @@
+{# This layout is used by pages viewed under a specific institution  #}
+
+{% set selectedTab = 'institutions' %}
+{% extends '::base.admin.html.twig' %}
+
+{% block title %}{{ parent() }} &raquo; Admin Panel{% endblock %}
+
+{% block body %}
+
+{% set sideBarUsed = sideBarUsed is defined ? sideBarUsed : 'AdminBundle:Institution:sidebar.html.twig' %}
+{% set profileHeader = institutionMedicalCenter.id is not defined or institutionMedicalCenter.id is empty ? 'AdminBundle:Institution:profileHeader.html.twig' : 'AdminBundle:Widgets/MedicalCenter:profileHeader.html.twig' %}
+
+<body data-target=".bs-docs-sidebar" data-spy="scroll">
+
+    {% include 'AdminBundle:Embed:header.layout.html.twig' %}
+
+    <div id="main-content">
+        <div class="row-fluid">
+            {% include profileHeader %}
+    	</div>
+
+    	<div class="container maincontent" style="margin-top:20px;">
+    	    {% include '::notice.admin.html.twig' %}
+    	    
+    	    <div id="navbar-side" class="span3 bs-docs-sidebar">
+    	        {% include sideBarUsed %}
+    	    </div>
+		    
+
+	        {% block content %}{% endblock %}
+    		<!-- End of main_content-->
+    	</div>
+    </div>
+
+    {% include '::footer.admin.html.twig' %}
+
+    <div id="dialog-container"></div>
+
+    {% block javascripts %}
+        <script src="{{ asset('bundles/helper/js/Location.js') }}"></script>
+        <script type="text/javascript">
+        Location.loadCitiesUrl = '{{ path("helper_loadCities") }}';
+        </script>
+    {% endblock %}
+    
+    {% block inlineJavascriptCode %}{% endblock %}
+</body>
+
+{% endblock %}
+

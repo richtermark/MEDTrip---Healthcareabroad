@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>{% block title %}{% endblock %}</title>
+
+        {% javascripts 
+            'js/jquery/jquery-1.8.2.js'
+            'js/jquery/jquery-ui-1.10.1.custom.min.js'
+            'js/jquery/jquery.form.min.js'
+            'js/bootstrap.min.js'
+			'bundles/helper/js/Common.js'
+			'bundles/helper/js/CustomSelect.js'
+			output='js/institution/compiled-institution.js'
+        %}
+
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script type="text/javascript">
+        $(function(){
+            HCA.init({
+                tinymceConfig: {
+                    textarea_class: "{{ tinymce.textarea_class }}",
+                    themeSimple: $.parseJSON('{{ tinymce.theme.simple|json_encode|raw }}'),
+                    themeMedium: $.parseJSON('{{ tinymce.theme.medium|json_encode|raw }}'),
+                    themeBbCode: $.parseJSON('{{ tinymce.theme.bbcode|json_encode|raw }}'),
+                    themeAdvanced: $.parseJSON('{{ tinymce.theme.advanced|json_encode|raw }}')
+                }
+            });
+        });
+        </script>
+
+        {% stylesheets
+		    'css/jquery-ui/base/jquery-ui-1.10.1.custom.min.css'
+            'css/bootstrap.min.css'
+			'css/bootstrap-timepicker.min.css'
+            'https://fonts.googleapis.com/css?family=PT+Sans:400,700'
+			'css/font-awesome.min.css'
+			'css/dropzone.css'
+			'css/hca-flags.css'
+			'css/institution/hca-admin.min.css'
+			output='css/institution/compiled-institution.css'
+        %}
+            <link href="{{ asset_url }}" rel="stylesheet"/>
+        {% endstylesheets %}
+
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+
+        {% if include_zopim is defined and include_zopim %}
+        <!--Start of Zopim Live Chat Script-->
+        <script type="text/javascript">
+        window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+        d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+        _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
+        $.src='//v2.zopim.com/?1KA08bX3bcKTQHs0eGLS6u4M9CqGyDSD';z.t=+new Date;$.
+        type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
+        </script>
+        <!--End of Zopim Live Chat Script-->
+        {% endif %}
+        
+        
+        {#<!-- add google analytics -->#}
+        {% set include_google_analytics = include_google_analytics is defined ? include_google_analytics : false %}
+        {% if include_google_analytics %}
+            <script type="text/javascript">
+
+              var _gaq = _gaq || [];
+              _gaq.push(['_setAccount', 'UA-39024795-1']);
+              _gaq.push(['_trackPageview']);
+            
+              (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+              })();
+
+            </script>
+        {% endif %}
+    </head>
+    
+    <body>
+        {% if include_zendesk is defined and include_zendesk %}
+        <!--Start of ZenDesk Feedback Tab Script-->
+        <script type="text/javascript" src="//assets.zendesk.com/external/zenbox/v2.6/zenbox.js"></script>
+        <style type="text/css" media="screen, projection">
+          @import url(//assets.zendesk.com/external/zenbox/v2.6/zenbox.css);
+        </style>
+        <script type="text/javascript">
+          if (typeof(Zenbox) !== "undefined") {
+            Zenbox.init({
+              dropboxID:   "20190463",
+              url:         "https://healthcareabroad.zendesk.com",
+              tabTooltip:  "Feedback",
+              tabImageURL: "https://assets.zendesk.com/external/zenbox/images/tab_feedback.png",
+              tabColor:    "#fe6500",
+              tabPosition: "Left"
+            });
+          }
+        </script>
+        <!--End of ZenDesk Feedback Tab Script-->
+        {% endif %}
+
+        {% block body %}{% endblock %}
+    
+        <script type="text/javascript">
+        (function(){
+            $(function(){
+                $('body').append($('.modal.fade'));
+
+                $(window).scroll(function() {
+                    if ($(this).scrollTop() > 100) {
+                        $('#back-top').fadeIn();
+                    } else {
+                         $('#back-top').fadeOut();
+                    }
+                });
+
+                $('#back-top a').click(function(e) {
+                    e.preventDefault();
+                    $('html').animate({scrollTop: 0}, 800);
+                });
+            });
+        })(jQuery);
+        </script>
+    </body>
+
+    {{ tinymce_init() }}
+</html>

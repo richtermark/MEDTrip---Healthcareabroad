@@ -1,0 +1,11 @@
+<form novalidate="novalidate" action="{{ form_url }}" method="POST" {{ form_enctype(form) }} class="basic-form">
+                        
+    {{ form_row(form.firstName) }}
+    {{ form_row(form.middleName) }}
+    {{ form_row(form.lastName) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.adminUserType) }}
+    {{ form_rest(form) }}
+    
+    <input type="submit" name="submit" value="Submit" class="btn btn-large btn-primary" />
+</form>

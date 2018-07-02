@@ -1,0 +1,21 @@
+<div id="filter-wrapper">
+	
+	{% for name, filter in filters %}
+		<div>
+			<label>{{ filter.label }}:</label>
+			
+			{% if filter.options is defined %}
+
+			<select name="{{ name }}" id="filter-{{ name }}" class="filter-params">
+				{% for value, label in filter.options %}
+					<option value="{{ value }}" {{ value == filter.selected ? 'selected' : ''}}>{{ label }}</option>
+				{% endfor %}
+			</select>
+			{% else %}
+			     <input type="text" id="filter-{{ name }}" class="filter-params {{ filter.class is defined ? filter.class : 'span2' }}"  name ="{{ name }}" data-date-format="mm/dd/yyyy" value="{{ filter.value }}" {% if filter.placeholder is defined %} placeholder="{{ filter.placeholder }}" {% endif %} style="margin-bottom: 0"/>
+			{% endif %}
+		</div>
+	{% endfor %}
+
+	<button class="btn btn-success" type="button" onclick="HCA.filterResult('{{ url }}')">Go</button>
+</div>

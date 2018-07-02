@@ -1,0 +1,81 @@
+{% extends 'InstitutionBundle::layout.html.twig' %}
+{% set mainNavigation = {selected: 'users'} %}
+{% block content %}
+    {% embed 'InstitutionBundle:Embed:contentWrapper.authenticated.html.twig' %}
+        {% block wrappedContent %}
+            <h1>
+                <i class="icon-group"></i>Create a Team
+            </h1>
+            <div class="span8">
+                <form action="/" method="post">
+                    <section class="section account-info manage-data">
+                        <h2>
+                            Members
+                        </h2>
+                    </section>
+                    <section>
+                        <table class="table table-striped table-hover user-lists">
+                            {% set even = false %}
+            				{% for staff in users %}
+                                <tr>
+                                    <td><i class="icon-user icon-2x"></i></td>
+                                    <td><a href="{{ path('institution_editAccount',{accountId : staff.id }) }}">{{staff.firstName}}-{{ staff.email}}</a></td>
+                                    <td>{{staff.institutionUserType.name}}</td>
+                                    <td></td>
+                                </tr>
+                                {% set even = even ? false : true %}    
+            				{% endfor %}
+                            
+                        </table>
+                        <!-- >div class="row-fluid">
+                            <div class="span12">
+                                <div class="row-field">
+                                    <a href="#add-user" class="btn btn-primary btn-large pull-right" data-toggle="modal">
+                                        <i class="icon-plus"></i> Add User
+                                    </a>
+                                </div>
+                            </div>
+                        </div-->
+                    </section>
+                </form>
+                <!-- Modal Form for Adding Users-->
+                {% include 'InstitutionBundle:InstitutionUser/Modals:modal.addUser.html.twig' %}     
+            </div>
+            <aside class="span4">
+                <section class="aside-box default">
+                    <h2>
+                        What is a TEAM?
+                    </h2>
+                    <div class="hca-sub-label">
+                        Faster team collaboration by allowing other users to share an account plan.
+                    </div>
+                    <div class="features">
+                        <div class="media">
+                            <div class="media-body">
+                                <i class="icon-check icon-2x pull-left">
+                                </i>
+                                <p>
+                                    Delegate administrations
+                                </p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-body">
+                                <i class="icon-check icon-2x pull-left">
+                                </i>
+                                <p>
+                                    Manage Medical Insitution Profile
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </div>
+            <!--End of one columns data-->
+                    
+        {% endblock %}
+        
+    {% endembed %}
+{% endblock %}

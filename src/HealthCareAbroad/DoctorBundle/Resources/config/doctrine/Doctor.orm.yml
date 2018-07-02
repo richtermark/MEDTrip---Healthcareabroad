@@ -1,0 +1,140 @@
+HealthCareAbroad\DoctorBundle\Entity\Doctor:
+    type: entity
+    table: doctors
+    repositoryClass: HealthCareAbroad\DoctorBundle\Repository\DoctorRepository
+    fields:
+        id:
+            id: true
+            type: bigint
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        firstName:
+            type: string
+            length: 250
+            fixed: true
+            nullable: false
+            column: first_name
+        middleName:
+            type: string
+            length: 250
+            fixed: true
+            nullable: false
+            column: middle_name
+        lastName:
+            type: string
+            length: 250
+            fixed: true
+            nullable: false
+            column: last_name
+        suffix:
+            type: string
+            length: 50
+            fixed: true
+            nullable: false
+            column: suffix
+        gender:
+            type: smallint
+            length: 1
+            fixed: true
+            nullable: true
+            column: gender
+        contactEmail:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+            column: contact_email
+        contactNumber:
+            type: string
+            fixed: false
+            nullable: false
+            column: contact_number
+        details:
+            type: text
+            nullable: false
+        dateCreated:
+            type: datetime
+            nullable: false
+            column: date_created
+        status:
+            type: boolean
+            nullable: false
+    manyToMany:
+        specializations:
+            targetEntity: HealthCareAbroad\TreatmentBundle\Entity\Specialization
+            cascade: {}
+            mappedBy: null
+            joinTable:
+                name: doctor_specializations
+                joinColumns:
+                    -
+                        name: doctor_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: specialization_id
+                        referencedColumnName: id
+            orderBy: null
+        institutionMedicalCenters:
+            targetEntity: HealthCareAbroad\InstitutionBundle\Entity\InstitutionMedicalCenter
+            cascade: {}
+            mappedBy: null
+            joinTable:
+                name: institution_medical_center_doctors
+                joinColumns:
+                    -
+                        name: doctor_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: institution_medical_center_id
+                        referencedColumnName: id
+            orderBy: null
+        contactDetails:
+            targetEntity: HealthCareAbroad\HelperBundle\Entity\ContactDetail
+            cascade:
+                - "persist"
+            mappedBy: null
+            joinTable:
+                name: doctor_contact_details
+                joinColumns:
+                    -
+                        name: doctor_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: contact_detail_id
+                        referencedColumnName: id
+            orderBy: null   
+        medicalSpecialities:
+            targetEntity: HealthCareAbroad\DoctorBundle\Entity\MedicalSpeciality
+            cascade:
+                - "persist"
+            mappedBy: null
+            joinTable:
+                name: doctor_medical_specialities
+                joinColumns:
+                    -
+                        name: doctor_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: medical_speciality_id
+                        referencedColumnName: id
+            orderBy: null
+    manyToOne:
+        country:
+            targetEntity: HealthCareAbroad\HelperBundle\Entity\Country
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                country_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+            
+    oneToOne:
+        media:
+            targetEntity: HealthCareAbroad\MediaBundle\Entity\Media
+    lifecycleCallbacks: {}

@@ -1,0 +1,29 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+{% set isHomePage = true %}
+{% block content %}
+
+    <!-- Main Content -->
+	<div class="span8">
+	    {{ render_homepage_featured_clinics_ads() }}
+
+	    {{ render_homepage_featured_destinations_ads() }}
+
+	</div> <!--End Main Content -->
+
+	<!--Sidebar Content -->
+	<aside class="span4">
+		<div class="widget-wrapper">
+			
+			{{ render_homepage_featured_posts_ads() }}
+
+	    	{{ render_homepage_common_treatments_ads() }}
+
+        	{{ render_homepage_featured_video_ad() }}
+
+		</div>
+
+	</aside> <!--End of Sidebar Content -->
+
+	{{ addInlineJavascript(getTemplateContents('FrontendBundle:Default:indexInline.js.twig')) }} 	
+    
+{% endblock %}

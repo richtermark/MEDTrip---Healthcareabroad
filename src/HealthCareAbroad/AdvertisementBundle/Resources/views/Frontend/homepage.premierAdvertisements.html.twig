@@ -1,0 +1,79 @@
+
+{% if highlight %}
+
+{% set institutionUrl = get_institution_frontend_url(highlight.institution) %}
+{% set featuredImages = json_decode(highlight.highlightFeaturedImages) %} 
+
+{#-- set statistic parameters for this advertisement --#}
+{% set _impressionStatisticParametersAttribute = get_statistics_parameter_attribute_name() ~ '=' ~ encode_advertisement_impressions_parameters(highlight)  %}
+{#-----------------------------------------------------#}
+
+{#-- BE CAREFUL WHEN MODIFYING ELEMENTS WITH STATS TRACKERS --#}
+<div class="premier-type-wrapper box-shadow row {{ get_impression_tracker_class() }}" {{ _impressionStatisticParametersAttribute }} > <!--Highighted Institution-->
+    <!-- institution logo link -->
+
+    <div class="header-wrapper">
+        <h3 class="heading">
+			{% include 'FrontendBundle:Widgets/Statistics:advertisement.clickthroughLink.html.twig' with {
+    		        statisticsDataObject: highlight,
+    		        link: { url: institutionUrl, html: highlight.institution.name }
+			} %}
+        </h3>
+        <span class="sub-heading">{{ institution_address_to_string(highlight.institution, ['city', 'country']) }}</span>
+
+        {% include 'FrontendBundle:Widgets/Statistics:advertisement.clickthroughLink.html.twig' with {
+    	        statisticsDataObject: highlight,
+    	        link: {url: institutionUrl, html: render_institution_logo(highlight.institution, {context: 4, attr: {class: 'mini'}}), class: 'mini-logo-wrapper'}
+    	    }
+    	%}
+    </div>
+
+	<div class="carousel slide" id="feature_carousel">
+		<div class="carousel-inner">
+		    {% set carouselImageSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::MEDIUM_BANNER') %}
+		    {% for i, image in featuredImages %}
+			<div class="{{ i==0 ? 'active' : '' }} item">
+                <img alt="" src="{{ advertisement_media_src(image.name, carouselImageSize) }}">
+			</div> <!--End of slider_item 1-->
+		    {% endfor %}
+		</div>
+		<div class="nav-pills">
+		    {% for i, image in featuredImages %}
+			    <a data-to="{{ loop.index }}" href="#feature_carousel" class="carousel-pills {{ i==0 ? 'pager-active' : '' }}"><span>&nbsp;</span></a>
+		    {% endfor %}
+		</div>
+		
+		<!-- Learn more orange button -->
+		{% include 'FrontendBundle:Widgets/Statistics:advertisement.clickthroughLink.html.twig' with {
+		        statisticsDataObject: highlight,
+		        link: {
+		            url: institutionUrl,
+    			    class: 'btn blue feature-btn',
+    			    html: '<span class="white-icon-search"></span> Learn More'
+		        }
+		    }
+		%}
+
+	</div> <!--End of carousel slide-->
+
+	<div class="ad-highlights-wrapper row-fluid">		
+        {% set highlights = json_decode(highlight.highlights) %}
+        {% set iconSize = constant('HealthCareAbroad\\MediaBundle\\Services\\ImageSizes::MINI') %}
+        {% for each in highlights %}
+            <div class="item-wrapper span6">
+                {% if each.icon %}
+                    <img class="img-circle pull-left" src="{{ each.icon.src_thumbnail is defined ? each.icon.src_thumbnail : advertisement_media_src(each.icon, iconSize) }}" alt="" width="50"/>
+                {% else %}
+                    <span class="{{ ad_highlight_placeholder_class(each.type) }} orange img-circle pull-left default"></span>
+                {% endif %}
+                
+                {% if each.header %}
+                    <h5 class="media-heading">{{ each.header }}</h5>
+                {% endif %}
+                <span class="title">{{ each.label }}</span>
+            </div>
+        {% endfor %}
+	</div>
+</div>
+
+{% endif %}

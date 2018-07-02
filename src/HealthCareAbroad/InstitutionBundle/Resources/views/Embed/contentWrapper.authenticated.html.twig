@@ -1,0 +1,37 @@
+{% set _mainNavDefaults = {'selected' : 'dashboard'} %}
+{% set mainNavigation = mainNavigation is defined ? _mainNavDefaults | merge(mainNavigation) : _mainNavDefaults %}
+{% set contentSpanClass = contentSpanClass is defined ? contentSpanClass : 'span12 marginleft0' %}
+<div id="content" class="container">
+    <div class="row">
+    {% if isNoBreadCrumbs is not defined %}
+        <ul class="breadcrumb">
+            <li>
+             <a href="{{ path('institution_homepage')}}"><i class="{{ 'dashboard' == mainNavigation.selected ? 'icon-h-sign' : 'icon-h-sign' }}"></i></a>
+                {{ 'dashboard' == mainNavigation.selected ? '' : '<span class="divider"> / </span>' }}
+            </li>
+            <li class="{{ subNavigation is not defined ? 'active' : '' }}">
+                {% if mainNavigation.url is not defined %}
+                    {{ mainNavigation.label is defined ? mainNavigation.label : mainNavigation.selected | title }}
+                 {% else %}
+                    <a href="{{mainNavigation.url}}">{{ mainNavigation.label | title }}</a>
+                    <span class="divider">  / </span>
+                 {% endif %}
+            </li>
+            {% if subNavigation is defined %}
+                <li class="active">
+                     {{ subNavigation.label | title }}
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+            <!-- callout -->
+    {% set callout = app.session.flashbag.get('callout_message') %}
+    {% if callout[0] is defined %}
+        {% include 'InstitutionBundle:Widgets:callout.html.twig' with {callout: callout} %}
+    {% endif %}
+
+        {% block wrappedContent %}{% endblock %}
+        {% block sidebar %}{% endblock %}
+    </div>        
+</div>
+

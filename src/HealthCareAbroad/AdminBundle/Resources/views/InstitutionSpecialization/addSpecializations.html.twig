@@ -1,0 +1,69 @@
+{% extends 'AdminBundle::layout.institution.html.twig' %}
+{% set centerLabel = getClassLabel('institution_medical_center').singular | title %}
+
+{% block title %}Add new clinic specialization for {{ institutionMedicalCenter.name }} {% endblock %}
+
+
+{% block content %}
+    <div class="span9">
+
+        {% embed 'HelperBundle:Widgets:section.html.twig' with { title: institutionMedicalCenter.name } %}
+            {% block sectionContent %}
+                <div style="border: 1px dashed #ddd; padding: 10px; margin-bottom: 20px">
+                    {{ institutionMedicalCenter.description | raw }}
+                </div>
+
+                <div class="treatmentbox">
+                	<h5>Add Specialization</h5>
+                	
+                	<label>Search and Add your SPECIALIZATIONS</label>
+                    {{ form_widget(form.specialization_selector) }}
+                    <div id="specializationLoading" class="ajax-loading" style="display:none">loading . . .</div>
+                	
+                	<div class="boxcontent">
+                        <form novalidate="novalidate" action="{{ path('admin_institution_medicalCenter_addSpecialization', { 'institutionId':institution.id, 'imcId': institutionMedicalCenter.id }) }}" method="POST" {{ form_enctype(form) }}>                	
+                            
+                            <div id="specializationAccordion"></div>
+
+                            <div id="specializationLoading" class="ajax-loading" style="display:none">loading . . .</div>
+                    		<div id="specializationAccordion"></div>
+                    		<br>
+                    		{% if hasSelectedTreatment is not defined %}
+                    	        <input id="addSpecializationBtn" type="submit" disabled="true" class="btn btn-large btn-primary" value="Submit" name="Submit">
+                    	    {% else %}
+                    	        <input id="addSpecializationBtn" type="submit" class="btn btn-large btn-primary" value="Submit" name="Submit">
+                    	    {% endif %}
+                        </form>
+                    </div>
+                </div>
+
+            {% endblock %} 
+
+        {% endembed %}
+    </div>
+{% endblock %}
+
+{% block inlineJavascriptCode %}
+<script src="{{ asset('bundles/admin/js/institutionTreatments.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+(function($){
+    $(function(){
+
+    	var _nsUrl = '{{ path("admin_medicalCenter_ajaxSpecializationSource", {institutionId: institution.id, imcId: institutionMedicalCenter.id}) }}';
+        
+        InstitutionSpecializationAutocomplete
+        .setAutocompleteOptions({
+            source : _nsUrl,
+            target: $('input.autocomplete_specialization_selector'),
+            selectedDataContainer: $('#specializationAccordion') 
+        })
+        .setLoaderElement($('#specializationLoading'))
+        .setLoadSpecializationFormUri('{{ path("admin_institution_medicalCenter_ajaxAddSpecialization", { "institutionId" : institution.id, "imcId": institutionMedicalCenter.id }) }}')
+        .autocomplete();
+        
+    });
+})(jQuery);
+//-->
+</script>
+{% endblock %}

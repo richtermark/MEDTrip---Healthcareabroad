@@ -1,0 +1,7 @@
+
+<ul class="nav nav-tabs">
+    {% for step in steps %}
+        {% set isSelected = step.selected is defined and step.selected %}
+	<li class="{{ isSelected ? 'active': '' }}"><a href="javascript:void(0)"><span>{{ loop.index }}</span> {{step.title}}</a></li>
+    {% endfor %}
+</ul>

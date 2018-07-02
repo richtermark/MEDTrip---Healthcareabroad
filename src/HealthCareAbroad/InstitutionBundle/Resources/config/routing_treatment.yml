@@ -1,0 +1,32 @@
+## isId is institution_specialization.id
+## issId is institution_subSpecialization.id
+institution_specialization_addTreatment:
+    pattern: /specialization/edit/{isId}/treatment/add
+    defaults: { _controller: InstitutionBundle:Treatment:add }
+    requirements:
+        _method: GET
+        isId: \d+
+
+institution_specialization_addTreatment_save:
+    pattern: /specialization/edit/{isId}/treatments/add
+    defaults: { _controller: InstitutionBundle:Treatment:save }
+    requirements:
+        _method: POST
+        isId: \d+
+
+institution_specialization_editTreatment:
+    pattern: /specialization/edit/{isId}/treatments/edit/{issId}
+    defaults: { _controller: InstitutionBundle:Treatment:edit }
+    requirements:
+        _method: GET
+        isId: \d+
+        issId: \d+
+
+institution_specialization_editTreatment_save:
+    pattern: /specialization/edit/{isId}/treatments/edit/{issId}
+    defaults: { _controller: InstitutionBundle:Treatment:save }
+    requirements:
+        _method: POST
+        isId: \d+
+        issId: \d+
+## --- end

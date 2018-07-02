@@ -1,0 +1,77 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+{% set selectedTab = 'manageHcaData' %}
+{% set selectedSubTab = 'manage_countries' %}
+{% set countryLabel = getClassLabel('country') %}
+
+{% block content %}
+
+    <div class="span3">
+    {% include 'AdminBundle:Widgets:subMenu.manageHcaData.html.twig'%}
+    </div>
+    <div id="content" class="span9">
+        
+        
+        {% embed 'HelperBundle:Widgets:section.html.twig' 
+            with { 
+                title: countryLabel.plural | title,
+                actions: [{link: path('admin_country_add'), label: 'Add '~ countryLabel.singular | title, 'icon' : 'icon-plus' }]
+            }  
+        %}
+            {% block sectionContent %}
+            
+                {% autoescape false %} {{ listFilters is defined ? listFilters : '' }} {% endautoescape %}
+                {% set sortBy = app.request.get('sortBy') %}
+                {% set sortOrder = app.request.get('sortOrder') %}
+                {% set default = sortBy | length ? '' : 'sort-asc' %}
+                
+                <table id="country-list" class="table table-bordered sortable-list">
+                    <tr>
+                        <th id="column-name"><a href="{{ app.request.uri }}" class="{{ sortBy == 'name' ? 'sort-' ~ sortOrder : default }}">Name</a></th>
+                         <th>Abbr (CCISO)</th>
+                         <th>Country Code</th>
+                         <th>Status</th>
+                        <th width="15%">Actions</th>
+                    </tr>
+                    {% for each in countries %}
+                    <tr>
+                        <td>{{ each.name }}</td>
+                        <td>{{ each.ccIso is defined ? each.ccIso : '' }}</td>
+                        <td>{{ each.countryCode is defined ? each.countryCode : '' }}</td>
+                        <td>
+                            <select class="update-status" style="width: 100px" data-update-url="{{ path('admin_country_updateStatus', {id:each.id}) }}">
+                                {% for status, statusLabel in statuses %}
+                                <option value="{{ status }}" {% if each.status is sameas(status) %}selected="selected"{% endif %}>{{ statusLabel }}</option>    
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_country_edit', { id:each.id } ) }}"> <i class="icon-edit"></i> Edit</a><br/>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endblock %}
+            
+        {% endembed %}
+        
+        {% if pager.isPaginable %}
+           {{ paginate(pager, 'admin_country_index', app.request.query.all) }}
+        {% endif %}
+        
+    </div>
+    
+{% endblock %}
+
+{% block inlineJavascriptCode %}
+<script type="text/javascript">
+$(function(){
+    $('select.update-status').change(function(){
+        var elem = $(this).prop('disabled', true);
+        elem.after('<span> updating status...</span>');
+        $.post($(this).data('update-url'), {status: $(this).val()}, function(response){
+            elem.prop('disabled', false).next().remove();
+        });
+    });    
+})
+</script>
+{% endblock %}

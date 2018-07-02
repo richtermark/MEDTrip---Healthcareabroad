@@ -1,0 +1,40 @@
+{% extends 'InstitutionBundle::signUpheader.html.twig' %}
+
+
+
+{% block content %}
+<!-- start content -->
+<div id="content">
+    <!--  start page-heading -->
+    <div id="page-heading">
+       
+        <h1>Invite Institutions </h1>
+    </div>
+    <!-- end page-heading -->
+    
+    {% embed '::contentWrapper.admin.html.twig' %}
+        
+        {% block wrappedContent %}
+            <!--  start table-content  -->
+            <div id="table-content">
+                {% include '::notice.admin.html.twig' %}
+                
+                {% block body %}
+                    
+                            Your account is successfully verified!
+                            Start creating your account.
+                        
+                    <section id="wrapper">
+                            <a href="{{ path('institution_signUp') }}">Proceed..</a></li>
+                    </section>
+                {% endblock %}
+           </div>
+            <!--  end table-content  -->
+        {% endblock %}
+        
+    {% endembed %}
+    
+</div>
+<!--  end content -->
+<div class="clear">&nbsp;</div>
+{% endblock %}
